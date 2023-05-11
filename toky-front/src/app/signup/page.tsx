@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 type valueType = {
     school: string;
     nickname: string;
+    phoneNumber: string;
 };
 
 export default function Signup() {
@@ -15,19 +16,28 @@ export default function Signup() {
     const [value, setValue] = useState<valueType>({
         school: "",
         nickname: "",
+        phoneNumber: "",
     });
     const [clickable, setClickable] = useState<boolean>(false);
 
     const SignupProps = [
         { title: ["학교", "를 선택해주세요."] },
         { title: ["닉네임", "을 입력해주세요."] },
+        { title: ["전화번호", "를 입력해주세요."] },
     ];
 
     useEffect(() => {
-        if (progress === 0 && value.school !== "") {
-            setClickable(true);
+        if (progress === 0) {
+            if (value.school !== "") setClickable(true);
+            else setClickable(false);
+        } else if (progress === 1) {
+            if (value.nickname !== "") setClickable(true);
+            else setClickable(false);
+        } else if (progress === 2) {
+            if (value.phoneNumber.length >= 12) setClickable(true);
+            else setClickable(false);
         }
-    }, [value]);
+    }, [value, progress]);
 
     return (
         <div>

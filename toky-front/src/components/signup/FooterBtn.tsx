@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import type { valueType } from "../../app/signup/page";
 
@@ -21,6 +20,12 @@ export default function FooterBtn({
         if (progress === 0 && value.school !== "") {
             handleProgress(progress + 1);
             setClickable(false);
+        } else if (progress === 1 && value.nickname !== "") {
+            handleProgress(progress + 1);
+            setClickable(false);
+        } else if (progress === 2 && value.phoneNumber.length >= 10) {
+            handleProgress(progress + 1);
+            setClickable(false);
         }
     };
 
@@ -33,16 +38,18 @@ export default function FooterBtn({
 
 const Button = styled.button<{ clickable: boolean }>`
     position: fixed;
-    bottom: 20px;
+    bottom: 0px;
     border: none;
 
-    color: white;
+    color: ${(props) =>
+        props.clickable ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.15)"};
     font-size: 22px;
     font-weight: 700;
     line-height: 28px;
 
-    background-color: ${(props) => (props.clickable ? "blue" : "#d9d9d9")};
-    width: 100%;
-    max-width: 395px;
+    cursor: ${(props) => (props.clickable ? "pointer" : "auto")};
+
+    background-color: #1f1f1f;
+    width: 390px;
     height: 80px;
 `;

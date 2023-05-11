@@ -1,11 +1,14 @@
-import { MouseEventHandler } from "react";
 import styled from "styled-components";
 import type { valueType } from "../../app/signup/page";
-import koreaLogo from "../../../public/image/korealogo.webp";
-import yonseiLogo from "../../../public/image/yonseiLogo.webp";
-import Image from "next/image";
-import { SchoolBtnWrapper, SchoolBtn } from "./schoolInput";
-import { NicknameCheck, NicknameCounter, NicknameInput } from "./nicknameInput";
+
+import {
+    SchoolBtnWrapper,
+    SchoolBtn,
+    NicknameCheck,
+    NicknameCounter,
+    SignupInput,
+} from "./inputs";
+import { useEffect } from "react";
 
 interface SignupComponentProps {
     title: string[];
@@ -29,17 +32,33 @@ export default function SignupComponent({
     };
     const handleNicknameChange = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
-        if (target.value.length <= 10) {
-            setValue((prev: valueType) => ({
-                ...prev,
-                nickname: target.value,
-            }));
+
+        if (target.value.length > 10) {
+            target.value = target.value.slice(0, 10);
         }
+
+        setValue((prev: valueType) => ({
+            ...prev,
+            nickname: target.value,
+        }));
+    };
+    const handlePhoneChange = (e: React.ChangeEvent) => {
+        const target = e.target as HTMLInputElement;
+
+        target.value = target.value
+            .replace(/[^0-9]/g, "")
+            .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+            .replace(/(\-{1,2})$/g, "");
+        setValue((prev: valueType) => ({
+            ...prev,
+            phoneNumber: target.value,
+        }));
     };
 
     return (
         <div>
             <TitleBox>
+                {progress === 1 && <MiniText>나중에 수정 가능해요!</MiniText>}
                 <b>{title[0]}</b>
                 {title[1]}
             </TitleBox>
@@ -65,24 +84,31 @@ export default function SignupComponent({
                     </div>
                 )}
                 {progress === 1 && (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        <NicknameInput
+                    <InputWrapper>
+                        <SignupInput
                             placeholder="닉네임"
                             onChange={handleNicknameChange}
                             value={value.nickname}
-                        ></NicknameInput>
+                            type={"text"}
+                            maxLength={10}
+                        ></SignupInput>
                         <NicknameCheck>
                             <NicknameCounter
                                 nickname={value.nickname}
                             ></NicknameCounter>
                         </NicknameCheck>
-                    </div>
+                    </InputWrapper>
+                )}
+                {progress === 2 && (
+                    <InputWrapper>
+                        <SignupInput
+                            placeholder="전화번호"
+                            type="tel"
+                            onChange={handlePhoneChange}
+                            value={value.phoneNumber}
+                            maxLength={13}
+                        ></SignupInput>
+                    </InputWrapper>
                 )}
             </SelectBox>
         </div>
@@ -94,11 +120,26 @@ const TitleBox = styled.div`
     margin-left: 32px;
     font-size: 22px;
 
-    color: #757575;
+    color: rgba(255, 255, 255, 0.6);
 
     & b {
-        color: #000000;
+        color: #ffffff;
+        opacity: none;
     }
+`;
+
+const InputWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+`;
+
+const MiniText = styled.p`
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.6);
 `;
 
 const SelectBox = styled.div`

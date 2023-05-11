@@ -42,7 +42,7 @@ export default function TopBar({
 }
 
 const Wrapper = styled.div`
-    margin-top: 20px;
+    padding-top: 20px;
     height: 40px;
 
     #progress {
@@ -51,15 +51,16 @@ const Wrapper = styled.div`
         width: 100%;
     }
     #progress::-webkit-progress-bar {
-        background: #d9d9d9;
+        background: rgba(255, 255, 255, 0.15);
     }
     #progress::-webkit-progress-value {
-        background: #757575;
+        background: rgba(255, 255, 255, 0.87);
     }
 `;
 
 const TopBarContainer = styled.div`
     width: 100%;
+    color: rgba(255, 255, 255, 0.87);
 
     display: flex;
     align-items: center;
