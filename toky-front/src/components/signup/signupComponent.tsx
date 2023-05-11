@@ -4,6 +4,8 @@ import type { valueType } from "../../app/signup/page";
 import koreaLogo from "../../../public/image/korealogo.webp";
 import yonseiLogo from "../../../public/image/yonseiLogo.webp";
 import Image from "next/image";
+import { SchoolBtnWrapper, SchoolBtn } from "./schoolInput";
+import { NicknameCheck, NicknameCounter, NicknameInput } from "./nicknameInput";
 
 interface SignupComponentProps {
     title: string[];
@@ -25,6 +27,16 @@ export default function SignupComponent({
         if (!target) return;
         setValue((prev: valueType) => ({ ...prev, school: target.innerText }));
     };
+    const handleNicknameChange = (e: React.ChangeEvent) => {
+        const target = e.target as HTMLInputElement;
+        if (target.value.length <= 10) {
+            setValue((prev: valueType) => ({
+                ...prev,
+                nickname: target.value,
+            }));
+        }
+    };
+
     return (
         <div>
             <TitleBox>
@@ -33,7 +45,7 @@ export default function SignupComponent({
             </TitleBox>
             <SelectBox>
                 {progress === 0 && (
-                    <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex", marginLeft: "56px" }}>
                         <SchoolBtnWrapper>
                             <SchoolBtn
                                 value={value.school}
@@ -41,13 +53,6 @@ export default function SignupComponent({
                             >
                                 고려대학교
                             </SchoolBtn>
-                            {value.school === "고려대학교" && (
-                                <Image
-                                    src={koreaLogo}
-                                    alt="고려대학교 로고"
-                                    fill
-                                />
-                            )}
                         </SchoolBtnWrapper>
                         <SchoolBtnWrapper>
                             <SchoolBtn
@@ -56,14 +61,27 @@ export default function SignupComponent({
                             >
                                 연세대학교
                             </SchoolBtn>
-                            {value.school === "연세대학교" && (
-                                <Image
-                                    src={yonseiLogo}
-                                    alt="연세대학교 로고"
-                                    fill
-                                />
-                            )}
                         </SchoolBtnWrapper>
+                    </div>
+                )}
+                {progress === 1 && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                        }}
+                    >
+                        <NicknameInput
+                            placeholder="닉네임"
+                            onChange={handleNicknameChange}
+                            value={value.nickname}
+                        ></NicknameInput>
+                        <NicknameCheck>
+                            <NicknameCounter
+                                nickname={value.nickname}
+                            ></NicknameCounter>
+                        </NicknameCheck>
                     </div>
                 )}
             </SelectBox>
@@ -74,6 +92,7 @@ export default function SignupComponent({
 const TitleBox = styled.div`
     margin-top: 64px;
     margin-left: 32px;
+    font-size: 22px;
 
     color: #757575;
 
@@ -84,38 +103,4 @@ const TitleBox = styled.div`
 
 const SelectBox = styled.div`
     margin-top: 32px;
-    margin-left: 56px;
-`;
-
-const SchoolBtn = styled.button<{ children: string; value: string }>`
-    background-color: #d9d9d9;
-    width: 128px;
-    height: 128px;
-    border-radius: 100%;
-    border: none;
-    font-size: ${(props) => (props.value === props.children ? "0px" : "18px")};
-    font-weight: 500;
-
-    background-color: ${(props) =>
-        props.value === props.children ? "white" : ""};
-
-    &:hover {
-        border-width: 3px;
-        border-style: solid;
-        border-color: ${(props) =>
-            props.children === "고려대학교" ? "crimson" : "#0123b4"};
-    }
-`;
-
-const SchoolBtnWrapper = styled.div`
-    position: relative;
-    width: 128px;
-    margin-right: 24px;
-
-    & img {
-        border-radius: 100%;
-
-        object-fit: fill;
-        object-position: center;
-    }
 `;

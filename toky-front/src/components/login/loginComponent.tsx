@@ -27,7 +27,7 @@ const LogoWrapper = styled.div`
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 54px;
-    margin-top: 54px; // temporary
+    margin-top: 134px; // temporary
 `;
 
 const LoginBtn = styled.button`
@@ -37,6 +37,9 @@ const LoginBtn = styled.button`
     margin-bottom: 8px;
     margin-left: auto;
     margin-right: auto;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
 
     &.kakao {
         background: #fde401;

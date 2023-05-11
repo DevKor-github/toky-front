@@ -3,7 +3,7 @@ import StyledComponentsRegistry from "@/lib/registry";
 import { Noto_Sans_KR } from "next/font/google";
 
 const NotoSansKR = Noto_Sans_KR({
-    weight: ["400", "500", "700"],
+    weight: ["500"],
     subsets: ["latin"],
 });
 
@@ -20,7 +20,17 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={NotoSansKR.className}>
-                <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+                <div
+                    style={{
+                        background: "#121212",
+                        width: "400px",
+                        height: "100vh",
+                    }}
+                >
+                    <StyledComponentsRegistry>
+                        {children}
+                    </StyledComponentsRegistry>
+                </div>
             </body>
         </html>
     );
