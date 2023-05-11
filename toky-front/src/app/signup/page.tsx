@@ -1,8 +1,9 @@
 "use client";
 
+import FooterBtn from "@/components/signup/FooterBtn";
 import SignupComponent from "@/components/signup/signupComponent";
 import TopBar from "@/components/signup/topBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type valueType = {
     school: string;
@@ -13,7 +14,15 @@ export default function Signup() {
     const [value, setValue] = useState<valueType>({
         school: "",
     });
+    const [clickable, setClickable] = useState<boolean>(false);
+
     const SignupProps = [{ title: ["학교", "를 선택해주세요."] }];
+
+    useEffect(() => {
+        if (progress === 0 && value.school !== "") {
+            setClickable(true);
+        }
+    }, [value]);
 
     return (
         <div>
@@ -29,6 +38,13 @@ export default function Signup() {
                 value={value}
                 setValue={setValue}
             />
+            <FooterBtn
+                value={value}
+                clickable={clickable}
+                setClickable={setClickable}
+                progress={progress}
+                handleProgress={setProgress}
+            ></FooterBtn>
         </div>
     );
 }

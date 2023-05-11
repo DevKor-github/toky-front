@@ -45,9 +45,7 @@ export default function SignupComponent({
                                 <Image
                                     src={koreaLogo}
                                     alt="고려대학교 로고"
-                                    layout="fill"
-                                    objectFit="cover"
-                                    objectPosition="center"
+                                    fill
                                 />
                             )}
                         </SchoolBtnWrapper>
@@ -62,9 +60,7 @@ export default function SignupComponent({
                                 <Image
                                     src={yonseiLogo}
                                     alt="연세대학교 로고"
-                                    layout="fill"
-                                    objectFit="cover"
-                                    objectPosition="center"
+                                    fill
                                 />
                             )}
                         </SchoolBtnWrapper>
@@ -118,5 +114,8 @@ const SchoolBtnWrapper = styled.div`
 
     & img {
         border-radius: 100%;
+
+        object-fit: fill;
+        object-position: center;
     }
 `;
