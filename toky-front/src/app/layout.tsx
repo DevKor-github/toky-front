@@ -2,7 +2,10 @@ import "./globals.css";
 import StyledComponentsRegistry from "@/lib/registry";
 import { Noto_Sans_KR } from "next/font/google";
 
-const NotoSansKR = Noto_Sans_KR({ weight: "500", subsets: ["latin"] });
+const NotoSansKR = Noto_Sans_KR({
+    weight: ["400", "500", "700"],
+    subsets: ["latin"],
+});
 
 export const metadata = {
     title: "신나는 고연전 승부예측 - toky",

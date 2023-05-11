@@ -3,16 +3,37 @@
 import styled from "styled-components";
 import Image from "next/image";
 import LeftArrow from "../../../public/image/leftarrow.webp";
+import { useRouter } from "next/navigation";
 
 interface TopBarProps {
     progressValue: number;
+    progress: number;
+    handleProgress: (num: number) => void;
 }
 
-export default function TopBar({ progressValue }: TopBarProps) {
+export default function TopBar({
+    progress,
+    progressValue,
+    handleProgress,
+}: TopBarProps) {
+    const router = useRouter();
+    const handleBack = () => {
+        if (progress === 0) {
+            router.push("/");
+        } else {
+            handleProgress(progress - 1);
+        }
+    };
+
     return (
         <Wrapper>
             <TopBarContainer>
-                <Image src={LeftArrow} alt="back" width={20} />
+                <Image
+                    onClick={handleBack}
+                    src={LeftArrow}
+                    alt="back"
+                    width={20}
+                />
                 <Title>회원가입</Title>
             </TopBarContainer>
             <progress id="progress" value={progressValue} max={100}></progress>
@@ -26,7 +47,7 @@ const Wrapper = styled.div`
 
     #progress {
         appearance: none;
-        height: 8px;
+        height: 5px;
         width: 100%;
     }
     #progress::-webkit-progress-bar {
@@ -44,6 +65,7 @@ const TopBarContainer = styled.div`
     align-items: center;
     & img {
         margin-left: 16px;
+        cursor: pointer;
     }
 `;
 
