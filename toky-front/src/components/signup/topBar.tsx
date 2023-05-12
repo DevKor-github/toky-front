@@ -9,12 +9,16 @@ interface TopBarProps {
     progressValue: number;
     progress: number;
     handleProgress: (num: number) => void;
+    slide: string;
+    setSlide: (str: string) => void;
 }
 
 export default function TopBar({
     progress,
     progressValue,
     handleProgress,
+    slide,
+    setSlide,
 }: TopBarProps) {
     const router = useRouter();
     const handleBack = () => {
@@ -22,6 +26,7 @@ export default function TopBar({
             router.push("/");
         } else {
             handleProgress(progress - 1);
+            setSlide(`back${progress - 1}`);
         }
     };
 
@@ -43,6 +48,7 @@ export default function TopBar({
 
 const Wrapper = styled.div`
     padding-top: 20px;
+    line-height: 20px;
     height: 40px;
 
     #progress {
@@ -72,5 +78,8 @@ const TopBarContainer = styled.div`
 
 const Title = styled.h4`
     display: inline-block;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.87);
     margin-left: 128px;
 `;

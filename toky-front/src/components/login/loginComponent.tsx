@@ -37,15 +37,15 @@ const LoginBtn = styled.button`
     margin-bottom: 8px;
     margin-left: auto;
     margin-right: auto;
-
     cursor: pointer;
     border-radius: 4px;
-    color: rgba(255, 255, 255, 0.87);
+    color: #121212;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 16px;
     line-height: 20px;
     letter-spacing: -0.06em;
+    border: none;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -53,12 +53,10 @@ const LoginBtn = styled.button`
     user-select: none;
 
     &.kakao {
-        background: #fde401;
-        border: 1px solid #000000;
+        background: #ffbe16;
     }
 
     &.naver {
-        background: #27c60f;
-        border: 1px solid #000000;
+        background: #13e059;
     }
 `;

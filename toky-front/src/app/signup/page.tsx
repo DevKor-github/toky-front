@@ -19,6 +19,7 @@ export default function Signup() {
         phoneNumber: "",
     });
     const [clickable, setClickable] = useState<boolean>(false);
+    const [slide, setSlide] = useState<string>("");
 
     const SignupProps = [
         { title: ["학교", "를 선택해주세요."] },
@@ -45,6 +46,8 @@ export default function Signup() {
                 handleProgress={setProgress}
                 progress={progress}
                 progressValue={(progress + 1) * 25}
+                slide={slide}
+                setSlide={setSlide}
             />
             <SignupComponent
                 title={SignupProps[progress].title}
@@ -52,6 +55,7 @@ export default function Signup() {
                 handleProgress={setProgress}
                 value={value}
                 setValue={setValue}
+                slide={slide}
             />
             <FooterBtn
                 value={value}
@@ -59,6 +63,7 @@ export default function Signup() {
                 setClickable={setClickable}
                 progress={progress}
                 handleProgress={setProgress}
+                setSlide={setSlide}
             ></FooterBtn>
         </div>
     );

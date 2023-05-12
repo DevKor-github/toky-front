@@ -8,7 +8,6 @@ import {
     NicknameCounter,
     SignupInput,
 } from "./inputs";
-import { useEffect } from "react";
 
 interface SignupComponentProps {
     title: string[];
@@ -16,6 +15,7 @@ interface SignupComponentProps {
     handleProgress: (num: number) => void;
     value: valueType;
     setValue: (val: any) => void;
+    slide: string;
 }
 
 export default function SignupComponent({
@@ -24,17 +24,25 @@ export default function SignupComponent({
     handleProgress,
     value,
     setValue,
+    slide,
 }: SignupComponentProps) {
+    // 학교 선택시 값 변경
     const handleSchoolClick = (e: React.MouseEvent) => {
         const target = e.target as HTMLElement;
         if (!target) return;
         setValue((prev: valueType) => ({ ...prev, school: target.innerText }));
     };
+
+    // 닉네임 입력시 값 변경, 닉네임 10자 이하로 제한
     const handleNicknameChange = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
-
         if (target.value.length > 10) {
+            target.classList.add("vibration");
             target.value = target.value.slice(0, 10);
+
+            setTimeout(() => {
+                target.classList.remove("vibration");
+            }, 1000);
         }
 
         setValue((prev: valueType) => ({
@@ -42,9 +50,9 @@ export default function SignupComponent({
             nickname: target.value,
         }));
     };
+
     const handlePhoneChange = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
-
         target.value = target.value
             .replace(/[^0-9]/g, "")
             .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
@@ -57,60 +65,77 @@ export default function SignupComponent({
 
     return (
         <div>
-            <TitleBox>
-                {progress === 1 && <MiniText>나중에 수정 가능해요!</MiniText>}
-                <b>{title[0]}</b>
-                {title[1]}
-            </TitleBox>
-            <SelectBox>
-                {progress === 0 && (
-                    <div style={{ display: "flex", marginLeft: "56px" }}>
-                        <SchoolBtnWrapper>
-                            <SchoolBtn
-                                value={value.school}
-                                onClick={handleSchoolClick}
-                            >
-                                고려대학교
-                            </SchoolBtn>
-                        </SchoolBtnWrapper>
-                        <SchoolBtnWrapper>
-                            <SchoolBtn
-                                value={value.school}
-                                onClick={handleSchoolClick}
-                            >
-                                연세대학교
-                            </SchoolBtn>
-                        </SchoolBtnWrapper>
-                    </div>
-                )}
-                {progress === 1 && (
-                    <InputWrapper>
-                        <SignupInput
-                            placeholder="닉네임"
-                            onChange={handleNicknameChange}
-                            value={value.nickname}
-                            type={"text"}
-                            maxLength={10}
-                        ></SignupInput>
-                        <NicknameCheck>
-                            <NicknameCounter
-                                nickname={value.nickname}
-                            ></NicknameCounter>
-                        </NicknameCheck>
-                    </InputWrapper>
-                )}
-                {progress === 2 && (
-                    <InputWrapper>
-                        <SignupInput
-                            placeholder="전화번호"
-                            type="tel"
-                            onChange={handlePhoneChange}
-                            value={value.phoneNumber}
-                            maxLength={13}
-                        ></SignupInput>
-                    </InputWrapper>
-                )}
-            </SelectBox>
+            {progress === 0 && (
+                <SchoolStage className={slide}>
+                    <TitleBox>
+                        <b>{title[0]}</b>
+                        {title[1]}
+                    </TitleBox>
+                    <SelectBox>
+                        <SlideWrapper>
+                            <SchoolBtnWrapper>
+                                <SchoolBtn
+                                    value={value.school}
+                                    onClick={handleSchoolClick}
+                                >
+                                    고려대학교
+                                </SchoolBtn>
+                            </SchoolBtnWrapper>
+                            <SchoolBtnWrapper>
+                                <SchoolBtn
+                                    value={value.school}
+                                    onClick={handleSchoolClick}
+                                >
+                                    연세대학교
+                                </SchoolBtn>
+                            </SchoolBtnWrapper>
+                        </SlideWrapper>
+                    </SelectBox>
+                </SchoolStage>
+            )}
+            {progress === 1 && (
+                <NicknameStage className={slide}>
+                    <TitleBox>
+                        <MiniText>나중에 수정 가능해요!</MiniText>
+                        <b>{title[0]}</b>
+                        {title[1]}
+                    </TitleBox>
+                    <SelectBox>
+                        <InputWrapper>
+                            <SignupInput
+                                placeholder="닉네임"
+                                onChange={handleNicknameChange}
+                                value={value.nickname}
+                                type={"text"}
+                            ></SignupInput>
+                            <NicknameCheck>
+                                <NicknameCounter
+                                    nickname={value.nickname}
+                                ></NicknameCounter>
+                            </NicknameCheck>
+                        </InputWrapper>
+                    </SelectBox>
+                </NicknameStage>
+            )}
+            {progress === 2 && (
+                <PhoneStage className={slide}>
+                    <TitleBox>
+                        <b>{title[0]}</b>
+                        {title[1]}
+                    </TitleBox>
+                    <SelectBox>
+                        <InputWrapper>
+                            <SignupInput
+                                placeholder="전화번호"
+                                type="tel"
+                                onChange={handlePhoneChange}
+                                value={value.phoneNumber}
+                                maxLength={13}
+                            ></SignupInput>
+                        </InputWrapper>
+                    </SelectBox>
+                </PhoneStage>
+            )}
         </div>
     );
 }
@@ -134,6 +159,11 @@ const InputWrapper = styled.div`
     flex-wrap: wrap;
 `;
 
+const SlideWrapper = styled.div`
+    display: flex;
+    margin-left: 56px;
+`;
+
 const MiniText = styled.p`
     font-weight: 300;
     font-size: 12px;
@@ -144,4 +174,58 @@ const MiniText = styled.p`
 
 const SelectBox = styled.div`
     margin-top: 32px;
+`;
+
+const SchoolStage = styled.div`
+    &.slide0 {
+        animation: slideFrom 0.15s ease-out;
+    }
+
+    &.back0 {
+        animation: slideBack 0.15s ease-out;
+    }
+
+    @keyframes slideFrom {
+        from {
+        }
+        to {
+            transform: translateX(-300px);
+        }
+    }
+
+    @keyframes slideBack {
+        from {
+            transform: translateX(-300px);
+        }
+        to {
+            transform: translateX(0px);
+        }
+    }
+`;
+const NicknameStage = styled.div`
+    &.slide0 {
+        animation: slideTo 0.15s ease-out;
+    }
+
+    &.slide1 {
+        animation: slideFrom 0.3s ease-out;
+    }
+
+    &.back1 {
+        animation: slideBack 0.15s ease-out;
+    }
+
+    @keyframes slideTo {
+        from {
+            transform: translateX(100px);
+        }
+        to {
+            transform: translateX(0px);
+        }
+    }
+`;
+const PhoneStage = styled.div`
+    &.slide1 {
+        animation: slideTo 0.2s ease-out;
+    }
 `;

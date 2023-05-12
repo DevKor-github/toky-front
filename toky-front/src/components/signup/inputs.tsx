@@ -6,18 +6,32 @@ interface NicknameCounterProps {
 
 export const SignupInput = styled.input`
     background-color: #121212;
-    font-weight: 700;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.38);
+
+    color: #ffffff;
     letter-spacing: -0.04em;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 4px;
     width: 90%;
     height: 50px;
     padding: 16px;
+    font-weight: 700;
+    font-size: 15px;
 
     &:active {
         border: 1px solid rgba(255, 255, 255, 0.87);
+    }
+
+    &.vibration {
+        animation: vibration 0.1s;
+    }
+
+    @keyframes vibration {
+        from {
+            transform: translateX(3px);
+        }
+        to {
+            transform: translateX(-3px);
+        }
     }
 `;
 

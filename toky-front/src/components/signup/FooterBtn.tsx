@@ -7,6 +7,7 @@ interface FooterBtnProps {
     handleProgress: (num: number) => void;
     clickable: boolean;
     setClickable: (bool: boolean) => void;
+    setSlide: (str: string) => void;
 }
 
 export default function FooterBtn({
@@ -15,17 +16,28 @@ export default function FooterBtn({
     handleProgress,
     clickable,
     setClickable,
+    setSlide,
 }: FooterBtnProps) {
     const handleNextClick = () => {
         if (progress === 0 && value.school !== "") {
-            handleProgress(progress + 1);
+            setSlide(`slide${progress}`);
             setClickable(false);
+
+            setTimeout(() => {
+                handleProgress(progress + 1);
+            }, 100);
         } else if (progress === 1 && value.nickname !== "") {
-            handleProgress(progress + 1);
+            setSlide(`slide${progress}`);
             setClickable(false);
+            setTimeout(() => {
+                handleProgress(progress + 1);
+            }, 100);
         } else if (progress === 2 && value.phoneNumber.length >= 10) {
-            handleProgress(progress + 1);
+            setSlide(`slide${progress}`);
             setClickable(false);
+            setTimeout(() => {
+                handleProgress(progress + 1);
+            }, 100);
         }
     };
 
