@@ -4,57 +4,43 @@ import { useRouter } from "next/navigation";
 import { styled } from "styled-components";
 import LeftArrow from "../../../public/image/leftarrow.webp";
 import Image from "next/image";
-
-export default function BetTopBar(){
+//import "./BetTopBar.css"
+export default function BetTopBar() {
   const router = useRouter();
   const handleBack = () => {
     router.back();
   };
 
   return (
-    <Wrapper>
-      <TopBarContainer>
-        <Image onClick={handleBack} src={LeftArrow} alt="back" width={20} />
-        <Title>2023 정기전 승부예측</Title>
-      </TopBarContainer>
-    </Wrapper>
+    <TopBarWrapper>
+      <Image
+        style={{ position: "absolute", left: "16px", bottom: "14px" }}
+        onClick={handleBack}
+        src={LeftArrow}
+        alt="back"
+        width={20}
+      />
+      <Title>
+        <h4>2023 정기전 승부예측</h4>
+      </Title>
+    </TopBarWrapper>
   );
 }
 
-const Wrapper = styled.div`
-  margin-top: 20px;
-  height: 40px;
-`;
-
-const TopBarContainer = styled.div`
+const TopBarWrapper = styled.div`
   width: 100%;
-
-  display: flex;
-  align-items: center;
-  & img {
-    margin-left: 16px;
-    cursor: pointer;
-  }
+  height: 100px;
+  position: relative;
 `;
-
-const Title = styled.h4`
+const Title = styled.div`
   position: absolute;
-  width: 154px;
-  height: 23px;
-  left: calc(50% - 154px / 2);
-  top: 65px;
-
-  font-family: "Spoqa Han Sans Neo";
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 14px;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
-  line-height: 23px;
-  /* identical to box height */
-
-  display: flex;
-  align-items: center;
-  text-align: center;
-  letter-spacing: -0.06em;
-
-  color: rgba(255, 255, 255, 0.87);
 `;
+const H4 = styled.h4``;
+
+const Arrow = styled.span``;
