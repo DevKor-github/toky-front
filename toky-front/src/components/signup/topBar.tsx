@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import LeftArrow from "../../../public/image/leftarrow.webp";
+import LeftArrow from "../../../public/image/leftArrow.webp";
 import { useRouter } from "next/navigation";
 
 interface TopBarProps {
