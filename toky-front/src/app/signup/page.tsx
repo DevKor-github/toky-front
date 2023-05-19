@@ -20,6 +20,9 @@ export default function Signup() {
     });
     const [clickable, setClickable] = useState<boolean>(false);
     const [slide, setSlide] = useState<string>("");
+    const [error, setError] = useState<
+        "nickname" | "phoneNumber" | "authNumber" | ""
+    >("");
 
     const SignupProps = [
         { title: ["학교", "를 선택해주세요."] },
@@ -56,6 +59,8 @@ export default function Signup() {
                 value={value}
                 setValue={setValue}
                 slide={slide}
+                error={error}
+                setError={setError}
             />
             <FooterBtn
                 value={value}
@@ -64,6 +69,8 @@ export default function Signup() {
                 progress={progress}
                 handleProgress={setProgress}
                 setSlide={setSlide}
+                error={error}
+                setError={setError}
             ></FooterBtn>
         </div>
     );

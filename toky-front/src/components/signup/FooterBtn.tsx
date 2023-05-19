@@ -8,6 +8,8 @@ interface FooterBtnProps {
     clickable: boolean;
     setClickable: (bool: boolean) => void;
     setSlide: (str: string) => void;
+    error: string;
+    setError: (str: "nickname" | "phoneNumber" | "authNumber" | "") => void;
 }
 
 export default function FooterBtn({
@@ -17,8 +19,10 @@ export default function FooterBtn({
     clickable,
     setClickable,
     setSlide,
+    error,
+    setError,
 }: FooterBtnProps) {
-    const handleNextClick = () => {
+    async function handleNextClick() {
         if (progress === 0 && value.school !== "") {
             setSlide(`slide${progress}`);
             setClickable(false);
@@ -27,11 +31,21 @@ export default function FooterBtn({
                 handleProgress(progress + 1);
             }, 100);
         } else if (progress === 1 && value.nickname !== "") {
-            setSlide(`slide${progress}`);
-            setClickable(false);
-            setTimeout(() => {
-                handleProgress(progress + 1);
-            }, 100);
+            const res = await fetch("/api/signup/nickname", {
+                method: "POST",
+                body: JSON.stringify({ nickname: value.nickname }),
+            });
+
+            if (res.status === 200) {
+                setSlide(`slide${progress}`);
+                setClickable(false);
+                setTimeout(() => {
+                    handleProgress(progress + 1);
+                }, 100);
+                setError("");
+            } else {
+                setError("nickname");
+            }
         } else if (progress === 2 && value.phoneNumber.length >= 10) {
             setSlide(`slide${progress}`);
             setClickable(false);
@@ -39,7 +53,7 @@ export default function FooterBtn({
                 handleProgress(progress + 1);
             }, 100);
         }
-    };
+    }
 
     return (
         <Button onClick={handleNextClick} clickable={clickable}>

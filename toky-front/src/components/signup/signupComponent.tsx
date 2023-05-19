@@ -16,6 +16,8 @@ interface SignupComponentProps {
     value: valueType;
     setValue: (val: any) => void;
     slide: string;
+    error: "nickname" | "phoneNumber" | "authNumber" | "";
+    setError: (str: "nickname" | "phoneNumber" | "authNumber" | "") => void;
 }
 
 export default function SignupComponent({
@@ -25,6 +27,8 @@ export default function SignupComponent({
     value,
     setValue,
     slide,
+    error,
+    setError,
 }: SignupComponentProps) {
     // 학교 선택시 값 변경
     const handleSchoolClick = (e: React.MouseEvent) => {
@@ -44,6 +48,7 @@ export default function SignupComponent({
                 target.classList.remove("vibration");
             }, 1000);
         }
+        if (error === "nickname") setError("");
 
         setValue((prev: valueType) => ({
             ...prev,
@@ -55,8 +60,7 @@ export default function SignupComponent({
         const target = e.target as HTMLInputElement;
         target.value = target.value
             .replace(/[^0-9]/g, "")
-            .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-            .replace(/(\-{1,2})$/g, "");
+            .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
         setValue((prev: valueType) => ({
             ...prev,
             phoneNumber: target.value,
@@ -112,6 +116,11 @@ export default function SignupComponent({
                                 <NicknameCounter
                                     nickname={value.nickname}
                                 ></NicknameCounter>
+                                {error === "nickname" && (
+                                    <ErrorText>
+                                        이미 존재하는 닉네임입니다.
+                                    </ErrorText>
+                                )}
                             </NicknameCheck>
                         </InputWrapper>
                     </SelectBox>
@@ -150,6 +159,25 @@ const TitleBox = styled.div`
     & b {
         color: #ffffff;
         opacity: none;
+    }
+`;
+
+const ErrorText = styled.p`
+    color: #ff5555;
+    margin-left: 150px;
+    display: inline-block;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: -0.04em;
+
+    animation: vibration 0.2s;
+    @keyframes vibration {
+        from {
+            transform: translateX(2px);
+        }
+        to {
+            transform: translateX(-2px);
+        }
     }
 `;
 

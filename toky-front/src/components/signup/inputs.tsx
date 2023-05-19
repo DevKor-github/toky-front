@@ -36,7 +36,7 @@ export const SignupInput = styled.input`
 `;
 
 export function NicknameCounter({ nickname }: NicknameCounterProps) {
-    return <p>{nickname?.length}/10</p>;
+    return <p style={{ display: "inline-block" }}>{nickname?.length}/10</p>;
 }
 
 export const NicknameCheck = styled.div`
