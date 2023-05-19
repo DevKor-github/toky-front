@@ -9,6 +9,7 @@ type valueType = {
     school: string;
     nickname: string;
     phoneNumber: string;
+    authNumber: string;
 };
 
 export default function Signup() {
@@ -17,6 +18,7 @@ export default function Signup() {
         school: "",
         nickname: "",
         phoneNumber: "",
+        authNumber: "",
     });
     const [clickable, setClickable] = useState<boolean>(false);
     const [slide, setSlide] = useState<string>("");
@@ -28,6 +30,7 @@ export default function Signup() {
         { title: ["학교", "를 선택해주세요."] },
         { title: ["닉네임", "을 입력해주세요."] },
         { title: ["전화번호", "를 입력해주세요."] },
+        { title: ["인증번호", "를 입력해주세요."] },
     ];
 
     useEffect(() => {

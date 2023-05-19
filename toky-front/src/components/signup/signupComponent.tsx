@@ -67,6 +67,19 @@ export default function SignupComponent({
         }));
     };
 
+    const handleAuthChange = (e: React.ChangeEvent) => {
+        const target = e.target as HTMLInputElement;
+
+        if (target.value.length > 6) {
+            target.value = target.value.slice(0, 6);
+        }
+
+        setValue((prev: valueType) => ({
+            ...prev,
+            authNumber: target.value,
+        }));
+    };
+
     return (
         <div>
             {progress === 0 && (
@@ -141,9 +154,50 @@ export default function SignupComponent({
                                 value={value.phoneNumber}
                                 maxLength={13}
                             ></SignupInput>
+                            {error === "phoneNumber" && (
+                                <ErrorText
+                                    style={{
+                                        marginLeft: "200px",
+                                        marginTop: "12px",
+                                    }}
+                                >
+                                    이미 사용 중인 전화번호입니다.
+                                </ErrorText>
+                            )}
                         </InputWrapper>
                     </SelectBox>
                 </PhoneStage>
+            )}
+            {progress === 3 && (
+                <AuthStage className={slide}>
+                    <TitleBox>
+                        문자로 도착한
+                        <br />
+                        <b>{title[0]}</b>
+                        {title[1]}
+                    </TitleBox>
+                    <SelectBox>
+                        <InputWrapper>
+                            <SignupInput
+                                placeholder="인증번호"
+                                type="number"
+                                onChange={handleAuthChange}
+                                value={value.authNumber}
+                                maxLength={6}
+                            ></SignupInput>
+                            {error === "authNumber" && (
+                                <ErrorText
+                                    style={{
+                                        marginLeft: "200px",
+                                        marginTop: "12px",
+                                    }}
+                                >
+                                    인증번호가 일치하지 않습니다.
+                                </ErrorText>
+                            )}
+                        </InputWrapper>
+                    </SelectBox>
+                </AuthStage>
             )}
         </div>
     );
@@ -254,6 +308,28 @@ const NicknameStage = styled.div`
 `;
 const PhoneStage = styled.div`
     &.slide1 {
-        animation: slideTo 0.2s ease-out;
+        animation: slideTo 0.15s ease-out;
+    }
+
+    &.slide2 {
+        animation: slideFrom 0.3s ease-out;
+    }
+
+    &.back2 {
+        animation: slideBack 0.15s ease-out;
+    }
+`;
+
+const AuthStage = styled.div`
+    &.slide2 {
+        animation: slideTo 0.15s ease-out;
+    }
+
+    &.slide3 {
+        animation: slideFrom 0.3s ease-out;
+    }
+
+    &.back3 {
+        animation: slideBack 0.15s ease-out;
     }
 `;
