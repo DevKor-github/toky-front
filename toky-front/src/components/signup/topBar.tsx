@@ -71,15 +71,17 @@ const TopBarContainer = styled.div`
     display: flex;
     align-items: center;
     & img {
-        margin-left: 16px;
+        margin-left: 5%;
         cursor: pointer;
     }
 `;
 
 const Title = styled.h4`
-    display: inline-block;
+    display: block;
+    width: 100%;
     font-weight: 400;
+    text-align: center;
     font-size: 18px;
+    position: absolute;
     color: rgba(255, 255, 255, 0.87);
-    margin-left: 128px;
 `;

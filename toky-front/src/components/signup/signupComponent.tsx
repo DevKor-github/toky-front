@@ -244,7 +244,7 @@ export default function SignupComponent({
 
 const TitleBox = styled.div`
     margin-top: 64px;
-    margin-left: 32px;
+    margin-left: 10%;
     font-size: 22px;
 
     color: rgba(255, 255, 255, 0.6);
@@ -282,7 +282,8 @@ const InputWrapper = styled.div`
 
 const SlideWrapper = styled.div`
     display: flex;
-    margin-left: 56px;
+    align-items: center;
+    justify-content: center;
 `;
 
 const MiniText = styled.p`

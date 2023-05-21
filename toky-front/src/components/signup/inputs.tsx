@@ -70,5 +70,7 @@ export const SchoolBtn = styled.button<{ children: string; value: string }>`
 export const SchoolBtnWrapper = styled.div`
     position: relative;
     width: 128px;
-    margin-right: 24px;
+
+    margin-right: 5%;
+    margin-left: 5%;
 `;

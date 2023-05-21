@@ -82,6 +82,6 @@ const Button = styled.button<{ clickable: boolean }>`
     cursor: ${(props) => (props.clickable ? "pointer" : "auto")};
 
     background-color: #1f1f1f;
-    width: 390px;
+    width: 100%;
     height: 80px;
 `;
