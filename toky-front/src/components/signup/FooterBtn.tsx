@@ -62,24 +62,29 @@ export default function FooterBtn({
     }
 
     return (
-        <Button onClick={handleNextClick} clickable={clickable}>
+        <Button
+            onClick={handleNextClick}
+            clickable={clickable ? "true" : "false"}
+        >
             다음
         </Button>
     );
 }
 
-const Button = styled.button<{ clickable: boolean }>`
+const Button = styled.button<{ clickable: string }>`
     position: fixed;
     bottom: 0px;
     border: none;
 
     color: ${(props) =>
-        props.clickable ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.15)"};
+        props.clickable === "true"
+            ? "rgba(255,255,255,1)"
+            : "rgba(255,255,255,0.15)"};
     font-size: 22px;
     font-weight: 700;
     line-height: 28px;
 
-    cursor: ${(props) => (props.clickable ? "pointer" : "auto")};
+    cursor: ${(props) => (props.clickable === "true" ? "pointer" : "auto")};
 
     background-color: #1f1f1f;
     width: 100%;

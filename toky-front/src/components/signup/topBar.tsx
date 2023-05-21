@@ -73,6 +73,7 @@ const TopBarContainer = styled.div`
     & img {
         margin-left: 5%;
         cursor: pointer;
+        z-index: 1;
     }
 `;
 
