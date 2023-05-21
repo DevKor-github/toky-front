@@ -31,6 +31,7 @@ export default function Signup() {
         { title: ["닉네임", "을 입력해주세요."] },
         { title: ["전화번호", "를 입력해주세요."] },
         { title: ["인증번호", "를 입력해주세요."] },
+        { title: ["환영합니다.", value.nickname] },
     ];
 
     useEffect(() => {
@@ -42,6 +43,9 @@ export default function Signup() {
             else setClickable(false);
         } else if (progress === 2) {
             if (value.phoneNumber.length >= 12) setClickable(true);
+            else setClickable(false);
+        } else if (progress === 3) {
+            if (value.authNumber.length === 6) setClickable(true);
             else setClickable(false);
         }
     }, [value, progress]);

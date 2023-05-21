@@ -52,6 +52,12 @@ export default function FooterBtn({
             setTimeout(() => {
                 handleProgress(progress + 1);
             }, 100);
+        } else if (progress === 3 && value.authNumber.length === 6) {
+            setSlide(`slide${progress}`);
+            setClickable(false);
+            setTimeout(() => {
+                handleProgress(progress + 1);
+            }, 100);
         }
     }
 

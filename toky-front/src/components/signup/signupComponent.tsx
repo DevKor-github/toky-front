@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import type { valueType } from "../../app/signup/page";
+import koreaLogo from "../../../public/image/koreaLogo.webp";
+import Image from "next/image";
 
 import {
     SchoolBtnWrapper,
@@ -201,6 +203,41 @@ export default function SignupComponent({
                     </SelectBox>
                 </AuthStage>
             )}
+            {progress === 4 && (
+                <DoneStage>
+                    <Image src={koreaLogo} alt="미정이미지" width={175} />
+                    {title[1].length <= 8 ? (
+                        <TitleBox
+                            style={{
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                                marginBottom: "0px",
+                                textAlign: "center",
+                            }}
+                        >
+                            {title[0]} <b>{title[1]}</b>님
+                        </TitleBox>
+                    ) : (
+                        <div>
+                            <TitleBox
+                                style={{
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    marginBottom: "0px",
+                                    textAlign: "center",
+                                }}
+                            >
+                                {title[0]}
+                            </TitleBox>
+                            <TitleBox
+                                style={{ marginTop: "0px", marginLeft: "0px" }}
+                            >
+                                <b>{title[1]}</b>님
+                            </TitleBox>
+                        </div>
+                    )}
+                </DoneStage>
+            )}
         </div>
     );
 }
@@ -333,5 +370,16 @@ const AuthStage = styled.div`
 
     &.back3 {
         animation: slideBack 0.15s ease-out;
+    }
+`;
+
+const DoneStage = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    &.slide3 {
+        animation: slideTo 0.15s ease-out;
     }
 `;
