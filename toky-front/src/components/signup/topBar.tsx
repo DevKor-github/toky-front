@@ -9,12 +9,16 @@ interface TopBarProps {
     progressValue: number;
     progress: number;
     handleProgress: (num: number) => void;
+    slide: string;
+    setSlide: (str: string) => void;
 }
 
 export default function TopBar({
     progress,
     progressValue,
     handleProgress,
+    slide,
+    setSlide,
 }: TopBarProps) {
     const router = useRouter();
     const handleBack = () => {
@@ -22,6 +26,7 @@ export default function TopBar({
             router.push("/");
         } else {
             handleProgress(progress - 1);
+            setSlide(`back${progress - 1}`);
         }
     };
 
@@ -42,7 +47,8 @@ export default function TopBar({
 }
 
 const Wrapper = styled.div`
-    margin-top: 20px;
+    padding-top: 20px;
+    line-height: 20px;
     height: 40px;
 
     #progress {
@@ -51,25 +57,32 @@ const Wrapper = styled.div`
         width: 100%;
     }
     #progress::-webkit-progress-bar {
-        background: #d9d9d9;
+        background: rgba(255, 255, 255, 0.15);
     }
     #progress::-webkit-progress-value {
-        background: #757575;
+        background: rgba(255, 255, 255, 0.87);
     }
 `;
 
 const TopBarContainer = styled.div`
     width: 100%;
+    color: rgba(255, 255, 255, 0.87);
 
     display: flex;
     align-items: center;
     & img {
-        margin-left: 16px;
+        margin-left: 5%;
         cursor: pointer;
+        z-index: 1;
     }
 `;
 
 const Title = styled.h4`
-    display: inline-block;
-    margin-left: 128px;
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.87);
 `;

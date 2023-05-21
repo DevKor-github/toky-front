@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 type valueType = {
     school: string;
     nickname: string;
+    phoneNumber: string;
+    authNumber: string;
 };
 
 export default function Signup() {
@@ -15,19 +17,38 @@ export default function Signup() {
     const [value, setValue] = useState<valueType>({
         school: "",
         nickname: "",
+        phoneNumber: "",
+        authNumber: "",
     });
     const [clickable, setClickable] = useState<boolean>(false);
+    const [slide, setSlide] = useState<string>("");
+    const [error, setError] = useState<
+        "nickname" | "phoneNumber" | "authNumber" | ""
+    >("");
 
     const SignupProps = [
         { title: ["학교", "를 선택해주세요."] },
         { title: ["닉네임", "을 입력해주세요."] },
+        { title: ["전화번호", "를 입력해주세요."] },
+        { title: ["인증번호", "를 입력해주세요."] },
+        { title: ["환영합니다.", value.nickname] },
     ];
 
     useEffect(() => {
-        if (progress === 0 && value.school !== "") {
-            setClickable(true);
+        if (progress === 0) {
+            if (value.school !== "") setClickable(true);
+            else setClickable(false);
+        } else if (progress === 1) {
+            if (value.nickname !== "") setClickable(true);
+            else setClickable(false);
+        } else if (progress === 2) {
+            if (value.phoneNumber.length >= 12) setClickable(true);
+            else setClickable(false);
+        } else if (progress === 3) {
+            if (value.authNumber.length === 6) setClickable(true);
+            else setClickable(false);
         }
-    }, [value]);
+    }, [value, progress]);
 
     return (
         <div>
@@ -35,6 +56,8 @@ export default function Signup() {
                 handleProgress={setProgress}
                 progress={progress}
                 progressValue={(progress + 1) * 25}
+                slide={slide}
+                setSlide={setSlide}
             />
             <SignupComponent
                 title={SignupProps[progress].title}
@@ -42,6 +65,9 @@ export default function Signup() {
                 handleProgress={setProgress}
                 value={value}
                 setValue={setValue}
+                slide={slide}
+                error={error}
+                setError={setError}
             />
             <FooterBtn
                 value={value}
@@ -49,6 +75,9 @@ export default function Signup() {
                 setClickable={setClickable}
                 progress={progress}
                 handleProgress={setProgress}
+                setSlide={setSlide}
+                error={error}
+                setError={setError}
             ></FooterBtn>
         </div>
     );
