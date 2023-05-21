@@ -69,7 +69,9 @@ export default function SignupComponent({
 
     const handleAuthChange = (e: React.ChangeEvent) => {
         const target = e.target as HTMLInputElement;
-
+        target.value = target.value
+            .replace(/[^0-9.]/g, "")
+            .replace(/(\..*)\./g, "$1");
         if (target.value.length > 6) {
             target.value = target.value.slice(0, 6);
         }
@@ -180,7 +182,7 @@ export default function SignupComponent({
                         <InputWrapper>
                             <SignupInput
                                 placeholder="인증번호"
-                                type="number"
+                                type="text"
                                 onChange={handleAuthChange}
                                 value={value.authNumber}
                                 maxLength={6}
