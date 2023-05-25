@@ -5,12 +5,13 @@ import { styled } from "styled-components";
 import TokyLayout from "../../../public/image/TokyLayout.png";
 import Coin from "../../../public/image/Coin.gif";
 import CoinPop from "../../../public/image/CoinPop.gif";
+import { MainSubTitle, MainTitle } from "./TitleComponents";
 export default function PointInfo() {
   return (
     <PointInfoWrapper>
       <PointDescription>
-        <h1>적중률에 따른 포인트 지급</h1>
-        <h4>어쩌구 저쩌구</h4>
+        <MainTitle>적중률에 따른 포인트 지급</MainTitle>
+        <MainSubTitle>어쩌구 저쩌구</MainSubTitle>
       </PointDescription>
       <PointGifWrapper>
         <PointGif>
@@ -51,6 +52,8 @@ export default function PointInfo() {
 }
 const PointInfoWrapper = styled.div`
   background-color: #222222;
+  min-width: 390px;
+  width: 100%;
   height: 417px;
   display: flex;
   flex-direction: column;
@@ -60,7 +63,9 @@ const PointInfoWrapper = styled.div`
   position: relative;
 `;
 
-const PointDescription = styled.div``;
+const PointDescription = styled.div`
+  margin-top: 90px;
+`;
 const PointGifWrapper = styled.div`
   position: absolute;
   bottom: 0px;
