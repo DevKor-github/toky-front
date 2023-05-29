@@ -20,5 +20,8 @@ a {
 }
 
 button {
+    resize: none;
+    outline: none;
+    border: none;
     color: #ffffff;
 }
