@@ -1,11 +1,11 @@
 import PlayerImage from "../../../public/image/Logo.webp";
 import { styled, css } from "styled-components";
 import Image from "next/image";
-import { playerInfo } from "./Player";
+import { playerInfo } from "./Data";
 type PlayerProps = {
   player: playerInfo;
 };
-export default function PlayerItem({ player }: PlayerProps) {
+export default function PlayerItem({ player }: PlayerProps, key: number) {
   const {
     image,
     nickname,
@@ -19,7 +19,7 @@ export default function PlayerItem({ player }: PlayerProps) {
     isKorea,
   } = player;
   return (
-    <UniSection>
+    <UniSection key={key}>
       <UniContainer isKorea={isKorea}>
         <ImageContainer isKorea={isKorea}>
           <Image src={image} alt="player" width={200} height={275}></Image>

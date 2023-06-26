@@ -2,26 +2,34 @@ import Link from "next/link";
 import { styled } from "styled-components";
 import Arrow from "../../../public/image/MainArrow.svg";
 import Image from "next/image";
+import testPlayer from "../../../public/image/playerTest.png";
 // link href 수정하기
-import { players } from "./Player";
+import { players } from "./Data";
 import PlayerItem from "./PlayerItem";
 
 export default function PlayerInfo() {
   let match = 1; // match 받아오기
   let matchPlayer = players[match];
-  console.log(matchPlayer);
 
   return (
     <Wrapper>
       <PlayerInfoWrapper>
-        {matchPlayer.map((player, i) => {
+        <PlayerImageWrapper>
+          <Image
+            src={testPlayer}
+            alt="player image test"
+            fill
+            style={{ objectFit: "contain", width: "100%" }}
+          />
+        </PlayerImageWrapper>
+        {/* {matchPlayer.map((player, i) => {
           return (
             <>
               <PlayerItem key={i} player={player} />
               {i % 2 == 0 && <Diagonal />}
             </>
           );
-        })}
+        })} */}
       </PlayerInfoWrapper>
       {/* 더 알아보기 버튼 */}
       <MorePlayerWrapper>
@@ -48,7 +56,8 @@ export default function PlayerInfo() {
 }
 
 const Wrapper = styled.div`
-  min-width: 390px;
+  /* min-width: 390px; */
+  padding-top: 40px;
 `;
 const PlayerInfoWrapper = styled.div``;
 const MorePlayerWrapper = styled.div`
@@ -71,4 +80,10 @@ const Diagonal = styled.div`
   height: 2px;
   transform: rotate(5deg);
   background: linear-gradient(90deg, #121212, #ffffff, #121212);
+`;
+const PlayerImageWrapper = styled.div`
+  position: relative;
+  min-height: 585px;
+  height: 1000px;
+  width: 100%;
 `;

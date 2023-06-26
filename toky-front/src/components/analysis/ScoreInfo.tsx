@@ -10,17 +10,25 @@ export default function ScoreInfo() {
 
   const score = [{}, {}];
   const match = 0; //match 정보가 넘어옴
-
   return (
-    <ScoreInfowrapper>
-      <Container>
-        <LeagueInfo>2022 KUSF 대학축구 U리그</LeagueInfo>
-        <ResultInfo>대결 경기는 고려대가 승리했어요</ResultInfo>
-        <CharImageWrapper>
-          <Image src={CharImage} alt="character image" />
-        </CharImageWrapper>
-      </Container>
-    </ScoreInfowrapper>
+    <>
+      <ScoreInfowrapper>
+        <Container>
+          <LeagueInfo>2022 KUSF 대학축구 U리그</LeagueInfo>
+          <ResultInfo>대결 경기는 고려대가 승리했어요</ResultInfo>
+          <CharImageWrapper>
+            <Image src={CharImage} alt="character image" />
+          </CharImageWrapper>
+        </Container>
+      </ScoreInfowrapper>
+      <MatchContainer>
+        <MatchTextContainer>
+          <h1>0:0</h1>
+          <h3>2022년 4월 1일</h3>
+          <h4>KUSF 대학축구 U리그 1권역</h4>
+        </MatchTextContainer>
+      </MatchContainer>
+    </>
   );
 }
 
@@ -58,4 +66,17 @@ const CharImageWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const MatchContainer = styled.div`
+  opacity: 0.5;
+  background: linear-gradient(270deg, #4c0eb0 0%, rgba(76, 14, 176, 0.1) 100%);
+  min-height: 138px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const MatchTextContainer = styled.div`
+  color: white;
+  text-align: center;
 `;
