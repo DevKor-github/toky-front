@@ -5,46 +5,80 @@ import { css, styled } from "styled-components";
 import Charater from "../../../public/image/Logo.webp";
 import Divider from "../../../public/image/divider.svg";
 import ShareIcon from "../../../public/image/ShareIcon.svg";
+import domtoimage from "dom-to-image";
+import { saveAs } from "file-saver";
 
 export interface ShareProps {
   clickModal: () => void;
 }
 
 export default function SharePrediction({ clickModal }: ShareProps) {
+  const downloadImage = () => {
+    var scale = 2;
+
+    const card = document.querySelector("#predictionCard");
+
+    if (card != null) {
+      // const filter = (card: Element) => {
+      //   return card.tagName !== "BUTTON";
+      // };
+      domtoimage
+        .toBlob(card, {
+          width: card.clientWidth * scale,
+          height: card.clientHeight * scale,
+          style: {
+            transform: "scale(" + scale + ")",
+            transformOrigin: "top left",
+            outerWidth: "1100px",
+            outerHeight: "1100px",
+          },
+          filter: (node: any) => node.tagName !== "BUTTON",
+        })
+        .then((blob) => {
+          saveAs(blob, "card.png");
+        });
+    }
+  };
   return (
     <>
       <ModalWrapper>
-        <ModalContainer $winKorea={false}>
-          <UserContainer>
-            <h3>유저이름최대열자열자님의 예측</h3>
-          </UserContainer>
-          <ImageContainer>
-            <Image
-              src={Charater}
-              alt="charater"
-              width={167}
-              height={177}
-            ></Image>
-          </ImageContainer>
-          <ScoreContainer>
-            <h4>고려대학교</h4>
-            <h1>3</h1>
-            <h1>:</h1>
-            <h1>2</h1>
-            <h4>연세대학교</h4>
-          </ScoreContainer>
-          <Footer>
-            <h4>2023정기전 승부예측 토키</h4>
-            <Image
-              src={Divider}
-              alt="divider"
-              width={0}
-              height={12}
-              style={{ marginRight: "7px", marginLeft: "7px" }}
-            ></Image>
-            <h4>@toky_official</h4>
-          </Footer>
-        </ModalContainer>
+        <Card id="predictionCard">
+          <ModalContainer $winKorea={false}>
+            <UserContainer>
+              <h3>유저이름최대열자열자님의 예측</h3>
+            </UserContainer>
+            <ImageContainer>
+              <Image
+                src={Charater}
+                alt="charater"
+                width={167}
+                height={177}
+              ></Image>
+            </ImageContainer>
+            <ScoreContainer>
+              <h4>고려대학교</h4>
+              <h1>3</h1>
+              <h1>:</h1>
+              <h1>2</h1>
+              <h4>연세대학교</h4>
+            </ScoreContainer>
+            <button className="downloadBtn" onClick={downloadImage}>
+              이미지 저장
+            </button>
+            <Footer>
+              <h4>2023정기전 승부예측 토키</h4>
+              <Image
+                src={Divider}
+                alt="divider"
+                width={0}
+                height={12}
+                style={{ marginRight: "7px", marginLeft: "7px" }}
+              ></Image>
+
+              <h4>@toky_official</h4>
+            </Footer>
+          </ModalContainer>
+        </Card>
         <BtnContainer>
           <QuitBtn onClick={clickModal}></QuitBtn>
           <ShareBtn>
@@ -127,6 +161,7 @@ const ModalWrapper = styled.div`
   flex-direction: column;
 `;
 const ModalContainer = styled.div<{ $winKorea: boolean }>`
+  margin: 5px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -199,4 +234,9 @@ const ShareBtn = styled.button`
   font-family: Spoqa Han Sans Neo;
   font-weight: 500;
   letter-spacing: -0.68px;
+`;
+
+const Card = styled.div`
+  width: 300px;
+  height: 440px;
 `;
