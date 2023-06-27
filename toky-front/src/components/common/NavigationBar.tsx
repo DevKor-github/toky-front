@@ -15,7 +15,12 @@ export default function NavigationBar() {
       <Image src={Logo} alt="logo" />
       <NavigationWrapper>
         <div style={{ display: "flex", gap: 23 }}>
-          <NavigationItem selected={pathname === ""}>전력분석</NavigationItem>
+          <NavigationItem
+            selected={pathname === "/analysis"}
+            onClick={() => router.push("/analysis")}
+          >
+            전력분석
+          </NavigationItem>
           <NavigationItem
             selected={pathname === "/bets/match"}
             onClick={() => router.push("/bets/match")}
