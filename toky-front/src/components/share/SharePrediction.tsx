@@ -15,13 +15,13 @@ export interface ShareProps {
 export default function SharePrediction({ clickModal }: ShareProps) {
   const downloadImage = () => {
     var scale = 2;
-
-    const card = document.querySelector("#predictionCard");
+    var card = document.querySelector("#predictionCard");
 
     if (card != null) {
       // const filter = (card: Element) => {
       //   return card.tagName !== "BUTTON";
       // };
+
       domtoimage
         .toBlob(card, {
           width: card.clientWidth * scale,
@@ -29,13 +29,44 @@ export default function SharePrediction({ clickModal }: ShareProps) {
           style: {
             transform: "scale(" + scale + ")",
             transformOrigin: "top left",
-            outerWidth: "1100px",
-            outerHeight: "1100px",
           },
           filter: (node: any) => node.tagName !== "BUTTON",
+          bgcolor: "transparent",
         })
         .then((blob) => {
           saveAs(blob, "card.png");
+        });
+    }
+  };
+  const shareImage = async () => {
+    var scale = 2;
+    var card = document.querySelector("#predictionCard");
+    if (card != null) {
+      const blobImageAsset = domtoimage
+        .toBlob(card, {
+          width: card.clientWidth * scale,
+          height: card.clientHeight * scale,
+          style: {
+            transform: "scale(" + scale + ")",
+            transformOrigin: "top left",
+          },
+          filter: (node: any) => node.tagName !== "BUTTON",
+          bgcolor: "transparent",
+        })
+        .then(async (blob) => {
+          const filesArray = [
+            new File([blob], `123.png`, {
+              type: "image/png",
+              lastModified: new Date().getTime(),
+            }),
+          ];
+          const shareData = {
+            title: `123`,
+            files: filesArray,
+          };
+          if (navigator.canShare && navigator.canShare(shareData)) {
+            await navigator.share(shareData);
+          }
         });
     }
   };
@@ -81,7 +112,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
         </Card>
         <BtnContainer>
           <QuitBtn onClick={clickModal}></QuitBtn>
-          <ShareBtn>
+          <ShareBtn onClick={shareImage}>
             <Image
               src={ShareIcon}
               alt="share icon"
@@ -147,6 +178,13 @@ const Footer = styled.div`
   }
 `;
 
+const Card = styled.div`
+  width: 289px;
+  height: 430px;
+  border-radius: 15px;
+  background-color: transparent;
+`;
+
 const ModalWrapper = styled.div`
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
@@ -161,7 +199,7 @@ const ModalWrapper = styled.div`
   flex-direction: column;
 `;
 const ModalContainer = styled.div<{ $winKorea: boolean }>`
-  margin: 5px auto;
+  //margin: 5px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -215,7 +253,7 @@ const QuitBtn = styled.button`
   height: 48px;
   border-radius: 50%;
   border: 1px solid var(--87, rgba(255, 255, 255, 0.87));
-  background-color: rgba(255, 255, 255, 0);
+  background: transparent;
 `;
 
 const ShareBtn = styled.button`
@@ -234,9 +272,4 @@ const ShareBtn = styled.button`
   font-family: Spoqa Han Sans Neo;
   font-weight: 500;
   letter-spacing: -0.68px;
-`;
-
-const Card = styled.div`
-  width: 300px;
-  height: 440px;
 `;
