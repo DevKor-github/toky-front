@@ -66,6 +66,8 @@ export default function SharePrediction({ clickModal }: ShareProps) {
           };
           if (navigator.canShare && navigator.canShare(shareData)) {
             await navigator.share(shareData);
+          } else {
+            //실패
           }
         });
     }
