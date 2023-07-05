@@ -1,16 +1,13 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import QuestionItem from "./QuestionItem";
+import { QuestionType } from "../../app/bets/page";
 
 //  import "./QuestionList.css";
 // match type으로 backend에 쏘고 getBetQuestions(match: Match) 받아서
 interface QuestionListProps {
   match: number;
-  questions: {
-    id: number;
-    description: string;
-    choice: string[];
-  }[];
+  questions: QuestionType[];
 }
 
 interface BetSchema {
@@ -20,14 +17,13 @@ interface BetSchema {
 
 export default function QuestionList({ match, questions }: QuestionListProps) {
   // betting 이력 조회 => QuestionItem에 내려줌
-  useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_BETS}`).then((res) => {
-      if (res.status === 200) {
-        const data: BetSchema = JSON.parse(res.data);
-      }
-    });
-  }, []);
-
+  // useEffect(() => {
+  //   axios.get(`${process.env.NEXT_PUBLIC_API_BETS}`).then((res) => {
+  //     if (res.status === 200) {
+  //       const data: BetSchema = JSON.parse(res.data);
+  //     }
+  //   });
+  // }, []);
   return (
     <div
       style={{

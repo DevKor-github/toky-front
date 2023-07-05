@@ -19,8 +19,8 @@ export default function QuestionItem({
   choice,
 }: QuestionItemProps) {
   //기본 답을 밥음
-  let userAnswer = 0;
   const [selectedButton, setSelectedButton] = useState<number | null>(null); // useeffect async로 유저의 기존 답변 받아올 수 있게 하기
+
   const [isLoding, setIsLoding] = useState(true);
   const handleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -30,21 +30,7 @@ export default function QuestionItem({
   };
 
   const answerLength = choice.length;
-  const answer = choice.map((choice, i) => {
-    return (
-      <form key={i} method="POST">
-        <AnswerBtn
-          type="submit"
-          index={i}
-          onClick={(e) => handleButtonClick(e, i)}
-          selected={selectedButton}
-          length={answerLength}
-        >
-          {choice}
-        </AnswerBtn>
-      </form>
-    );
-  });
+
   return (
     <QuestionContainer>
       {/* index 원 */}
@@ -52,7 +38,21 @@ export default function QuestionItem({
         <QuestionIndex>{itemIndex + 1}</QuestionIndex>
         {description}
       </QuestionInfo>
-      <AnswerContainer>{answer}</AnswerContainer>
+      <AnswerContainer>
+        {choice.map((el, i) => (
+          <form key={i} method="POST">
+            <AnswerBtn
+              type="submit"
+              index={i}
+              onClick={(e) => handleButtonClick(e, i)}
+              selected={selectedButton}
+              length={answerLength}
+            >
+              {el}
+            </AnswerBtn>
+          </form>
+        ))}
+      </AnswerContainer>
 
       {/* choices.size 보고 2이면 이거 3이면 이거 */}
       {/* 누르면 다르게 */}

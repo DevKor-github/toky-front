@@ -7,10 +7,10 @@ import { styled } from "styled-components";
 
 interface MatchNavBarProps {
   match: Number;
-  setMatch: (n: number) => void;
+  handleMatch: (n: number) => void;
 }
 
-export default function MatchNavBar({ match, setMatch }: MatchNavBarProps) {
+export default function MatchNavBar({ match, handleMatch }: MatchNavBarProps) {
   //index
   //match enum type으로 쏴서 질문들 받아와야함
 
@@ -19,7 +19,7 @@ export default function MatchNavBar({ match, setMatch }: MatchNavBarProps) {
       <NavBar>
         <button
           onClick={() => {
-            setMatch(0);
+            handleMatch(0);
           }}
           style={{
             color: match === 0 ? "white" : "",
@@ -34,7 +34,7 @@ export default function MatchNavBar({ match, setMatch }: MatchNavBarProps) {
         </button>
         <button
           onClick={() => {
-            setMatch(1);
+            handleMatch(1);
           }}
           style={{
             color: match === 1 ? "white" : "",
@@ -49,7 +49,7 @@ export default function MatchNavBar({ match, setMatch }: MatchNavBarProps) {
         </button>
         <button
           onClick={() => {
-            setMatch(2);
+            handleMatch(2);
           }}
           style={{
             color: match === 2 ? "white" : "",
@@ -64,7 +64,7 @@ export default function MatchNavBar({ match, setMatch }: MatchNavBarProps) {
         </button>
         <button
           onClick={() => {
-            setMatch(3);
+            handleMatch(3);
           }}
           style={{
             color: match === 3 ? "white" : "",
@@ -79,7 +79,7 @@ export default function MatchNavBar({ match, setMatch }: MatchNavBarProps) {
         </button>
         <button
           onClick={() => {
-            setMatch(4);
+            handleMatch(4);
           }}
           style={{
             color: match === 4 ? "white" : "",
