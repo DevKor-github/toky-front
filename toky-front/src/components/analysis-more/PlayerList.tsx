@@ -34,6 +34,7 @@ const Wrapper = styled.div<{ open: boolean }>`
   display: flex;
   gap: 10px;
   padding: 12px 0 0 20px;
+  overflow: hidden;
 
   ${({ open }) =>
     !open ? "max-height: 122px;  flex-wrap: nowrap" : "flex-wrap: wrap;"}
