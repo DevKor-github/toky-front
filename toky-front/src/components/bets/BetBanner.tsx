@@ -64,6 +64,7 @@ const ProgressBox = styled.div`
   box-sizing: border-box;
   top: 20%;
   left: 50%;
+  line-height: 20px;
   transform: translate(-50%, -50%);
   width: 80px;
   height: 22px;

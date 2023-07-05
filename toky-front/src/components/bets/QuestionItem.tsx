@@ -4,13 +4,16 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 
 interface QuestionItemProps {
+  match: number;
   itemIndex: number;
   description: string;
   choice: string[];
 }
+
 // props로 i 받고 description choices + style에 index랑 choice.size넣어서 구분
 // 이미 저장해뒀다면 받아와야함
 export default function QuestionItem({
+  match,
   itemIndex,
   description,
   choice,
@@ -60,7 +63,12 @@ export default function QuestionItem({
 const AnswerContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
+
+  & > form {
+    width: 100%;
+  }
 `;
 
 const AnswerBtn = styled.button<{
@@ -69,7 +77,7 @@ const AnswerBtn = styled.button<{
   selected: number | null;
 }>`
   border: 0;
-  width: ${(props) => (props.length === 2 ? "175px" : "114px")};
+  width: 100%;
   height: 67px;
   ${(props) => {
     //선택지 2개인 경우
@@ -89,7 +97,7 @@ const AnswerBtn = styled.button<{
         }
         //본인 인덱스 선택 안됨
         else {
-          return `background: #181818; border-radius: 7px 0px 0px 7px; color: rgba(255, 255, 255, 0.15);`;
+          return ` background: #181818; border-radius: 7px 0px 0px 7px; color: rgba(255, 255, 255, 0.15);`;
         }
       }
       //오른쪽
@@ -98,7 +106,7 @@ const AnswerBtn = styled.button<{
           return `background: linear-gradient(90deg, rgba(41, 72, 255, 0.25) 0%, #2948FF 100%); 
         box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 0px 7px 7px 0px; color : white`;
         } else {
-          return `background: #181818; border-radius: 0px 7px 7px 0px; color: rgba(255, 255, 255, 0.15);`;
+          return `color: rgba(255, 255, 255, 0.15); background: #181818; border-radius: 0px 7px 7px 0px; color: rgba(255, 255, 255, 0.15);`;
         }
       }
     }
@@ -113,17 +121,17 @@ const AnswerBtn = styled.button<{
           return props.selected === 0
             ? `background: linear-gradient(90deg, #f3233c 0%, rgba(243, 35, 60, 0.25) 100%);
         box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 7px 0px 0px 7px; color : white`
-            : "background: #181818";
+            : "color: rgba(255, 255, 255, 0.15); background: #181818";
         } else if (props.index === 1) {
           return props.selected === 1
-            ? `background: linear-gradient(90deg, rgba(76, 14, 176, 0.6) -12.75%, #4C0EB0 38.63%, #4C0EB0 60.71%, rgba(76, 14, 176, 0.6) 113.73%);
+            ? `background: linear-gradient(90deg, rgba(76, 14, 176, 0.6) -12.75%, #4C0EB0 15.63%, #4C0EB0 60.71%, rgba(76, 14, 176, 0.6) 113.73%);
 box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25)`
-            : "background: #181818";
+            : "color: rgba(255, 255, 255, 0.15); background: #181818";
         } else if (props.index === 2) {
           return props.selected === 2
             ? `background: linear-gradient(90deg, rgba(41, 72, 255, 0.25) 0%, #2948FF 100%); 
         box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 0px 7px 7px 0px; color : white`
-            : "background: #181818";
+            : "color: rgba(255, 255, 255, 0.15); background: #181818";
         }
       }
     }
