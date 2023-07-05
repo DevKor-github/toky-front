@@ -13,6 +13,15 @@ export interface ShareProps {
 }
 
 export default function SharePrediction({ clickModal }: ShareProps) {
+  const data = {
+    numWinKorea: 2,
+    numWinYonsei: 2,
+    numDraw: 1,
+  };
+  let winKorea = false;
+  let draw = false;
+  if (data.numWinKorea == data.numWinYonsei) draw = true;
+  else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
   const downloadImage = () => {
     var scale = 2;
     var card = document.querySelector("#predictionCard");
@@ -76,7 +85,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
     <>
       <ModalWrapper>
         <Card id="predictionCard">
-          <ModalContainer $winKorea={false}>
+          <ModalContainer $winKorea={winKorea} $draw={draw}>
             <UserContainer>
               <h3>유저이름최대열자열자님의 예측</h3>
             </UserContainer>
@@ -90,9 +99,9 @@ export default function SharePrediction({ clickModal }: ShareProps) {
             </ImageContainer>
             <ScoreContainer>
               <h4>고려대학교</h4>
-              <h1>3</h1>
+              <h1>{data.numWinKorea}</h1>
               <h1>:</h1>
-              <h1>2</h1>
+              <h1>{data.numWinYonsei}</h1>
               <h4>연세대학교</h4>
             </ScoreContainer>
             <button className="downloadBtn" onClick={downloadImage}>
@@ -200,7 +209,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const ModalContainer = styled.div<{ $winKorea: boolean }>`
+const ModalContainer = styled.div<{ $winKorea: boolean; $draw: boolean }>`
   //margin: 5px auto;
   display: flex;
   flex-direction: column;
@@ -221,7 +230,11 @@ const ModalContainer = styled.div<{ $winKorea: boolean }>`
     css`
       background: linear-gradient(180deg, #8bd5ff 0%, #445fff 100%);
     `}
-
+  ${(props) =>
+    props.$draw &&
+    css`
+      background: gray;
+    `}
   & h3 {
     font-size: 14px;
     font-family: Spoqa Han Sans Neo;
@@ -241,6 +254,12 @@ const ModalContainer = styled.div<{ $winKorea: boolean }>`
       css`
         background: var(--125, rgba(255, 255, 255, 0.38));
         color: var(--blue, #445fff);
+      `}
+    ${(props) =>
+      props.$draw &&
+      css`
+        background: #b0a5a5;
+        color: black;
       `}
   }
 `;
