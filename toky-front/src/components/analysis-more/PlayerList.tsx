@@ -32,10 +32,11 @@ export default function PlayerList({ univ }: Props) {
 
 const Wrapper = styled.div<{ open: boolean }>`
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
   padding: 12px 0 0 20px;
-  ${({ open }) => !open && "max-height: 122px; overflow-y: hidden;"}
+
+  ${({ open }) =>
+    !open ? "max-height: 122px;  flex-wrap: nowrap" : "flex-wrap: wrap;"}
 `;
 
 const Open = styled.div`
