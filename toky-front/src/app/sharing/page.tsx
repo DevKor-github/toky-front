@@ -1,9 +1,14 @@
 "use client";
 import SharePrediction from "@/components/share/SharePrediction";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function Share() {
   const [showModal, setShowModal] = useState(false);
+  const [portalElement, setProtalElement] = useState<Element | null>(null);
+  useEffect(() => {
+    setProtalElement(document.getElementById("portal"));
+  }, [showModal]);
   function clickModal() {
     setShowModal(!showModal);
   }
@@ -12,7 +17,12 @@ export default function Share() {
       <div onClick={clickModal} style={{ backgroundColor: "black" }}>
         modal
       </div>
-      {showModal && <SharePrediction clickModal={clickModal}></SharePrediction>}
+      {showModal && portalElement
+        ? createPortal(
+            <SharePrediction clickModal={clickModal} />,
+            portalElement
+          )
+        : null}
     </>
   );
 }
