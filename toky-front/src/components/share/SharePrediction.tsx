@@ -7,6 +7,9 @@ import Divider from "../../../public/image/divider.svg";
 import ShareIcon from "../../../public/image/ShareIcon.svg";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
+import * as htmlToImage from "html-to-image";
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+import { useCallback, useRef } from "react";
 
 export interface ShareProps {
   clickModal: () => void;
@@ -22,67 +25,109 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   let draw = false;
   if (data.numWinKorea == data.numWinYonsei) draw = true;
   else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
-  const downloadImage = () => {
-    var scale = 2;
-    var card = document.querySelector("#predictionCard");
+  const ref = useRef<HTMLDivElement>(null);
 
-    if (card != null) {
-      // const filter = (card: Element) => {
-      //   return card.tagName !== "BUTTON";
-      // };
+  const downloadImage = useCallback(() => {
+    if (ref.current === null) {
+      return;
+    }
 
-      domtoimage
-        .toBlob(card, {
-          width: card.clientWidth * scale,
-          height: card.clientHeight * scale,
-          style: {
-            transform: "scale(" + scale + ")",
-            transformOrigin: "top left",
-          },
-          filter: (node: any) => node.tagName !== "BUTTON",
-          bgcolor: "white",
-        })
-        .then((blob) => {
-          saveAs(blob, "card.png");
-        });
+    toPng(ref.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "my-image-name.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [ref]);
+
+  // const downloadImage = () => {
+  //   var scale = 2;
+  //   var card = document.querySelector("#predictionCard");
+
+  //   if (card != null) {
+  //     // const filter = (card: Element) => {
+  //     //   return card.tagName !== "BUTTON";
+  //     // };
+
+  //     domtoimage
+  //       .toBlob(card, {
+  //         width: card.clientWidth * scale,
+  //         height: card.clientHeight * scale,
+  //         style: {
+  //           transform: "scale(" + scale + ")",
+  //           transformOrigin: "top left",
+  //         },
+  //         filter: (node: any) => node.tagName !== "BUTTON",
+  //         bgcolor: "white",
+  //       })
+  //       .then((blob) => {
+  //         saveAs(blob, "card.png");
+  //       });
+  //   }
+  // };
+  // const shareImage = async () => {
+  //   var scale = 2;
+  //   var card = document.querySelector("#predictionCard");
+  //   if (card != null) {
+  //     const blobImageAsset = domtoimage
+  //       .toBlob(card, {
+  //         width: card.clientWidth * scale,
+  //         height: card.clientHeight * scale,
+  //         style: {
+  //           transform: "scale(" + scale + ")",
+  //           transformOrigin: "top left",
+  //         },
+  //         filter: (node: any) => node.tagName !== "BUTTON",
+  //         bgcolor: "transparent",
+  //       })
+  //       .then(async (blob) => {
+  //         const filesArray = [
+  //           new File([blob], `123.png`, {
+  //             type: "image/png",
+  //             lastModified: new Date().getTime(),
+  //           }),
+  //         ];
+  //         const shareData = {
+  //           title: `123`,
+  //           files: filesArray,
+  //         };
+  //         if (navigator.canShare && navigator.canShare(shareData)) {
+  //           alert("okay");
+  //           await navigator.share(shareData);
+  //         } else {
+  //           alert("djdd");
+  //         }
+  //       });
+  //   }
+  // };
+
+  const shareImage = useCallback(() => {
+    if (ref.current === null) {
+      return;
     }
-  };
-  const shareImage = async () => {
-    var scale = 2;
-    var card = document.querySelector("#predictionCard");
-    if (card != null) {
-      const blobImageAsset = domtoimage
-        .toBlob(card, {
-          width: card.clientWidth * scale,
-          height: card.clientHeight * scale,
-          style: {
-            transform: "scale(" + scale + ")",
-            transformOrigin: "top left",
-          },
-          filter: (node: any) => node.tagName !== "BUTTON",
-          bgcolor: "transparent",
-        })
-        .then(async (blob) => {
-          const filesArray = [
-            new File([blob], `123.png`, {
-              type: "image/png",
-              lastModified: new Date().getTime(),
-            }),
-          ];
-          const shareData = {
-            title: `123`,
-            files: filesArray,
-          };
-          if (navigator.canShare && navigator.canShare(shareData)) {
-            await navigator.share(shareData);
-          }
-        });
-    }
-  };
+
+    toPng(ref.current, {
+      cacheBust: true,
+      filter: (node: any) => node.tagName !== "BUTTON",
+    })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "my-image-name.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [ref]);
   return (
     <>
       <ModalWrapper>
-        <SaveArea id="predictionCard">
+        <SaveArea ref={ref} id="predictionCard">
           <Card>
             <ModalContainer $winKorea={winKorea} $draw={draw}>
               <UserContainer>
