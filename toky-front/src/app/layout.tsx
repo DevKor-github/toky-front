@@ -25,7 +25,10 @@ export default function RootLayout({
             background: "#121212",
           }}
         >
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+            {children}
+            <div id="portal"></div>
+          </StyledComponentsRegistry>
         </div>
       </body>
     </html>
