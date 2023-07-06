@@ -40,7 +40,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
             transformOrigin: "top left",
           },
           filter: (node: any) => node.tagName !== "BUTTON",
-          bgcolor: "transparent",
+          bgcolor: "white",
         })
         .then((blob) => {
           saveAs(blob, "card.png");
@@ -75,8 +75,6 @@ export default function SharePrediction({ clickModal }: ShareProps) {
           };
           if (navigator.canShare && navigator.canShare(shareData)) {
             await navigator.share(shareData);
-          } else {
-            //실패
           }
         });
     }
@@ -84,64 +82,71 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   return (
     <>
       <ModalWrapper>
-        <Card id="predictionCard">
-          <ModalContainer $winKorea={winKorea} $draw={draw}>
-            <UserContainer>
-              <h3>유저이름최대열자열자님의 예측</h3>
-            </UserContainer>
-            <ImageContainer>
-              <Image
-                src={Charater}
-                alt="charater"
-                width={167}
-                height={177}
-              ></Image>
-            </ImageContainer>
-            <ScoreContainer>
-              <h4>고려대학교</h4>
-              <h1>{data.numWinKorea}</h1>
-              <h1>:</h1>
-              <h1>{data.numWinYonsei}</h1>
-              <h4>연세대학교</h4>
-            </ScoreContainer>
-            <button className="downloadBtn" onClick={downloadImage}>
-              이미지 저장
-            </button>
-            <Footer>
-              <h4>2023정기전 승부예측 토키</h4>
-              <Image
-                src={Divider}
-                alt="divider"
-                width={0}
-                height={12}
-                style={{ marginRight: "7px", marginLeft: "7px" }}
-              ></Image>
+        <SaveArea id="predictionCard">
+          <Card>
+            <ModalContainer $winKorea={winKorea} $draw={draw}>
+              <UserContainer>
+                <h3>유저이름최대열자열자님의 예측</h3>
+              </UserContainer>
+              <ImageContainer>
+                <Image
+                  src={Charater}
+                  alt="charater"
+                  width={167}
+                  height={177}
+                ></Image>
+              </ImageContainer>
+              <ScoreContainer>
+                <h4>고려대학교</h4>
+                <h1>{data.numWinKorea}</h1>
+                <h1>:</h1>
+                <h1>{data.numWinYonsei}</h1>
+                <h4>연세대학교</h4>
+              </ScoreContainer>
+              <button className="downloadBtn" onClick={downloadImage}>
+                이미지 저장
+              </button>
+              <Footer>
+                <h4>2023정기전 승부예측 토키</h4>
+                <Image
+                  src={Divider}
+                  alt="divider"
+                  width={0}
+                  height={12}
+                  style={{ marginRight: "7px", marginLeft: "7px" }}
+                ></Image>
 
-              <h4>@toky_official</h4>
-            </Footer>
-          </ModalContainer>
-        </Card>
-        <BtnContainer>
-          <QuitBtn onClick={clickModal}></QuitBtn>
-          <ShareBtn onClick={shareImage}>
-            <Image
-              src={ShareIcon}
-              alt="share icon"
-              width={26.5}
-              height={26.8}
-              style={{
-                marginRight: "9px",
-                marginLeft: "24px",
-                marginBottom: "4px",
-              }}
-            ></Image>
-            공유하기
-          </ShareBtn>
-        </BtnContainer>
+                <h4>@toky_official</h4>
+              </Footer>
+            </ModalContainer>
+            <BtnContainer>
+              <QuitBtn onClick={clickModal}></QuitBtn>
+              <ShareBtn onClick={shareImage}>
+                <Image
+                  src={ShareIcon}
+                  alt="share icon"
+                  width={26.5}
+                  height={26.8}
+                  style={{
+                    marginRight: "9px",
+                    marginLeft: "24px",
+                    marginBottom: "4px",
+                  }}
+                ></Image>
+                공유하기
+              </ShareBtn>
+            </BtnContainer>
+          </Card>
+        </SaveArea>
       </ModalWrapper>
     </>
   );
 }
+const SaveArea = styled.div`
+  width: 500px;
+  height: 1000px;
+`;
+
 const UserContainer = styled.div`
   width: 207px;
   height: 26px;
@@ -190,10 +195,14 @@ const Footer = styled.div`
 `;
 
 const Card = styled.div`
-  width: 289px;
-  height: 430px;
+  width: 100%;
+  height: 100%;
   border-radius: 15px;
   background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ModalWrapper = styled.div`
