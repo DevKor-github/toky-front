@@ -7,8 +7,7 @@ import Divider from "../../../public/image/divider.svg";
 import ShareIcon from "../../../public/image/ShareIcon.svg";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
-import * as htmlToImage from "html-to-image";
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
+import { toPng } from "html-to-image";
 import { useCallback, useRef } from "react";
 
 export interface ShareProps {
@@ -25,87 +24,25 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   let draw = false;
   if (data.numWinKorea == data.numWinYonsei) draw = true;
   else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
-  const ref = useRef<HTMLDivElement>(null);
 
+  const ref = useRef<HTMLDivElement>(null);
   const downloadImage = useCallback(() => {
     if (ref.current === null) {
       return;
     }
 
-    toPng(ref.current, { cacheBust: true })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = "my-image-name.png";
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    toPng(ref.current, {
+      cacheBust: true,
+      filter: (node: any) => node.tagName !== "BUTTON",
+    }).then((dataUrl) => {
+      const link = document.createElement("a");
+      link.download = "my-prediction.png";
+      link.href = dataUrl;
+      link.click();
+    });
   }, [ref]);
 
-  // const downloadImage = () => {
-  //   var scale = 2;
-  //   var card = document.querySelector("#predictionCard");
-
-  //   if (card != null) {
-  //     // const filter = (card: Element) => {
-  //     //   return card.tagName !== "BUTTON";
-  //     // };
-
-  //     domtoimage
-  //       .toBlob(card, {
-  //         width: card.clientWidth * scale,
-  //         height: card.clientHeight * scale,
-  //         style: {
-  //           transform: "scale(" + scale + ")",
-  //           transformOrigin: "top left",
-  //         },
-  //         filter: (node: any) => node.tagName !== "BUTTON",
-  //         bgcolor: "white",
-  //       })
-  //       .then((blob) => {
-  //         saveAs(blob, "card.png");
-  //       });
-  //   }
-  // };
-  // const shareImage = async () => {
-  //   var scale = 2;
-  //   var card = document.querySelector("#predictionCard");
-  //   if (card != null) {
-  //     const blobImageAsset = domtoimage
-  //       .toBlob(card, {
-  //         width: card.clientWidth * scale,
-  //         height: card.clientHeight * scale,
-  //         style: {
-  //           transform: "scale(" + scale + ")",
-  //           transformOrigin: "top left",
-  //         },
-  //         filter: (node: any) => node.tagName !== "BUTTON",
-  //         bgcolor: "transparent",
-  //       })
-  //       .then(async (blob) => {
-  //         const filesArray = [
-  //           new File([blob], `123.png`, {
-  //             type: "image/png",
-  //             lastModified: new Date().getTime(),
-  //           }),
-  //         ];
-  //         const shareData = {
-  //           title: `123`,
-  //           files: filesArray,
-  //         };
-  //         if (navigator.canShare && navigator.canShare(shareData)) {
-  //           alert("okay");
-  //           await navigator.share(shareData);
-  //         } else {
-  //           alert("djdd");
-  //         }
-  //       });
-  //   }
-  // };
-
-  const shareImage = useCallback(() => {
+  const shareImage = useCallback(async () => {
     if (ref.current === null) {
       return;
     }
@@ -114,16 +51,28 @@ export default function SharePrediction({ clickModal }: ShareProps) {
       cacheBust: true,
       filter: (node: any) => node.tagName !== "BUTTON",
     })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = "my-image-name.png";
-        link.href = dataUrl;
-        link.click();
+      .then(async (dataUrl) => {
+        const blob = await (await fetch(dataUrl)).blob();
+        const filesArray = [
+          new File([blob], "my-prediction.png", {
+            type: "image/png",
+            lastModified: new Date().getTime(),
+          }),
+        ];
+        const shareData = {
+          files: filesArray,
+        };
+        if (navigator.canShare && navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+        } else {
+          alert("no");
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   }, [ref]);
+
   return (
     <>
       <ModalWrapper>
