@@ -17,6 +17,7 @@ export default function QuestionList({ questions }: QuestionListProps) {
     return (
       <div key={question.id}>
         <QuestionItem
+          key={i}
           itemIndex={i}
           description={question.description}
           choice={question.choice}
