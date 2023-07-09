@@ -1,35 +1,52 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { BettedSchema } from "./QuestionList";
 
 interface QuestionItemProps {
+  qid: number;
   match: number;
   itemIndex: number;
   description: string;
   choice: string[];
+  bet: number | null;
+  betList: BettedSchema[];
+  setBet: (betList: BettedSchema[], qid: number, ans: number) => void;
+  blockedBet: number;
+  setBlockedBet: (n: number) => void;
 }
 
 // props로 i 받고 description choices + style에 index랑 choice.size넣어서 구분
 // 이미 저장해뒀다면 받아와야함
 export default function QuestionItem({
+  qid,
   match,
   itemIndex,
   description,
   choice,
+  bet,
+  betList,
+  setBet,
+  blockedBet,
+  setBlockedBet,
 }: QuestionItemProps) {
   //기본 답을 밥음
-  const [selectedButton, setSelectedButton] = useState<number | null>(null); // useeffect async로 유저의 기존 답변 받아올 수 있게 하기
+  // const [selectedButton, setSelectedButton] = useState<number | null>(bet); // useeffect async로 유저의 기존 답변 받아올 수 있게 하기
 
   const [isLoding, setIsLoding] = useState(true);
-  const handleButtonClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    idx: number
-  ) => {
-    setSelectedButton(idx);
-  };
+  // const handleButtonClick = (
+  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  //   idx: number
+  // ) => {
+  //   setSelectedButton(idx);
+  // };
 
   const answerLength = choice.length;
+
+  // useEffect(() => {
+  //   setSelectedButton(null);
+  // }, [choice]);
 
   return (
     <QuestionContainer>
@@ -44,8 +61,15 @@ export default function QuestionItem({
             <AnswerBtn
               type="submit"
               index={i}
-              onClick={(e) => handleButtonClick(e, i)}
-              selected={selectedButton}
+              onClick={() => {
+                if (blockedBet === itemIndex) {
+                  alert("잠시 후에 다시 눌러주세요!");
+                } else {
+                  setBlockedBet(itemIndex);
+                  setBet(betList, qid, i);
+                }
+              }}
+              selected={bet}
               length={answerLength}
             >
               {el}

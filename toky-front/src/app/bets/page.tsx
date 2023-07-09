@@ -22,62 +22,32 @@ export default function Bets() {
   const [match, setMatch] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [questions, setQuestions] = useState<QuestionType[]>([
-    {
-      id: 1,
-      match: match,
-      description: "첫 점수를 획득할 팀을 고르세요!",
-      choice: ["고려대", "연세대"],
-    },
-    {
-      id: 2,
-      match: match,
-      description: "승리 팀을 예측하세요!",
-      choice: ["고려대 승", "무승부", "연세대 승"],
-    },
-  ]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
 
   const handleMatch = (m: number) => {
     setMatch(m);
-
-    // 임시 코드
-    setQuestions((prev) => {
-      const newArr = [
-        {
-          id: 1,
-          match: m,
-          description: `${m} 첫 점수를 획득할 팀을 고르세요!`,
-          choice: ["고려대", "연세대"],
-        },
-        {
-          id: 2,
-          match: m,
-          description: "승리 팀을 예측하세요!",
-          choice: ["고려대 승", "무승부", "연세대 승"],
-        },
-      ];
-      return newArr;
-    });
-
-    // if (process.env.NEXT_PUBLIC_API_BETS_QUESTIONS) {
-    //   axios
-    //     .get(`${process.env.NEXT_PUBLIC_API_BETS_QUESTIONS}/${match}`)
-    //     .then((res) => {
-    //       if (res.status === 200) {
-    //         setQuestions(JSON.parse(res.data));
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
-    //     .finally(() => {
-    //       setIsLoading(false);
-    //     });
-    // }
   };
 
+  // 최초 로드 및 match 변경 시 -> 질문 가져오기
   useEffect(() => {
-    setIsLoading(false);
+    if (process.env.NEXT_PUBLIC_API_BETS_QUESTIONS) {
+      setIsLoading(true);
+
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_BETS_QUESTIONS}/${match}`)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res.data);
+            // setQuestions(JSON.parse(res.data));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   }, [match]);
 
   return (
