@@ -34,7 +34,7 @@ const DrawInfoWrapper = styled.div`
   text-align: center;
   color: white;
   min-height: 505px;
-  min-width: 390px;
+  min-width: 375px;
 `;
 
 const DrawDescription = styled.div`

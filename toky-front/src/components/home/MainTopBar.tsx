@@ -2,7 +2,7 @@
 import "./MainTopBar.css";
 import { styled } from "styled-components";
 import Link from "next/link";
-import Logo from "../../../public/image/Logo.webp";
+import Logo from "../../../public/image/TokyMainLogo.png";
 import Image from "next/image";
 import { easeInOut, motion } from "framer-motion";
 import MainArrow from "../../../public/image/MainArrow.svg";
@@ -26,7 +26,6 @@ export default function MainTopBar() {
         src={Logo}
         alt="logo"
         width={89}
-        height={35}
         style={{
           position: "absolute",
           left: "5%",
