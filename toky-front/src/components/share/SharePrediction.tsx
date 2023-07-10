@@ -8,7 +8,7 @@ import ShareIcon from "../../../public/image/ShareIcon.svg";
 import domtoimage from "dom-to-image";
 import { saveAs } from "file-saver";
 import { toPng } from "html-to-image";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 export interface ShareProps {
   clickModal: () => void;
@@ -24,7 +24,16 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   let draw = false;
   if (data.numWinKorea == data.numWinYonsei) draw = true;
   else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
-
+  useEffect(() => {
+    //safari first randering
+    if (ref.current === null) {
+      return;
+    }
+    toPng(ref.current, {
+      cacheBust: true,
+      filter: (node: any) => node.tagName !== "BUTTON",
+    });
+  }, []);
   const ref = useRef<HTMLDivElement>(null);
   const downloadImage = useCallback(() => {
     if (ref.current === null) {
