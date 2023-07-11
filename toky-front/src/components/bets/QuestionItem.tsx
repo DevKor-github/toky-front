@@ -60,6 +60,7 @@ export default function QuestionItem({
 const AnswerContainer = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
 `;
 
 const AnswerBtn = styled.button<{
@@ -68,7 +69,7 @@ const AnswerBtn = styled.button<{
   selected: number | null;
 }>`
   border: 0;
-  width: 175px;
+  width: ${(props) => (props.length === 2 ? "175px" : "114px")};
   height: 67px;
   ${(props) => {
     //선택지 2개인 경우
@@ -104,12 +105,26 @@ const AnswerBtn = styled.button<{
 
     // 선택지 3개인 경우
     else {
-      if (props.index === 0) {
-        return `  background: linear-gradient(90deg, #f3233c 0%, rgba(243, 35, 60, 0.25) 100%);
-        box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 7px 0px 0px 7px; color : white`;
-      } else if (props.index == 2) {
-        return `background: linear-gradient(90deg, rgba(41, 72, 255, 0.25) 0%, #2948FF 100%); 
-        box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 0px 7px 7px 0px; color : white`;
+      if (props.selected === null) {
+        //아무것도 선택안됨
+        return "background: #323232";
+      } else {
+        if (props.index === 0) {
+          return props.selected === 0
+            ? `background: linear-gradient(90deg, #f3233c 0%, rgba(243, 35, 60, 0.25) 100%);
+        box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 7px 0px 0px 7px; color : white`
+            : "background: #181818";
+        } else if (props.index === 1) {
+          return props.selected === 1
+            ? `background: linear-gradient(90deg, rgba(76, 14, 176, 0.6) -12.75%, #4C0EB0 38.63%, #4C0EB0 60.71%, rgba(76, 14, 176, 0.6) 113.73%);
+box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25)`
+            : "background: #181818";
+        } else if (props.index === 2) {
+          return props.selected === 2
+            ? `background: linear-gradient(90deg, rgba(41, 72, 255, 0.25) 0%, #2948FF 100%); 
+        box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.25); border-radius: 0px 7px 7px 0px; color : white`
+            : "background: #181818";
+        }
       }
     }
   }}
