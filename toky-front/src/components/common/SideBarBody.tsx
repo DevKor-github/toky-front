@@ -8,13 +8,14 @@ import Avatar from '../../../public/image/Avatar.png';
 const Wrapper = styled.div`
 	position: fixed;
 	top: 0px;
-	left: 390px;
+	left: 100%;
 	height: 100%;
 	width: 331px;
 	background-color: #222222;
 	transition: 1s ease;
+	z-index: 10;
 	&.open {
-		left: 59px;
+		left: calc(100% - 331px);
 		transition: 1s ease;
 	}
 `;
