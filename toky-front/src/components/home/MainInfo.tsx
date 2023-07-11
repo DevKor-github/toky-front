@@ -24,6 +24,7 @@ export default function MainInfo() {
         transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
         style={{
           width: "100%",
+          height: "380px",
           position: "absolute",
           bottom: "0%",
           textAlign: "center",
@@ -32,6 +33,7 @@ export default function MainInfo() {
         <Image
           src={TokyCharacter}
           height={380}
+          style={{ verticalAlign: "bottom" }}
           alt="toky character"
           priority={true}
         ></Image>
@@ -79,7 +81,7 @@ export default function MainInfo() {
           className="MainTitle"
           style={{
             zIndex: "1",
-            paddingTop: "10vh",
+            paddingTop: "8vh",
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -126,7 +128,7 @@ export default function MainInfo() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: easeInOut, delay: 1.2 }}
-          style={{ zIndex: "1", marginTop: "35vh" }}
+          style={{ zIndex: "1", marginTop: "37vh" }}
         >
           <H5> 현재 {people}명이 승부예측에 참여했어요</H5>
           <H5>
