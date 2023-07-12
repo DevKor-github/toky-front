@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 import BannerImage from "./../../../public/image/bannerimage.jpeg";
 import KLogo from "./../../../public/image/koreaLogo.webp";
 import YLogo from "./../../../public/image/yonseiLogo.webp";
-
+import ShareArrow from "../../../public/image/ShareArrow.svg";
 interface BannerProps {
   match: number;
 }
@@ -59,6 +59,14 @@ export default function BetBanner({ match }: BannerProps) {
             <H3>연세대학교</H3>
           </UniLogo>
         </MatchInfo>
+        <ShareBtn>
+          내 예측 공유하기
+          <Image
+            src={ShareArrow}
+            alt="share arrow"
+            style={{ marginLeft: "4.69px" }}
+          />
+        </ShareBtn>
       </Banner>
     </BannerWrapper>
   );
@@ -147,6 +155,28 @@ const H5 = styled.h5`
   letter-spacing: -0.04em;
 `;
 
+const ShareBtn = styled.button`
+  position: absolute;
+  width: 108px;
+  height: 29px;
+  border-radius: 3.45px;
+  border: 0.862px solid var(--87, rgba(255, 255, 255, 0.87));
+
+  background-color: transparent;
+  z-index: 1;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: var(--87, rgba(255, 255, 255, 0.87));
+  text-align: center;
+  font-family: Spoqa Han Sans Neo;
+  font-size: 11.813px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.472px;
+`;
 {
   /* backgrou 이미지 넣고 logo image 넣고 시간 */
 }
