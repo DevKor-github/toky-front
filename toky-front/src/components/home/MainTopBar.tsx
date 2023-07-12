@@ -1,5 +1,4 @@
 "use client";
-import "./MainTopBar.css";
 import { styled } from "styled-components";
 import Link from "next/link";
 import Logo from "../../../public/image/TokyMainLogo.png";
