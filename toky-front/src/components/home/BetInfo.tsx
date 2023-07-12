@@ -28,7 +28,7 @@ export default function BetInfo() {
 
 const BetInfoWrapper = styled.div`
   background-color: #121212;
-  min-width: 390px;
+  min-width: 375px;
   width: 100%;
   height: 377px;
   display: flex;
