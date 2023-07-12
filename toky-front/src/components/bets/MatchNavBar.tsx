@@ -1,86 +1,97 @@
 import { match } from "assert";
-import Link from "next/link";
+
 import { usePathname } from "next/navigation";
 import { styled } from "styled-components";
 //import "./MatchNavBar.css"
 // 야구 축구 농구 럭비 빙구 있고 누르면 navbar 활성화 되게 navbar랑 list를 container로 감싸게
 
-export default function MatchNavBar() {
+interface MatchNavBarProps {
+  match: Number;
+  handleMatch: (n: number) => void;
+}
+
+export default function MatchNavBar({ match, handleMatch }: MatchNavBarProps) {
   //index
   //match enum type으로 쏴서 질문들 받아와야함
 
-  const pathName = usePathname();
-
-  const isActive = 0;
-  const match = pathName ? pathName.split("/")[2] : null;
   return (
     <NavBarWrapper>
       <NavBar>
-        <Link
-          href="/bets/0"
+        <button
+          onClick={() => {
+            handleMatch(0);
+          }}
           style={{
-            color: pathName === "/bets/0" ? "white" : "",
-            borderColor: pathName === "/bets/0" ? "white" : "",
-            borderTop: pathName === "/bets/0" ? "solid" : "",
+            color: match === 0 ? "white" : "",
+            borderColor: match === 0 ? "white" : "",
+            borderTop: match === 0 ? "solid" : "",
             width: "60px",
             textAlign: "center",
             padding: "10px",
           }}
         >
           야구
-        </Link>
-        <Link
-          href="/bets/1"
+        </button>
+        <button
+          onClick={() => {
+            handleMatch(1);
+          }}
           style={{
-            color: pathName === "/bets/1" ? "white" : "",
-            borderColor: pathName === "/bets/1" ? "white" : "",
-            borderTop: pathName === "/bets/1" ? "solid" : "",
+            color: match === 1 ? "white" : "",
+            borderColor: match === 1 ? "white" : "",
+            borderTop: match === 1 ? "solid" : "",
             width: "60px",
             textAlign: "center",
             padding: "10px",
           }}
         >
           농구
-        </Link>
-        <Link
-          href="/bets/2"
+        </button>
+        <button
+          onClick={() => {
+            handleMatch(2);
+          }}
           style={{
-            color: pathName === "/bets/2" ? "white" : "",
-            borderColor: pathName === "/bets/2" ? "white" : "",
-            borderTop: pathName === "/bets/2" ? "solid" : "",
+            color: match === 2 ? "white" : "",
+            borderColor: match === 2 ? "white" : "",
+            borderTop: match === 2 ? "solid" : "",
             width: "60px",
             textAlign: "center",
             padding: "10px",
           }}
         >
           빙구
-        </Link>
-        <Link
-          href="/bets/3"
+        </button>
+        <button
+          onClick={() => {
+            handleMatch(3);
+          }}
           style={{
-            color: pathName === "/bets/3" ? "white" : "",
-            borderColor: pathName === "/bets/3" ? "white" : "",
-            borderTop: pathName === "/bets/3" ? "solid" : "",
+            color: match === 3 ? "white" : "",
+            borderColor: match === 3 ? "white" : "",
+            borderTop: match === 3 ? "solid" : "",
             width: "60px",
             textAlign: "center",
             padding: "10px",
           }}
         >
           럭비
-        </Link>
-        <Link
-          href="/bets/4"
+        </button>
+        <button
+          onClick={() => {
+            handleMatch(4);
+          }}
           style={{
-            color: pathName === "/bets/4" ? "white" : "",
-            borderColor: pathName === "/bets/4" ? "white" : "",
-            borderTop: pathName === "/bets/4" ? "solid" : "",
+            color: match === 4 ? "white" : "",
+            borderColor: match === 4 ? "white" : "",
+            borderTop: match === 4 ? "solid" : "",
             width: "60px",
             textAlign: "center",
             padding: "10px",
           }}
         >
           축구
-        </Link>
+        </button>
       </NavBar>
     </NavBarWrapper>
   );
@@ -92,6 +103,10 @@ const NavBar = styled.div`
   color: rgba(255, 255, 255, 0.38);
   margin: 0px;
   letter-spacing: -0.04em;
+
+  & > button {
+    background: none;
+  }
 `;
 
 const NavBarWrapper = styled.div`

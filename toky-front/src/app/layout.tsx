@@ -10,6 +10,9 @@ const NotoSansKR = Noto_Sans_KR({
 export const metadata = {
   title: "신나는 고연전 승부예측 - toky",
   description: "고연전 승부예측하고 경품 받자!",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -23,6 +26,7 @@ export default function RootLayout({
         <div
           style={{
             background: "#121212",
+            height: "100vh",
           }}
         >
           <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
