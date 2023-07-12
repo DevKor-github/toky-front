@@ -4,12 +4,12 @@ import Arrow from "../../../public/image/MainArrow.svg";
 import Image from "next/image";
 import testPlayer from "../../../public/image/playerTest.png";
 // link href 수정하기
-import { players } from "./Data";
+import { PLAYER } from "./Data";
 import PlayerItem from "./PlayerItem";
+import { MatchProps } from "./MatchType";
 
-export default function PlayerInfo() {
-  let match = 1; // match 받아오기
-  let matchPlayer = players[match];
+export default function PlayerInfo({ match }: MatchProps) {
+  let matchPlayer = PLAYER[match];
 
   return (
     <Wrapper>

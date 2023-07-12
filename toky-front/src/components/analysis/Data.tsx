@@ -11,7 +11,7 @@ export interface playerInfo {
   isKorea: boolean;
 }
 
-export const players: playerInfo[][] = [
+export const PLAYER: playerInfo[][] = [
   [
     {
       image: "/image/Logo.webp",
@@ -70,5 +70,34 @@ export const players: playerInfo[][] = [
     },
   ],
 ];
-
+interface scheduleInfo {
+  playDate: string;
+  location?: string;
+}
+export const SCHEDULE: scheduleInfo[] = [
+  {
+    playDate: "2023.0908(금) 14:00",
+    location: "고양 종합운동장",
+  },
+  {
+    playDate: "2023.0908(금) 16:00",
+    location: "빙구장",
+  },
+  {
+    playDate: "2023.0908(금) 17:00",
+    location: "농구장",
+  },
+  {
+    playDate: "2023.0909(금) 14:00",
+    location: "럭비장",
+  },
+  {
+    playDate: "2023.0909(토) 14:00",
+    location: "고양 종합운동장",
+  },
+  {
+    playDate: "2023.0908(금) 야구,빙구,농구",
+    location: "2023.0909(토) 축구 럭비",
+  },
+];
 export const pastMatch = [[{}, {}], []];

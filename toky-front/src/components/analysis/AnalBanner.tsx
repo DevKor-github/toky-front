@@ -4,11 +4,12 @@ import { styled } from "styled-components";
 import AnalBannerImage from "../../../public/image/AnalBannerImage.png";
 import Link from "next/link";
 import Timer from "./Timer";
+import { MatchProps } from "./MatchType";
+import { SCHEDULE } from "./Data";
 
-export default function AnalBanner() {
+export default function AnalBanner({ match }: MatchProps) {
   //progress 받아오기
   //match별 결과 받아오기
-
   let progress = 0;
   return (
     <BannerWrapper>
@@ -22,8 +23,9 @@ export default function AnalBanner() {
         <BannerImageBack />
       </BannerImageWrapper>
       <MatchTimeInfo>
-        <H4>2023.09.09(토) 14:00 </H4>
-        <H4>고양 종합운동장</H4>
+        <H4>{SCHEDULE[match].playDate}</H4>
+
+        <H4>{SCHEDULE[match].location}</H4>
       </MatchTimeInfo>
       <ProgressWrapper>
         {progress === 0 && <Timer />}
@@ -104,13 +106,13 @@ const PredictBtn = styled.button`
 `;
 
 const H4 = styled.h4`
-  font-family: "Spoqa Han Sans Neo";
+  font-family: Spoqa Han Sans Neo;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: -0.04em;
-  color: #ffffff;
+  line-height: normal;
+  letter-spacing: -0.48px;
+  color: white;
 `;
 
 const H3 = styled.h3`
