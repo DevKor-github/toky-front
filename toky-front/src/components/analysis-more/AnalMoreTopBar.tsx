@@ -53,8 +53,8 @@ export default function AnalMoreTopBar() {
         onClick={handleMenuClick}
         style={{
           position: "absolute",
-          right: "0px",
-          bottom: "18px",
+          right: "20px",
+          bottom: "23px",
           backgroundColor: "#222222",
         }}
       />

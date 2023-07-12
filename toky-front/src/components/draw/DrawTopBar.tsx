@@ -5,6 +5,8 @@ import Image from "next/image";
 import styled from "styled-components";
 import LeftArrow from "../../../public/image/leftArrow.webp";
 // import SideBar from "../common/SideBar";
+import Menu from "../../../public/image/menu.svg";
+import SideBarBody from "../common/SideBarBody";
 
 export default function DrawTopBar() {
   const router = useRouter();
@@ -44,6 +46,18 @@ export default function DrawTopBar() {
         width={20}
       />
       <Title>내 포인트</Title>
+      <Image
+        src={Menu}
+        alt="menu"
+        onClick={handleMenuClick}
+        style={{
+          position: "absolute",
+          right: "20px",
+          bottom: "23px",
+          backgroundColor: "#222222",
+        }}
+      />
+      <SideBarBody isBarOpen={isBarOpen} ref={inside} />
       {/* <SideBar
         handleMenuClick={handleMenuClick}
         style={{
