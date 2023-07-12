@@ -34,7 +34,7 @@ export default function NavigationBar() {
       <NavigationWrapper>
         <div style={{ display: "flex", gap: 23 }}>
           <NavigationItem
-            selected={pathname === "/analyze"}
+            selected={pathname === "/analysis"}
             onClick={() => {
               router.push("/analyze");
             }}
@@ -72,6 +72,7 @@ const Wrapper = styled.div`
   padding: 0px 23px;
   background-color: #121212;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 10;
 `;
 
 const NavigationWrapper = styled.div`
