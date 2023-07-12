@@ -39,6 +39,7 @@ export default function BetBanner() {
 }
 const BannerWrapper = styled.div`
   display: block;
+  padding-top: 46px;
 `;
 const Banner = styled.div`
   height: 133px;

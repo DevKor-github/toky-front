@@ -3,6 +3,7 @@ import BetBanner from "@/components/bets/BetBanner";
 import BetTopBar from "@/components/bets/BetTopBar";
 import MatchNavBar from "@/components/bets/MatchNavBar";
 import QuestionList from "@/components/bets/QuestionList";
+import NavigationBar from "@/components/common/NavigationBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
@@ -51,12 +52,12 @@ export default function Bets() {
   }, [match]);
 
   return (
-    <BetWrapper>
-      <BetTopBar />
+    <>
+      <NavigationBar />
       <BetBanner />
       <MatchNavBar match={match} handleMatch={handleMatch} />
       {!isLoading && <QuestionList match={match} questions={questions} />}
-    </BetWrapper>
+    </>
   );
 }
 
