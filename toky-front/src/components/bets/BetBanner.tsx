@@ -5,7 +5,33 @@ import { styled } from "styled-components";
 import BannerImage from "./../../../public/image/bannerimage.jpeg";
 import KLogo from "./../../../public/image/koreaLogo.webp";
 import YLogo from "./../../../public/image/yonseiLogo.webp";
-export default function BetBanner() {
+
+interface BannerProps {
+  match: number;
+}
+export default function BetBanner({ match }: BannerProps) {
+  const matchTime = [
+    {
+      date: "9/8(금)",
+      time: "11:30",
+    },
+    {
+      date: "9/8(금)",
+      time: "15:30",
+    },
+    {
+      date: "9/8(금)",
+      time: "17:30",
+    },
+    {
+      date: "9/9(토)",
+      time: "09:30",
+    },
+    {
+      date: "9/9(토)",
+      time: "12:30",
+    },
+  ];
   return (
     <BannerWrapper>
       <Banner>
@@ -25,8 +51,8 @@ export default function BetBanner() {
             <Image src={KLogo} width={40} alt="koreaUniLogo" />
           </UniLogo>
           <TimeInfo>
-            <H4>07:30</H4>
-            <H5>10/28(금)</H5>
+            <H4>{matchTime[match].date}</H4>
+            <H5>{matchTime[match].time}</H5>
           </TimeInfo>
           <UniLogo>
             <Image src={YLogo} width={40} alt="koreaUniLogo" />

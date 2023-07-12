@@ -54,7 +54,7 @@ export default function Bets() {
   return (
     <>
       <NavigationBar />
-      <BetBanner />
+      <BetBanner match={match} />
       <MatchNavBar match={match} handleMatch={handleMatch} />
       {!isLoading && <QuestionList match={match} questions={questions} />}
     </>
