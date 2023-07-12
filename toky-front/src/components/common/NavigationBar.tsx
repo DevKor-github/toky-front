@@ -2,28 +2,48 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import styled from "styled-components";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Logo from "../../../public/image/logo.svg";
 import Menu from "../../../public/image/menu.svg";
+import SideBarBody from "./SideBarBody";
 
 export default function NavigationBar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [isBarOpen, setIsBarOpen] = useState(false);
+  const inside = useRef<any>();
+  useEffect(() => {
+    const handlerOutside = (e: any) => {
+      if (!inside.current.contains(e.target)) {
+        setIsBarOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlerOutside);
+    return () => {
+      document.removeEventListener("mousedown", handlerOutside);
+    };
+  });
+  const handleMenuClick = () => {
+    setIsBarOpen(true);
+  };
   return (
     <Wrapper>
       <Image src={Logo} alt="logo" />
       <NavigationWrapper>
         <div style={{ display: "flex", gap: 23 }}>
           <NavigationItem
-            selected={pathname === "/analysis"}
-            onClick={() => router.push("/analysis")}
+            selected={pathname === "/analyze"}
+            onClick={() => {
+              router.push("/analyze");
+            }}
           >
             전력분석
           </NavigationItem>
           <NavigationItem
-            selected={pathname === "/bets/match"}
-            onClick={() => router.push("/bets/match")}
+            selected={pathname === "/bets"}
+            onClick={() => router.push("/bets")}
           >
             승부예측
           </NavigationItem>
@@ -34,7 +54,8 @@ export default function NavigationBar() {
             랭킹
           </NavigationItem>
         </div>
-        <Image src={Menu} alt="menu" />
+        <Image src={Menu} alt="menu" onClick={handleMenuClick} />
+        <SideBarBody isBarOpen={isBarOpen} ref={inside} />
       </NavigationWrapper>
     </Wrapper>
   );

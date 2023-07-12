@@ -7,7 +7,7 @@ export default function AnalFooter() {
   return (
     <AnalFooterWrapper>
       <MoreInfo>
-        <Link href="/">
+        <Link href="/analysis-more">
           <H4>더 알아보기</H4>
         </Link>
       </MoreInfo>
