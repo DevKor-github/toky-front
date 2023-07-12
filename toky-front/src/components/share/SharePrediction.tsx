@@ -157,6 +157,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   );
 }
 const ModalWrapper = styled.div`
+  z-index: 10;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
   position: fixed;

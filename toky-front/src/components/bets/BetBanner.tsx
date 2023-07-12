@@ -6,10 +6,12 @@ import BannerImage from "./../../../public/image/bannerimage.jpeg";
 import KLogo from "./../../../public/image/koreaLogo.webp";
 import YLogo from "./../../../public/image/yonseiLogo.webp";
 import ShareArrow from "../../../public/image/ShareArrow.svg";
+
 interface BannerProps {
   match: number;
+  clickModal: () => void;
 }
-export default function BetBanner({ match }: BannerProps) {
+export default function BetBanner({ match, clickModal }: BannerProps) {
   const matchTime = [
     {
       date: "9/8(금)",
@@ -32,6 +34,7 @@ export default function BetBanner({ match }: BannerProps) {
       time: "12:30",
     },
   ];
+
   return (
     <BannerWrapper>
       <Banner>
@@ -59,7 +62,7 @@ export default function BetBanner({ match }: BannerProps) {
             <H3>연세대학교</H3>
           </UniLogo>
         </MatchInfo>
-        <ShareBtn>
+        <ShareBtn onClick={clickModal}>
           내 예측 공유하기
           <Image
             src={ShareArrow}
