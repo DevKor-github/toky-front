@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 export default function AnalFooter() {
   //로그인에 따라 bets 어디로 갈지
   return (
-    <AnalFooterWrapper>
+    <AnalFooterWrapper className="AnalFooter">
       <MoreInfo>
         <Link href="/analysis-more">
           <H4>더 알아보기</H4>
@@ -23,6 +23,7 @@ export default function AnalFooter() {
 const AnalFooterWrapper = styled.div`
   display: flex;
   justify-content: center;
+  background-color: #121212;
 `;
 const MoreInfo = styled.button`
   width: 170px;

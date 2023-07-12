@@ -33,7 +33,6 @@ export default function AnalyzeList() {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  top: 387px;
   display: flex;
   flex-direction: column;
   padding-bottom: 40px;

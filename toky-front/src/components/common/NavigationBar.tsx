@@ -36,7 +36,7 @@ export default function NavigationBar() {
           <NavigationItem
             selected={pathname === "/analysis"}
             onClick={() => {
-              router.push("/analyze");
+              router.push("/analysis");
             }}
           >
             전력분석

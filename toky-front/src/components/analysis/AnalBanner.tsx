@@ -6,8 +6,9 @@ import Link from "next/link";
 import Timer from "./Timer";
 import { MatchProps } from "./MatchType";
 import { SCHEDULE } from "./Data";
+import React from "react";
 
-export default function AnalBanner({ match }: MatchProps) {
+function AnalBanner({ match }: MatchProps) {
   //progress 받아오기
   //match별 결과 받아오기
   let progress = 0;
@@ -28,7 +29,7 @@ export default function AnalBanner({ match }: MatchProps) {
         <H4>{SCHEDULE[match].location}</H4>
       </MatchTimeInfo>
       <ProgressWrapper>
-        {progress === 0 && <Timer />}
+        {progress === 0 ? <Timer match={match} /> : null}
         {progress === 1 && <H3>예측 마감</H3>}
         {progress === 2 && (
           <>
@@ -41,7 +42,7 @@ export default function AnalBanner({ match }: MatchProps) {
 
       <PredictBtn>
         {progress === 0 && (
-          <Link href="/bets/0">
+          <Link href="/bets">
             <H4>승부예측하러 가기</H4>
           </Link>
         )}
@@ -59,6 +60,7 @@ export default function AnalBanner({ match }: MatchProps) {
     </BannerWrapper>
   );
 }
+export default React.memo(AnalBanner);
 
 const BannerWrapper = styled.div`
   margin-top: 46px;

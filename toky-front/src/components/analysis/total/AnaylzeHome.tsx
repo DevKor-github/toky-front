@@ -28,7 +28,6 @@ export default function AnalyzeHome() {
 
 const Wrapper = styled.div`
   position: relative;
-  top: 290px;
   display: flex;
   flex-direction: column;
   justify-content: center;

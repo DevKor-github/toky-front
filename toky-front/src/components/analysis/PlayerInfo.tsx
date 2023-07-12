@@ -58,6 +58,7 @@ export default function PlayerInfo({ match }: MatchProps) {
 const Wrapper = styled.div`
   /* min-width: 390px; */
   padding-top: 40px;
+  background-color: #121212;
 `;
 const PlayerInfoWrapper = styled.div``;
 const MorePlayerWrapper = styled.div`
@@ -84,6 +85,6 @@ const Diagonal = styled.div`
 const PlayerImageWrapper = styled.div`
   position: relative;
   min-height: 585px;
-  height: 1000px;
+  height: 665px;
   width: 100%;
 `;

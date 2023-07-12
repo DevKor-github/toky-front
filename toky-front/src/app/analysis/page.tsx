@@ -5,6 +5,9 @@ import AnalNavBar from "@/components/analysis/AnalNavBar";
 import PlayerInfo from "@/components/analysis/PlayerInfo";
 import PredictInfo from "@/components/analysis/PredictInfo";
 import ScoreInfo from "@/components/analysis/ScoreInfo";
+import AnalyzeCheer from "@/components/analysis/total/AnalyzeCheer";
+import AnalyzeList from "@/components/analysis/total/AnalyzeList";
+import AnalyzeHome from "@/components/analysis/total/AnaylzeHome";
 import NavigationBar from "@/components/common/NavigationBar";
 import { useState } from "react";
 
@@ -19,10 +22,22 @@ export default function Analysis() {
       <NavigationBar />
       <AnalNavBar match={match} handleMatch={handleMatch} />
       <AnalBanner match={match} />
-      <ScoreInfo match={match} />
-      <PlayerInfo match={match} />
-      <PredictInfo match={match} />
-      <AnalFooter />
+
+      {match === 5 && (
+        <>
+          <AnalyzeHome />
+          <AnalyzeList />
+          <AnalyzeCheer />
+        </>
+      )}
+      {match !== 5 && (
+        <>
+          <ScoreInfo match={match} />
+          <PlayerInfo match={match} />
+          <PredictInfo match={match} />
+          <AnalFooter />
+        </>
+      )}
     </>
   );
 }
