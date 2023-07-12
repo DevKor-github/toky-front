@@ -1,6 +1,6 @@
 "use client";
 
-import TokyCharacter from "../../../public/image/Logo.webp";
+import TokyCharacter from "../../../public/image/MainPageCharater.png";
 import KoreaWaterMark from "../../../public/image/KoreaWaterMark.png";
 import YonseiWaterMark from "../../../public/image/YonseiWaterMark.png";
 import TokyTitle from "../../../public/image/title1.png";
@@ -9,6 +9,7 @@ import ScrollArrow from "../../../public/image/scroll.svg";
 import { keyframes, styled } from "styled-components";
 import Image from "next/image";
 import { easeIn, easeInOut, easeOut, motion } from "framer-motion";
+import { relative } from "path";
 export default function MainInfo() {
   //사람들 수 받아오게
   let people = 100;
@@ -16,6 +17,27 @@ export default function MainInfo() {
   let yonsei = 50;
   return (
     <MainBackground>
+      <motion.div
+        className="CharaterContainer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
+        style={{
+          width: "100%",
+          height: "380px",
+          position: "absolute",
+          bottom: "0%",
+          textAlign: "center",
+        }}
+      >
+        <Image
+          src={TokyCharacter}
+          height={380}
+          style={{ verticalAlign: "bottom" }}
+          alt="toky character"
+          priority={true}
+        ></Image>
+      </motion.div>
       <UniLogoWrapper>
         <UniLogos>
           {/* 학교 로고 애니메이션 부분 */}
@@ -57,12 +79,15 @@ export default function MainInfo() {
       <MainInfoWrapper>
         <motion.div
           className="MainTitle"
-          style={{ marginTop: 33, marginBottom: 44 }}
+          style={{
+            zIndex: "1",
+            paddingTop: "8vh",
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: easeInOut }}
         >
-          <h5>고려대학교 vs 연세대학교</h5>
+          <H5>고려대학교 vs 연세대학교</H5>
           <Image
             src={TokyTitle}
             alt="title1"
@@ -80,6 +105,10 @@ export default function MainInfo() {
             width={286}
             height={61}
             quality={100}
+            style={{
+              display: "block",
+              margin: "0 auto ",
+            }}
           />
         </motion.div>
         <motion.div
@@ -87,29 +116,24 @@ export default function MainInfo() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
+          style={{ zIndex: "1", marginTop: "5vh" }}
         >
-          <h3>
+          <H3>
             정기전 승부예측 하고 <br></br> 아이패드 받자
-          </h3>
+          </H3>
         </motion.div>
-        <motion.div
-          className="LogoContainer"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
-        >
-          <Image src={TokyCharacter} alt="toky character"></Image>
-        </motion.div>
+
         <motion.div
           className="Participants"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: easeInOut, delay: 1.2 }}
+          style={{ zIndex: "1", marginTop: "37vh" }}
         >
-          <h5> 현재 {people}명이 승부예측에 참여했어요</h5>
-          <h5>
+          <H5> 현재 {people}명이 승부예측에 참여했어요</H5>
+          <H5>
             {korea}명이 고려대학교, {yonsei}명이 연세대학교 학생이에요.
-          </h5>
+          </H5>
         </motion.div>
       </MainInfoWrapper>
       <motion.div
@@ -150,7 +174,7 @@ export default function MainInfo() {
   );
 }
 const MainBackground = styled.div`
-  min-width: 390px;
+  min-width: 375px;
   min-height: 657px;
   background: linear-gradient(
     180deg,
@@ -158,7 +182,7 @@ const MainBackground = styled.div`
     rgba(65, 17, 145, 0.56) 100%
   );
   height: 90vh;
-  padding-top: 50px;
+  padding-top: 58px;
   position: relative;
   //z-index: 0;
 `;
@@ -174,11 +198,9 @@ const UniLogos = styled.div`
 const MainInfoWrapper = styled.div`
   //z-index: 1;
   color: white;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  margin-top: 52px;
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 // const MainCatchphrase = styled.div`
@@ -188,3 +210,16 @@ const MainInfoWrapper = styled.div`
 // const LogoContainer = styled.div``;
 
 // const Participants = styled.div``;
+
+const ImageContainer = styled.div`
+  position: absolute;
+  transform: translate(-50%, -50%);
+`;
+
+const H5 = styled.h5`
+  text-align: center;
+`;
+
+const H3 = styled.h3`
+  text-align: center;
+`;

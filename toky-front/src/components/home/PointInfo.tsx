@@ -52,7 +52,7 @@ export default function PointInfo() {
 }
 const PointInfoWrapper = styled.div`
   background-color: #222222;
-  min-width: 390px;
+  min-width: 375px;
   width: 100%;
   height: 417px;
   display: flex;
