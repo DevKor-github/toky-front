@@ -100,4 +100,13 @@ export const SCHEDULE: scheduleInfo[] = [
     location: "2023.0909(토) 축구 럭비",
   },
 ];
+
+export const TIME: Date[] = [
+  new Date("2023-09-08 10:30:00"),
+  new Date("2023-09-08 15:30:00"),
+  new Date("2023-09-08 16:30:30"),
+  new Date("2023-09-09 10:30:00"),
+  new Date("2023-09-09 13:30:00"),
+  new Date("2023-09-09 13:30:00"),
+];
 export const pastMatch = [[{}, {}], []];

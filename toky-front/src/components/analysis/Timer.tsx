@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { MatchProps } from "./MatchType";
+import { TIME } from "./Data";
 
 const Countdown = (targetDate: Date): String[] => {
   const countDownDate = new Date(targetDate).getTime();
@@ -31,12 +33,19 @@ const getReturnValues = (countDown: number) => {
   );
   return [days, hours, minutes, seconds];
 };
-export default function Timer() {
-  let targetDate = new Date("2023-11-02 16:14:14"); //match 받아서 구현 match : number 날짜 다섯개 파기
+
+export default function Timer({ match }: MatchProps) {
+  const [targetDate, setTargetDate] = useState<Date>(
+    new Date(new Date("2023-09-09 13:30:00"))
+  );
+  useEffect(() => {
+    setTargetDate(TIME[match]);
+  }, [match]);
+  // let targetDate = TIME[match]; //match 받아서 구현 match : number 날짜 다섯개 파기
   const [days, hours, minutes, seconds] = Countdown(targetDate);
-  const timer = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초`;
+  const timer = `${days}일 ${hours}시간 ${minutes}분 ${seconds}초 전`;
   return (
-    <div>
+    <div key={match} style={{ width: "270px" }}>
       <h5
         style={{
           fontFamily: "Spoqa Han Sans Neo",
@@ -63,49 +72,3 @@ export default function Timer() {
     </div>
   );
 }
-
-/*const [countDown, setCountDown] = useState(
-    targetDate.getTime() - new Date().getTime()
-  );
-  const d = String(Math.floor(countDown / (1000 * 60 * 60 * 24))).padStart(
-    2,
-    "0"
-  );
-  const h = String(
-    Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  ).padStart(2, "0");
-  const m = String(
-    Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60))
-  ).padStart(2, "0");
-  const s = String(Math.floor((countDown % (1000 * 60)) / 1000)).padStart(
-    2,
-    "0"
-  );
-  const [days, setDays] = useState(d);
-  const [hours, setHours] = useState(h);
-  const [minutes, setMinutes] = useState(m);
-  const [seconds, setSeconds] = useState(s);
-
-  useEffect(() => {
-    setInterval(() => {
-      setCountDown(targetDate.getTime() - new Date().getTime());
-      const d = String(Math.floor(countDown / (1000 * 60 * 60 * 24))).padStart(
-        2,
-        "0"
-      );
-      const h = String(
-        Math.floor((countDown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      ).padStart(2, "0");
-      const m = String(
-        Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60))
-      ).padStart(2, "0");
-      const s = String(Math.floor((countDown % (1000 * 60)) / 1000)).padStart(
-        2,
-        "0"
-      );
-      setDays(d);
-      setHours(h);
-      setMinutes(m);
-      setSeconds(s);
-    }, 1000);
-  }, [countDown]);*/
