@@ -97,16 +97,16 @@ export const SCHEDULE: scheduleInfo[] = [
   },
   {
     playDate: "2023.0908(금) 야구,빙구,농구",
-    location: "2023.0909(토) 축구 럭비",
+    location: "2023.0909(토) 럭비 축구 ",
   },
 ];
 
 export const TIME: Date[] = [
-  new Date("2023-09-08 10:30:00"),
+  new Date("2023-09-08 11:00:00"),
   new Date("2023-09-08 15:30:00"),
   new Date("2023-09-08 16:30:30"),
   new Date("2023-09-09 10:30:00"),
   new Date("2023-09-09 13:30:00"),
-  new Date("2023-09-09 13:30:00"),
+  //new Date("2023-09-09 13:30:00"),
 ];
 export const pastMatch = [[{}, {}], []];

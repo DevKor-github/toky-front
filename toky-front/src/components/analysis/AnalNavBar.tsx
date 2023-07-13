@@ -37,7 +37,7 @@ export default function AnalNavBar({ match, handleMatch }: AnalNavProps) {
             handleMatch(1);
           }}
         >
-          농구
+          빙구
         </NavigationItem>
         <NavigationItem
           index={2}
@@ -46,7 +46,7 @@ export default function AnalNavBar({ match, handleMatch }: AnalNavProps) {
             handleMatch(2);
           }}
         >
-          빙구
+          농구
         </NavigationItem>
         <NavigationItem
           index={3}

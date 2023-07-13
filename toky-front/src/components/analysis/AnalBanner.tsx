@@ -7,11 +7,29 @@ import Timer from "./Timer";
 import { MatchProps } from "./MatchType";
 import { SCHEDULE } from "./Data";
 import React from "react";
+import BaseballTimer from "./timer/BaseballTimer";
+import IcehockeyTimer from "./timer/IcehockeyTimer";
+import BasketballTimer from "./timer/BasketballTimer";
+import RugbyTimer from "./timer/RugbyTimer";
+import FootballTimer from "./timer/FootballTimer";
 
 function AnalBanner({ match }: MatchProps) {
   //progress 받아오기
   //match별 결과 받아오기
   let progress = 0;
+  const rederTimer = () => {
+    if (match === 0) {
+      return <BaseballTimer />;
+    } else if (match === 1) {
+      return <IcehockeyTimer />;
+    } else if (match === 2) {
+      return <BasketballTimer />;
+    } else if (match === 3) {
+      return <RugbyTimer />;
+    } else {
+      return <FootballTimer />;
+    }
+  };
   return (
     <BannerWrapper>
       <BannerImageWrapper>
@@ -29,7 +47,7 @@ function AnalBanner({ match }: MatchProps) {
         <H4>{SCHEDULE[match].location}</H4>
       </MatchTimeInfo>
       <ProgressWrapper>
-        {progress === 0 ? <Timer match={match} /> : null}
+        {progress === 0 ? rederTimer() : null}
         {progress === 1 && <H3>예측 마감</H3>}
         {progress === 2 && (
           <>
