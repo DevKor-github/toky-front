@@ -1,23 +1,34 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styled from "styled-components";
 import LeftArrow from "../../../public/image/leftArrow.webp";
-import SideBar from "../common/SideBar";
+// import SideBar from "../common/SideBar";
+import Menu from "../../../public/image/menu.svg";
+import SideBarBody from "../common/SideBarBody";
 
-export default function DrawTopBar({
-  setIsBarOpen,
-}: {
-  setIsBarOpen?: Dispatch<SetStateAction<boolean>>;
-}) {
+export default function DrawTopBar() {
   const router = useRouter();
+  const [isBarOpen, setIsBarOpen] = useState(false);
+  const inside = useRef<any>();
+  useEffect(() => {
+    const handlerOutside = (e: any) => {
+      if (!inside.current.contains(e.target)) {
+        setIsBarOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlerOutside);
+    return () => {
+      document.removeEventListener("mousedown", handlerOutside);
+    };
+  });
 
   const handleBack = () => {
     router.back();
   };
   const handleMenuClick = () => {
-    setIsBarOpen && setIsBarOpen(true);
+    setIsBarOpen(true);
   };
 
   return (
@@ -35,7 +46,19 @@ export default function DrawTopBar({
         width={20}
       />
       <Title>내 포인트</Title>
-      <SideBar
+      <Image
+        src={Menu}
+        alt="menu"
+        onClick={handleMenuClick}
+        style={{
+          position: "absolute",
+          right: "20px",
+          bottom: "23px",
+          backgroundColor: "#222222",
+        }}
+      />
+      <SideBarBody isBarOpen={isBarOpen} ref={inside} />
+      {/* <SideBar
         handleMenuClick={handleMenuClick}
         style={{
           position: "absolute",
@@ -43,7 +66,7 @@ export default function DrawTopBar({
           bottom: "18px",
           backgroundColor: "#222222",
         }}
-      />
+      /> */}
     </TopBarWrapper>
   );
 }
