@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   height: 214px;
   padding: 24px 0 24px 0;
   border-radius: 5.927px;
-  background: #ffffff;
+  background: #383838;
   box-shadow: 0px 4px 4px 0px rgba(18, 18, 18, 0.25);
 
   .content {
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: #2c2c2c;
+    color: #ffffff;
     font-family: Spoqa Han Sans Neo;
     font-size: 20px;
     font-style: normal;

@@ -1,7 +1,7 @@
 'use client';
 import styled from 'styled-components';
 import ResponsiveBox from '@/components/common/ResponsiveBox';
-import AnalMoreTopBar from '@/components/analysis-more/AnalMoreTopBar';
+import TopBar from '@/components/common/TopBar';
 import PlayerInfo from '@/components/analysis-more/PlayerInfo';
 import Article from '@/components/analysis-more/Article';
 
@@ -9,7 +9,7 @@ export default function AnalysisMore() {
 	return (
 		<>
 			<Wrapper>
-				<AnalMoreTopBar />
+				<TopBar title='전력분석 더 알아보기' />
 				<PlayerInfo />
 				<Article />
 			</Wrapper>
@@ -23,8 +23,4 @@ const Wrapper = styled(ResponsiveBox)`
 	right: 0;
 	transition: 1s ease;
 	padding: 0px;
-	&.open {
-		transition: 1s ease;
-		right: 331px;
-	}
 `;

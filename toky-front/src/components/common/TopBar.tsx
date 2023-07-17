@@ -3,9 +3,13 @@ import {useRouter} from 'next/navigation';
 import Image from 'next/image';
 import styled from 'styled-components';
 import LeftArrow from '../../../public/image/leftArrow.webp';
-import SideBar from '../common/SideBar';
+import SideBar from './SideBar';
 
-export default function DrawTopBar() {
+interface Props {
+	title: string;
+}
+
+export default function TopBar({title}: Props) {
 	const router = useRouter();
 
 	const handleBack = () => {
@@ -26,11 +30,11 @@ export default function DrawTopBar() {
 				alt='back'
 				width={20}
 			/>
-			<Title>내 포인트</Title>
+			<Title>{title}</Title>
 			<SideBar
 				style={{
 					position: 'absolute',
-					right: '16px',
+					right: '20px',
 					bottom: '18px',
 					backgroundColor: '#222222',
 				}}
@@ -38,7 +42,6 @@ export default function DrawTopBar() {
 		</TopBarWrapper>
 	);
 }
-
 const TopBarWrapper = styled.div`
 	position: relative;
 	height: 60px;
@@ -54,4 +57,10 @@ const Title = styled.div`
 	font-family: Spoqa Han Sans Neo;
 	font-weight: 400;
 	letter-spacing: -1.08px;
+`;
+
+const MenuButton = styled(Image)`
+	position: absolute;
+	right: 20px;
+	bottom: 23px;
 `;
