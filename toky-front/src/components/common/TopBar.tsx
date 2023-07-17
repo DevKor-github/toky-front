@@ -1,21 +1,38 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+import { useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styled from "styled-components";
 import LeftArrow from "../../../public/image/leftArrow.webp";
-import SideBar from "../common/SideBar";
+import Menu from "../../../public/image/menu.svg";
+import SideBarBody from "./SideBarBody";
 
-export default function AnalMoreTopBar({
-  setIsBarOpen,
-}: {
+interface Props {
+  title: string;
+  isBarOpen: boolean;
   setIsBarOpen: Dispatch<SetStateAction<boolean>>;
-}) {
+}
+
+export default function TopBar({ title, isBarOpen, setIsBarOpen }: Props) {
   const router = useRouter();
 
   const handleBack = () => {
     router.back();
   };
+
+  const inside = useRef<any>();
+  useEffect(() => {
+    const handlerOutside = (e: any) => {
+      if (!inside.current.contains(e.target)) {
+        setIsBarOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlerOutside);
+    return () => {
+      document.removeEventListener("mousedown", handlerOutside);
+    };
+  });
+
   const handleMenuClick = () => {
     setIsBarOpen(true);
   };
@@ -34,16 +51,9 @@ export default function AnalMoreTopBar({
         alt="back"
         width={20}
       />
-      <Title>전력분석 더 알아보기</Title>
-      <SideBar
-        handleMenuClick={handleMenuClick}
-        style={{
-          position: "absolute",
-          right: "0px",
-          bottom: "18px",
-          backgroundColor: "#222222",
-        }}
-      />
+      <Title>{title}</Title>
+      <MenuButton src={Menu} alt="menu" onClick={handleMenuClick} />
+      <SideBarBody isBarOpen={isBarOpen} ref={inside} />
     </TopBarWrapper>
   );
 }
@@ -63,4 +73,10 @@ const Title = styled.div`
   font-family: Spoqa Han Sans Neo;
   font-weight: 400;
   letter-spacing: -1.08px;
+`;
+
+const MenuButton = styled(Image)`
+  position: absolute;
+  right: 20px;
+  bottom: 23px;
 `;

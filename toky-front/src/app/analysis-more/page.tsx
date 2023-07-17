@@ -1,36 +1,24 @@
 "use client";
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
-import SideBarBody from "@/components/common/SideBarBody";
-import AnalMoreTopBar from "@/components/analysis-more/AnalMoreTopBar";
+import TopBar from "@/components/common/TopBar";
 import PlayerInfo from "@/components/analysis-more/PlayerInfo";
 import Article from "@/components/analysis-more/Article";
 
 export default function AnalysisMore() {
   const [isBarOpen, setIsBarOpen] = useState(false);
-  const inside = useRef<any>();
-  useEffect(() => {
-    const handlerOutside = (e: any) => {
-      if (!inside.current.contains(e.target)) {
-        setIsBarOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handlerOutside);
-    return () => {
-      document.removeEventListener("mousedown", handlerOutside);
-    };
-  });
 
   return (
-    <>
-      <Wrapper className={isBarOpen ? "open" : ""}>
-        <AnalMoreTopBar setIsBarOpen={setIsBarOpen} />
-        <PlayerInfo />
-        <Article />
-      </Wrapper>
-      <SideBarBody ref={inside} isBarOpen={isBarOpen} />
-    </>
+    <Wrapper className={isBarOpen ? "open" : ""}>
+      <TopBar
+        title="전력분석 더 알아보기"
+        isBarOpen={isBarOpen}
+        setIsBarOpen={setIsBarOpen}
+      />
+      <PlayerInfo />
+      <Article />
+    </Wrapper>
   );
 }
 
