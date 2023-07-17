@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Image from "next/image";
 import Help from "../../../public/image/help.svg";
@@ -8,6 +9,7 @@ import HelpTip from "./HelpTip";
 
 export default function UserPoint() {
   const [helpTipOpen, setHelpTipOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   return (
     <Wrapper>
@@ -28,14 +30,17 @@ export default function UserPoint() {
         />
         {helpTipOpen && <HelpTip closeHelpTip={() => setHelpTipOpen(false)} />}
       </div>
-
       <Space h={10} />
       <span className="text3">2000p</span>
       <Space h={3} />
       <span className="text1">누적 포인트: 2500p</span>
       <Space h={3} />
-      <span className="text1" style={{ textDecoration: "underline" }}>
-        사용내역 보기
+      <span
+        className="text1"
+        style={{ textDecoration: "underline" }}
+        onClick={() => router.push("/point-history")}
+      >
+        적립/사용내역
       </span>
     </Wrapper>
   );
