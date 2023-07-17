@@ -10,10 +10,9 @@ import { useRouter } from "next/navigation";
 export default function DrawInfo() {
   const rank = [2, 1, 3];
   const userid = null;
+  const router = useRouter();
   //user정보 없으면 로그인으로, 있으면 bets로
   const handleBtnClick = () => {
-    const router = useRouter();
-
     router.push("/bets");
   };
 
