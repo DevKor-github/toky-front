@@ -4,12 +4,32 @@ import { styled } from "styled-components";
 import AnalBannerImage from "../../../public/image/AnalBannerImage.png";
 import Link from "next/link";
 import Timer from "./Timer";
+import { MatchProps } from "./MatchType";
+import { SCHEDULE } from "./Data";
+import React from "react";
+import BaseballTimer from "./timer/BaseballTimer";
+import IcehockeyTimer from "./timer/IcehockeyTimer";
+import BasketballTimer from "./timer/BasketballTimer";
+import RugbyTimer from "./timer/RugbyTimer";
+import FootballTimer from "./timer/FootballTimer";
 
-export default function AnalBanner() {
+function AnalBanner({ match }: MatchProps) {
   //progress 받아오기
   //match별 결과 받아오기
-
   let progress = 0;
+  const rederTimer = () => {
+    if (match === 0) {
+      return <BaseballTimer />;
+    } else if (match === 1) {
+      return <IcehockeyTimer />;
+    } else if (match === 2) {
+      return <BasketballTimer />;
+    } else if (match === 3) {
+      return <RugbyTimer />;
+    } else {
+      return <FootballTimer />;
+    }
+  };
   return (
     <BannerWrapper>
       <BannerImageWrapper>
@@ -22,11 +42,12 @@ export default function AnalBanner() {
         <BannerImageBack />
       </BannerImageWrapper>
       <MatchTimeInfo>
-        <H4>2023.09.09(토) 14:00 </H4>
-        <H4>고양 종합운동장</H4>
+        <H4>{SCHEDULE[match].playDate}</H4>
+
+        <H4>{SCHEDULE[match].location}</H4>
       </MatchTimeInfo>
       <ProgressWrapper>
-        {progress === 0 && <Timer />}
+        {progress === 0 ? rederTimer() : null}
         {progress === 1 && <H3>예측 마감</H3>}
         {progress === 2 && (
           <>
@@ -39,7 +60,7 @@ export default function AnalBanner() {
 
       <PredictBtn>
         {progress === 0 && (
-          <Link href="/bets/0">
+          <Link href="/bets">
             <H4>승부예측하러 가기</H4>
           </Link>
         )}
@@ -57,6 +78,7 @@ export default function AnalBanner() {
     </BannerWrapper>
   );
 }
+export default React.memo(AnalBanner);
 
 const BannerWrapper = styled.div`
   margin-top: 46px;
@@ -104,13 +126,13 @@ const PredictBtn = styled.button`
 `;
 
 const H4 = styled.h4`
-  font-family: "Spoqa Han Sans Neo";
+  font-family: Spoqa Han Sans Neo;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: -0.04em;
-  color: #ffffff;
+  line-height: normal;
+  letter-spacing: -0.48px;
+  color: white;
 `;
 
 const H3 = styled.h3`

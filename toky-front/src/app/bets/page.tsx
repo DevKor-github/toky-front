@@ -3,8 +3,11 @@ import BetBanner from "@/components/bets/BetBanner";
 import BetTopBar from "@/components/bets/BetTopBar";
 import MatchNavBar from "@/components/bets/MatchNavBar";
 import QuestionList from "@/components/bets/QuestionList";
+import NavigationBar from "@/components/common/NavigationBar";
+import SharePrediction from "@/components/share/SharePrediction";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { styled } from "styled-components";
 
 export type QuestionType = {
@@ -18,6 +21,15 @@ export default function Bets() {
   // useeffect로 axios쏘고 이미 있는지 체크
   // useffect로 question 받아와서 question set해주기
   // 서버로 유지 위해 use client를 question list로?
+
+  const [showModal, setShowModal] = useState(false);
+  const [portalElement, setProtalElement] = useState<Element | null>(null);
+  useEffect(() => {
+    setProtalElement(document.getElementById("portal"));
+  }, [showModal]);
+  function clickModal() {
+    setShowModal(!showModal);
+  }
 
   const [match, setMatch] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -51,12 +63,18 @@ export default function Bets() {
   }, [match]);
 
   return (
-    <BetWrapper>
-      <BetTopBar />
-      <BetBanner />
+    <>
+      <NavigationBar />
+      <BetBanner match={match} clickModal={clickModal} />
       <MatchNavBar match={match} handleMatch={handleMatch} />
       {!isLoading && <QuestionList match={match} questions={questions} />}
-    </BetWrapper>
+      {showModal && portalElement
+        ? createPortal(
+            <SharePrediction clickModal={clickModal} />,
+            portalElement
+          )
+        : null}
+    </>
   );
 }
 

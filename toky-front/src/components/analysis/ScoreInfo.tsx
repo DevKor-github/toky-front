@@ -2,14 +2,14 @@
 import Image from "next/image";
 import { styled } from "styled-components";
 import CharImage from "../../../public/image/Logo.webp";
-export default function ScoreInfo() {
+import { MatchProps } from "./MatchType";
+export default function ScoreInfo({ match }: MatchProps) {
   //10경기 -- 한 종목당 2개
   //match 받아서
   //과거 결과 데이터 받아오기
   //몇개 안되니까 하드코딩으로 박아버리고 매치에 따라 다르게 표시하는 것만 해주기
 
   const score = [{}, {}];
-  const match = 0; //match 정보가 넘어옴
   return (
     <>
       <ScoreInfowrapper>

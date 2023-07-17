@@ -5,7 +5,36 @@ import { styled } from "styled-components";
 import BannerImage from "./../../../public/image/bannerimage.jpeg";
 import KLogo from "./../../../public/image/koreaLogo.webp";
 import YLogo from "./../../../public/image/yonseiLogo.webp";
-export default function BetBanner() {
+import ShareArrow from "../../../public/image/ShareArrow.svg";
+
+interface BannerProps {
+  match: number;
+  clickModal: () => void;
+}
+export default function BetBanner({ match, clickModal }: BannerProps) {
+  const matchTime = [
+    {
+      date: "9/8(금)",
+      time: "11:30",
+    },
+    {
+      date: "9/8(금)",
+      time: "15:30",
+    },
+    {
+      date: "9/8(금)",
+      time: "17:30",
+    },
+    {
+      date: "9/9(토)",
+      time: "09:30",
+    },
+    {
+      date: "9/9(토)",
+      time: "12:30",
+    },
+  ];
+
   return (
     <BannerWrapper>
       <Banner>
@@ -25,20 +54,29 @@ export default function BetBanner() {
             <Image src={KLogo} width={40} alt="koreaUniLogo" />
           </UniLogo>
           <TimeInfo>
-            <H4>07:30</H4>
-            <H5>10/28(금)</H5>
+            <H4>{matchTime[match].date}</H4>
+            <H5>{matchTime[match].time}</H5>
           </TimeInfo>
           <UniLogo>
             <Image src={YLogo} width={40} alt="koreaUniLogo" />
             <H3>연세대학교</H3>
           </UniLogo>
         </MatchInfo>
+        <ShareBtn onClick={clickModal}>
+          내 예측 공유하기
+          <Image
+            src={ShareArrow}
+            alt="share arrow"
+            style={{ marginLeft: "4.69px" }}
+          />
+        </ShareBtn>
       </Banner>
     </BannerWrapper>
   );
 }
 const BannerWrapper = styled.div`
   display: block;
+  padding-top: 46px;
 `;
 const Banner = styled.div`
   height: 133px;
@@ -120,6 +158,28 @@ const H5 = styled.h5`
   letter-spacing: -0.04em;
 `;
 
+const ShareBtn = styled.button`
+  position: absolute;
+  width: 108px;
+  height: 29px;
+  border-radius: 3.45px;
+  border: 0.862px solid var(--87, rgba(255, 255, 255, 0.87));
+
+  background-color: transparent;
+  z-index: 1;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: var(--87, rgba(255, 255, 255, 0.87));
+  text-align: center;
+  font-family: Spoqa Han Sans Neo;
+  font-size: 11.813px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.472px;
+`;
 {
   /* backgrou 이미지 넣고 logo image 넣고 시간 */
 }
