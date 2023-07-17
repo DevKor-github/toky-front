@@ -1,6 +1,6 @@
 'use client';
 
-import {usePathname, useRouter} from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Logo from '../../../public/image/logo.svg';
@@ -14,7 +14,7 @@ export default function NavigationBar() {
 		<Wrapper>
 			<Image src={Logo} alt='logo' />
 			<NavigationWrapper>
-				<div style={{display: 'flex', gap: 23}}>
+				<div style={{ display: 'flex', gap: 23 }}>
 					<NavigationItem
 						selected={pathname === '/analyze'}
 						onClick={() => {
@@ -50,6 +50,7 @@ const Wrapper = styled.div`
 	padding: 0px 23px;
 	background-color: #121212;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+	z-index: 10;
 `;
 
 const NavigationWrapper = styled.div`
@@ -58,12 +59,12 @@ const NavigationWrapper = styled.div`
 	gap: 25px;
 `;
 
-const NavigationItem = styled.div<{selected: boolean}>`
+const NavigationItem = styled.div<{ selected: boolean }>`
 	display: flex;
 	align-items: center;
 	height: 46px;
 	font-weight: 500;
 	color: rgba(255, 255, 255, 0.38);
 
-	${({selected}) => selected && 'color: #ffffff; border-bottom: 3px solid #ffffff;'}
+	${({ selected }) => selected && 'color: #ffffff; border-bottom: 3px solid #ffffff;'}
 `;

@@ -1,5 +1,4 @@
 "use client";
-import "./MainTopBar.css";
 import { styled } from "styled-components";
 import Link from "next/link";
 import Logo from "../../../public/image/TokyMainLogo.png";
@@ -10,7 +9,7 @@ import MainArrow from "../../../public/image/MainArrow.svg";
 export default function MainTopBar() {
   return (
     //<MainTopBarWrapper>
-    <motion.div
+    <MainTopBarWrapper
       className="MainTopBarWrapper"
       initial={{
         opacity: 0,
@@ -34,7 +33,7 @@ export default function MainTopBar() {
         }}
       />
       <Link
-        href="/bets/0"
+        href="/bets"
         style={{
           position: "absolute",
           right: "5%",
@@ -59,17 +58,18 @@ export default function MainTopBar() {
         </h4>
         <Image src={MainArrow} alt="main arrow" width={9} height={14} />
       </Link>
-    </motion.div>
+    </MainTopBarWrapper>
     //</MainTopBarWrapper>
   );
 }
 
-// const MainTopBarWrapper = styled.div`
-//   position: fixed;
-//   color: white;
-//   width: 100%;
-//   height: 96px;
-//   background: #121212;
-//   box-shadow: 0px 4px 4px rgba(18, 18, 18, 0.25);
-//   z-index: 5;
-// `;
+const MainTopBarWrapper = styled(motion.div)`
+  position: fixed;
+  color: white;
+  min-width: 375px;
+  width: 100%;
+  height: 58px;
+  background: #121212;
+  box-shadow: 0px 4px 4px rgba(18, 18, 18, 0.25);
+  z-index: 3;
+`;

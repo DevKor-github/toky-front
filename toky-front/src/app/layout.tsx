@@ -29,7 +29,10 @@ export default function RootLayout({
             height: "100vh",
           }}
         >
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+            {children}
+            <div id="portal"></div>
+          </StyledComponentsRegistry>
         </div>
       </body>
     </html>

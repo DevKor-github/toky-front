@@ -4,12 +4,12 @@ import Arrow from "../../../public/image/MainArrow.svg";
 import Image from "next/image";
 import testPlayer from "../../../public/image/playerTest.png";
 // link href 수정하기
-import { players } from "./Data";
+import { PLAYER } from "./Data";
 import PlayerItem from "./PlayerItem";
+import { MatchProps } from "./MatchType";
 
-export default function PlayerInfo() {
-  let match = 1; // match 받아오기
-  let matchPlayer = players[match];
+export default function PlayerInfo({ match }: MatchProps) {
+  let matchPlayer = PLAYER[match];
 
   return (
     <Wrapper>
@@ -58,6 +58,7 @@ export default function PlayerInfo() {
 const Wrapper = styled.div`
   /* min-width: 390px; */
   padding-top: 40px;
+  background-color: #121212;
 `;
 const PlayerInfoWrapper = styled.div``;
 const MorePlayerWrapper = styled.div`
@@ -84,6 +85,6 @@ const Diagonal = styled.div`
 const PlayerImageWrapper = styled.div`
   position: relative;
   min-height: 585px;
-  height: 1000px;
+  height: 665px;
   width: 100%;
 `;
