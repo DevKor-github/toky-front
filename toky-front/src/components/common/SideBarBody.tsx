@@ -1,5 +1,4 @@
-import React from 'react';
-import {useEffect, useState} from 'react';
+import React, {ForwardedRef} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Setting from '../../../public/image/Setting.svg';
@@ -103,7 +102,7 @@ const InfoDetail = styled.div`
 	color: rgba(255, 255, 255, 0.87);
 `;
 
-function SideBarBodyFC({isBarOpen = true}, ref: React.Ref<HTMLDivElement>) {
+function SideBarBodyFC({isBarOpen = true}, ref: ForwardedRef<HTMLDivElement>) {
 	return (
 		<Wrapper ref={ref} className={isBarOpen ? 'open' : ''}>
 			<FlexWrapper style={{marginTop: 72, paddingLeft: 15}}>
@@ -144,6 +143,6 @@ function SideBarBodyFC({isBarOpen = true}, ref: React.Ref<HTMLDivElement>) {
 	);
 }
 
-const SideBarBody = React.forwardRef<HTMLDivElement, {isBarOpen: boolean}>(SideBarBodyFC);
+const SideBarBody = React.forwardRef(SideBarBodyFC);
 
 export default SideBarBody;
