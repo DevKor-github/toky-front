@@ -17,27 +17,6 @@ export default function MainInfo() {
   let yonsei = 50;
   return (
     <MainBackground>
-      <motion.div
-        className="CharaterContainer"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
-        style={{
-          width: "100%",
-          height: "380px",
-          position: "absolute",
-          bottom: "0%",
-          textAlign: "center",
-        }}
-      >
-        <Image
-          src={TokyCharacter}
-          height={380}
-          style={{ verticalAlign: "bottom" }}
-          alt="toky character"
-          priority={true}
-        ></Image>
-      </motion.div>
       <UniLogoWrapper>
         <UniLogos>
           {/* 학교 로고 애니메이션 부분 */}
@@ -75,6 +54,27 @@ export default function MainInfo() {
           </motion.div>
         </UniLogos>
       </UniLogoWrapper>
+      <motion.div
+        className="CharaterContainer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
+        style={{
+          width: "100%",
+          height: "380px",
+          position: "absolute",
+          bottom: "0%",
+          textAlign: "center",
+        }}
+      >
+        <Image
+          src={TokyCharacter}
+          height={380}
+          style={{ verticalAlign: "bottom" }}
+          alt="toky character"
+          priority={true}
+        ></Image>
+      </motion.div>
       {/* 메인 내부 정보들 및 애니메이션 */}
       <MainInfoWrapper>
         <motion.div
