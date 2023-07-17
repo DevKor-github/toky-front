@@ -5,10 +5,18 @@ import { styled, css } from "styled-components";
 import DrawProduct from "../../../public/image/DummyProduct.png";
 import Link from "next/link";
 import { MainSubTitle, MainTitle } from "./TitleComponents";
+import { useRouter } from "next/navigation";
+
 export default function DrawInfo() {
   const rank = [2, 1, 3];
   const userid = null;
   //user정보 없으면 로그인으로, 있으면 bets로
+  const handleBtnClick = () => {
+    const router = useRouter();
+
+    router.push("/bets");
+  };
+
   const product = rank.map((ranking, i) => {
     return (
       <ProductBox key={i} ranking={ranking}>
@@ -28,9 +36,7 @@ export default function DrawInfo() {
         </MainSubTitle>
       </DrawDescription>
       <DrawGifWrapper>{product}</DrawGifWrapper>
-      <Btn>
-        <Link href="/bets/0">토키 바로 시작하기</Link>
-      </Btn>
+      <Btn onClick={handleBtnClick}>토키 바로 시작하기</Btn>
     </DrawInfoWrapper>
   );
 }
@@ -66,6 +72,8 @@ const Btn = styled.button`
   background: #4c0eb0;
   border-radius: 4px;
   margin-top: 60px;
+
+  cursor: pointer;
 `;
 const ProductBox = styled.div<{ ranking: number }>`
   border-radius: 6px;
