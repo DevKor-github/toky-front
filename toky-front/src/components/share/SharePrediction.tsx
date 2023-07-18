@@ -10,6 +10,7 @@ import DownloadIcon from "../../../public/image/DownloadIcon.svg";
 import CloseIcon from "../../../public/image/ShareClose.svg";
 import { toPng } from "html-to-image";
 import { useCallback, useEffect, useRef } from "react";
+import html2canvas from "html2canvas";
 
 export interface ShareProps {
   clickModal: () => void;
@@ -25,65 +26,107 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   let draw = false;
   if (data.numWinKorea == data.numWinYonsei) draw = true;
   else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
-  useEffect(() => {
-    //safari first randering
-    if (ref.current === null) {
-      return;
-    }
-    toPng(ref.current, {
-      cacheBust: true,
-      filter: (node: any) => node.tagName !== "BUTTON",
-    }).then(() => {
-      return;
-    });
-  }, []);
   const ref = useRef<HTMLDivElement>(null);
-  const downloadImage = useCallback(() => {
-    if (ref.current === null) {
-      return;
+  const downloadImage = async () => {
+    if (ref.current === null) return;
+
+    const canvas = await html2canvas(ref.current);
+    alert("a");
+    const imgUrl = canvas.toDataURL("image/png", 1.0);
+    fakelinkDownload(imgUrl, "my-prediction");
+  };
+  const fakelinkDownload = (blob: string, fileName: string) => {
+    alert("a");
+    const fakeLink = window.document.createElement("a");
+    fakeLink.download = fileName;
+    fakeLink.href = blob;
+    document.body.appendChild(fakeLink);
+    fakeLink.click();
+    document.body.removeChild(fakeLink);
+    fakeLink.remove();
+  };
+
+  const shareImage = async () => {
+    if (ref.current === null) return;
+    alert("a");
+
+    const canvas = await html2canvas(ref.current);
+    alert("a");
+    const imgUrl = canvas.toDataURL("image/png", 1.0);
+    const blob = await (await fetch(imgUrl)).blob();
+    const filesArray = [
+      new File([blob], "my-prediction.png", {
+        type: "image/png",
+        lastModified: new Date().getTime(),
+      }),
+    ];
+    const shareData = {
+      files: filesArray,
+    };
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      await navigator.share(shareData);
+    } else {
+      alert("no");
     }
+  };
+  // useEffect(() => {
+  //   //safari first randering
+  //   if (ref.current === null) {
+  //     return;
+  //   }
+  //   toPng(ref.current, {
+  //     cacheBust: true,
+  //     filter: (node: any) => node.tagName !== "BUTTON",
+  //   }).then(() => {
+  //     return;
+  //   });
+  // }, []);
+  // const downloadImage = useCallback(() => {
+  //   if (ref.current === null) {
+  //     return;
+  //   }
 
-    toPng(ref.current, {
-      cacheBust: true,
-      filter: (node: any) => node.tagName !== "BUTTON",
-    }).then((dataUrl) => {
-      const link = document.createElement("a");
-      link.download = "my-prediction.png";
-      link.href = dataUrl;
-      link.click();
-    });
-  }, [ref]);
+  //   toPng(ref.current, {
+  //     cacheBust: true,
+  //     filter: (node: any) => node.tagName !== "BUTTON",
+  //   }).then((dataUrl) => {
+  //     const link = document.createElement("a");
+  //     link.download = "my-prediction.png";
+  //     link.href = dataUrl;
+  //     link.click();
+  //   });
+  // }, [ref]);
 
-  const shareImage = useCallback(async () => {
-    if (ref.current === null) {
-      return;
-    }
+  // const shareImage = useCallback(async () => {
+  //   if (ref.current === null) {
+  //     return;
+  //   }
 
-    toPng(ref.current, {
-      cacheBust: true,
-      filter: (node: any) => node.tagName !== "BUTTON",
-    })
-      .then(async (dataUrl) => {
-        const blob = await (await fetch(dataUrl)).blob();
-        const filesArray = [
-          new File([blob], "my-prediction.png", {
-            type: "image/png",
-            lastModified: new Date().getTime(),
-          }),
-        ];
-        const shareData = {
-          files: filesArray,
-        };
-        if (navigator.canShare && navigator.canShare(shareData)) {
-          await navigator.share(shareData);
-        } else {
-          alert("no");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [ref]);
+  //   toPng(ref.current, {
+  //     cacheBust: true,
+  //     filter: (node: any) => node.tagName !== "BUTTON",
+  //   })
+  //     .then(async (dataUrl) => {
+  //       const blob = await (await fetch(dataUrl)).blob();
+  //       const filesArray = [
+  //         new File([blob], "my-prediction.png", {
+  //           type: "image/png",
+  //           lastModified: new Date().getTime(),
+  //         }),
+  //       ];
+  //       const shareData = {
+  //         files: filesArray,
+  //       };
+  //       if (navigator.canShare && navigator.canShare(shareData)) {
+  //         await navigator.share(shareData);
+  //       } else {
+  //         alert("no");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [ref]);
 
   return (
     <>
@@ -91,7 +134,15 @@ export default function SharePrediction({ clickModal }: ShareProps) {
         <SaveArea ref={ref} id="predictionCard">
           <ModalContainer>
             <ShareCard $winKorea={winKorea} $draw={draw}>
+              <UserContainer className="userContainer">
+                <h3>유저이름최대열자열자님의 예측</h3>
+              </UserContainer>
               <ImageContainer>
+                {/* <img
+                  src="/image/TestCharacter.svg"
+                  alt="img"
+                  style={{ width: "289px", verticalAlign: "bottom" }}
+                /> */}
                 <Image
                   src={TestCharacter}
                   alt="charater"
@@ -99,10 +150,6 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                   style={{ verticalAlign: "bottom" }}
                 ></Image>
               </ImageContainer>
-              <UserContainer className="userContainer">
-                <h3>유저이름최대열자열자님의 예측</h3>
-              </UserContainer>
-
               <ScoreContainer>
                 <h4>고려대학교</h4>
                 <h2 className="score">{data.numWinKorea}</h2>
