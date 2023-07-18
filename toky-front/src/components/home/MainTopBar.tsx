@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "styled-components";
 import Link from "next/link";
-import Logo from "../../../public/image/TokyMainLogo.png";
+import Logo from "../../../public/image/logo.svg";
 import Image from "next/image";
 import { easeInOut, motion } from "framer-motion";
 import MainArrow from "../../../public/image/MainArrow.svg";
@@ -28,7 +28,7 @@ export default function MainTopBar() {
         style={{
           position: "absolute",
           left: "5%",
-          top: "50%",
+          top: "45%",
           transform: "translate(0, -50%)",
         }}
       />

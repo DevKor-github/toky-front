@@ -12,13 +12,13 @@ export default function NavigationBar() {
 
 	return (
 		<Wrapper>
-			<Image src={Logo} alt='logo' />
+			<Image src={Logo} alt='logo' width={52} onClick={()=>{router.push('/')}} />
 			<NavigationWrapper>
 				<div style={{ display: 'flex', gap: 23 }}>
 					<NavigationItem
-						selected={pathname === '/analyze'}
+						selected={pathname === '/analysis'}
 						onClick={() => {
-							router.push('/analyze');
+							router.push('/analysis');
 						}}
 					>
 						전력분석
