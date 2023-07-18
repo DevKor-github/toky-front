@@ -3,6 +3,7 @@ import Image from "next/image";
 import { css, styled } from "styled-components";
 //data 받아오기
 import Charater from "../../../public/image/ShareCharacter.png";
+import TestCharacter from "../../../public/image/TestCharacter.svg";
 import Divider from "../../../public/image/divider.svg";
 import ShareIcon from "../../../public/image/ShareIcon.svg";
 import DownloadIcon from "../../../public/image/DownloadIcon.svg";
@@ -32,6 +33,8 @@ export default function SharePrediction({ clickModal }: ShareProps) {
     toPng(ref.current, {
       cacheBust: true,
       filter: (node: any) => node.tagName !== "BUTTON",
+    }).then(() => {
+      return;
     });
   }, []);
   const ref = useRef<HTMLDivElement>(null);
@@ -90,7 +93,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
             <ShareCard $winKorea={winKorea} $draw={draw}>
               <ImageContainer>
                 <Image
-                  src={Charater}
+                  src={TestCharacter}
                   alt="charater"
                   width={289}
                   style={{ verticalAlign: "bottom" }}
