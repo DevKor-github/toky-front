@@ -2,14 +2,14 @@
 import Image from "next/image";
 import { css, styled } from "styled-components";
 //data 받아오기
-import Charater from "../../../public/image/ShareCharacter.png";
+import Character from "../../../public/image/ShareCharacter.png";
 import TestCharacter from "../../../public/image/TestCharacter.svg";
 import Divider from "../../../public/image/divider.svg";
 import ShareIcon from "../../../public/image/ShareIcon.svg";
 import DownloadIcon from "../../../public/image/DownloadIcon.svg";
 import CloseIcon from "../../../public/image/ShareClose.svg";
 import { toPng } from "html-to-image";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 
 export interface ShareProps {
@@ -17,6 +17,7 @@ export interface ShareProps {
 }
 
 export default function SharePrediction({ clickModal }: ShareProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const data = {
     numWinKorea: 2,
     numWinYonsei: 1,
@@ -29,14 +30,13 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   const ref = useRef<HTMLDivElement>(null);
   const downloadImage = async () => {
     if (ref.current === null) return;
-
-    const canvas = await html2canvas(ref.current);
-    alert("a");
+    setIsLoading(true);
+    const canvas = await html2canvas(ref.current, { useCORS: true });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     fakelinkDownload(imgUrl, "my-prediction");
+    setIsLoading(false);
   };
   const fakelinkDownload = (blob: string, fileName: string) => {
-    alert("a");
     const fakeLink = window.document.createElement("a");
     fakeLink.download = fileName;
     fakeLink.href = blob;
@@ -48,12 +48,10 @@ export default function SharePrediction({ clickModal }: ShareProps) {
 
   const shareImage = async () => {
     if (ref.current === null) return;
-    alert("a");
-
     const canvas = await html2canvas(ref.current);
-    alert("a");
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     const blob = await (await fetch(imgUrl)).blob();
+
     const filesArray = [
       new File([blob], "my-prediction.png", {
         type: "image/png",
@@ -66,7 +64,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
     if (navigator.canShare && navigator.canShare(shareData)) {
       await navigator.share(shareData);
     } else {
-      alert("no");
+      alert("지원되지 않는 브라우저입니다. 크롬으로 접속해주세요!");
     }
   };
   // useEffect(() => {
@@ -131,77 +129,85 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   return (
     <>
       <ModalWrapper>
-        <SaveArea ref={ref} id="predictionCard">
-          <ModalContainer>
-            <ShareCard $winKorea={winKorea} $draw={draw}>
-              <UserContainer className="userContainer">
-                <h3>유저이름최대열자열자님의 예측</h3>
-              </UserContainer>
-              <ImageContainer>
-                {/* <img
+        {!isLoading && (
+          <SaveArea id="predictionCard">
+            <ModalContainer>
+              <ShareCardWrapper ref={ref}>
+                <ShareCard $winKorea={winKorea} $draw={draw}>
+                  <UserContainer className="userContainer">
+                    <h3>유저이름최대열자열자님의 예측</h3>
+                  </UserContainer>
+
+                  <ScoreContainer>
+                    <h4>고려대학교</h4>
+                    <h2 className="score">{data.numWinKorea}</h2>
+                    <h1>:</h1>
+                    <h2 className="score">{data.numWinYonsei}</h2>
+                    <h4>연세대학교</h4>
+                  </ScoreContainer>
+
+                  <Footer>
+                    <h4>2023정기전 승부예측 토키</h4>
+
+                    <Image
+                      src={Divider}
+                      alt="divider"
+                      width={0}
+                      height={12}
+                      style={{ marginRight: "7px", marginLeft: "7px" }}
+                    ></Image>
+
+                    <h4>@toky_official</h4>
+                  </Footer>
+                  <ImageContainer>
+                    {/* <img
                   src="/image/TestCharacter.svg"
                   alt="img"
                   style={{ width: "289px", verticalAlign: "bottom" }}
                 /> */}
-                <Image
-                  src={TestCharacter}
-                  alt="charater"
-                  width={289}
-                  style={{ verticalAlign: "bottom" }}
-                ></Image>
-              </ImageContainer>
-              <ScoreContainer>
-                <h4>고려대학교</h4>
-                <h2 className="score">{data.numWinKorea}</h2>
-                <h1>:</h1>
-                <h2 className="score">{data.numWinYonsei}</h2>
-                <h4>연세대학교</h4>
-              </ScoreContainer>
-
-              <Footer>
-                <h4>2023정기전 승부예측 토키</h4>
-                <Image
-                  src={Divider}
-                  alt="divider"
-                  width={0}
-                  height={12}
-                  style={{ marginRight: "7px", marginLeft: "7px" }}
-                ></Image>
-
-                <h4>@toky_official</h4>
-              </Footer>
-            </ShareCard>
-            <BtnContainer>
-              <Btn onClick={clickModal}>
-                <Image
-                  src={CloseIcon}
-                  alt="cloase icon"
-                  // width={26}
-                  // height={28}
-                  style={{ paddingTop: "5px" }}
-                ></Image>
-              </Btn>
-              <Btn onClick={downloadImage}>
-                <Image
-                  src={DownloadIcon}
-                  alt="Download icon"
-                  // width={26}
-                  // height={28}
-                  style={{ paddingTop: "4px" }}
-                ></Image>
-              </Btn>
-              <Btn onClick={shareImage}>
-                <Image
-                  src={ShareIcon}
-                  alt="share icon"
-                  width={26}
-                  height={28}
-                  style={{ paddingTop: "6px" }}
-                ></Image>
-              </Btn>
-            </BtnContainer>
-          </ModalContainer>
-        </SaveArea>
+                    <Image
+                      src={TestCharacter}
+                      alt="charater"
+                      width={289}
+                      style={{ verticalAlign: "bottom", zIndex: "1000" }}
+                      priority
+                    ></Image>
+                  </ImageContainer>
+                </ShareCard>
+              </ShareCardWrapper>
+              <BtnContainer>
+                <Btn onClick={clickModal}>
+                  <Image
+                    src={CloseIcon}
+                    alt="cloase icon"
+                    width={26}
+                    height={28}
+                    style={{ paddingTop: "5px" }}
+                  ></Image>
+                </Btn>
+                <Btn onClick={downloadImage}>
+                  <Image
+                    src={DownloadIcon}
+                    alt="Download icon"
+                    width={26}
+                    height={28}
+                    style={{ paddingTop: "4px" }}
+                  ></Image>
+                </Btn>
+                <Btn onClick={shareImage}>
+                  <Image
+                    src={ShareIcon}
+                    alt="share icon"
+                    width={30}
+                    height={28}
+                    style={{ paddingTop: "6px" }}
+                  ></Image>
+                </Btn>
+              </BtnContainer>
+            </ModalContainer>
+          </SaveArea>
+        )}
+        {isLoading && <h1>loading</h1>}
       </ModalWrapper>
     </>
   );
@@ -251,7 +257,7 @@ const UserContainer = styled.div`
 `;
 
 const ScoreContainer = styled.div`
-  z-index: 1;
+  z-index: 1001;
   width: 207px;
 
   margin-top: 17px;
@@ -273,10 +279,11 @@ const ScoreContainer = styled.div`
   }
 `;
 const BtnContainer = styled.div`
-  margin-top: 18px;
+  /* margin-top: 18px; */
   display: flex;
   justify-content: space-between;
   width: 207px;
+  transform: translateY(-50%);
 `;
 
 const Btn = styled.button`
@@ -288,7 +295,7 @@ const Btn = styled.button`
   text-align: center;
 `;
 const Footer = styled.div`
-  z-index: 1;
+  z-index: 1002;
   margin-top: 274px;
   display: flex;
   & h4 {
@@ -383,4 +390,13 @@ const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
         color: black;
       `}
   }
+`;
+
+const ShareCardWrapper = styled.div`
+  width: 400px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
 `;
