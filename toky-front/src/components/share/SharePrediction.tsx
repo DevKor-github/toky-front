@@ -31,7 +31,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   const downloadImage = async () => {
     if (ref.current === null) return;
     setIsLoading(true);
-    const canvas = await html2canvas(ref.current, { useCORS: true });
+    const canvas = await html2canvas(ref.current, { useCORS: true, scale: 2 });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     fakelinkDownload(imgUrl, "my-prediction");
     setIsLoading(false);
@@ -48,7 +48,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
 
   const shareImage = async () => {
     if (ref.current === null) return;
-    const canvas = await html2canvas(ref.current);
+    const canvas = await html2canvas(ref.current, { scale: 2 });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     const blob = await (await fetch(imgUrl)).blob();
 
@@ -64,67 +64,9 @@ export default function SharePrediction({ clickModal }: ShareProps) {
     if (navigator.canShare && navigator.canShare(shareData)) {
       await navigator.share(shareData);
     } else {
-      alert("지원되지 않는 브라우저입니다. 크롬으로 접속해주세요!");
+      alert("지원되지 않는 브라우저입니다. 모바일 크롬으로 접속해주세요!");
     }
   };
-  // useEffect(() => {
-  //   //safari first randering
-  //   if (ref.current === null) {
-  //     return;
-  //   }
-  //   toPng(ref.current, {
-  //     cacheBust: true,
-  //     filter: (node: any) => node.tagName !== "BUTTON",
-  //   }).then(() => {
-  //     return;
-  //   });
-  // }, []);
-  // const downloadImage = useCallback(() => {
-  //   if (ref.current === null) {
-  //     return;
-  //   }
-
-  //   toPng(ref.current, {
-  //     cacheBust: true,
-  //     filter: (node: any) => node.tagName !== "BUTTON",
-  //   }).then((dataUrl) => {
-  //     const link = document.createElement("a");
-  //     link.download = "my-prediction.png";
-  //     link.href = dataUrl;
-  //     link.click();
-  //   });
-  // }, [ref]);
-
-  // const shareImage = useCallback(async () => {
-  //   if (ref.current === null) {
-  //     return;
-  //   }
-
-  //   toPng(ref.current, {
-  //     cacheBust: true,
-  //     filter: (node: any) => node.tagName !== "BUTTON",
-  //   })
-  //     .then(async (dataUrl) => {
-  //       const blob = await (await fetch(dataUrl)).blob();
-  //       const filesArray = [
-  //         new File([blob], "my-prediction.png", {
-  //           type: "image/png",
-  //           lastModified: new Date().getTime(),
-  //         }),
-  //       ];
-  //       const shareData = {
-  //         files: filesArray,
-  //       };
-  //       if (navigator.canShare && navigator.canShare(shareData)) {
-  //         await navigator.share(shareData);
-  //       } else {
-  //         alert("no");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [ref]);
 
   return (
     <>
@@ -247,7 +189,9 @@ const ImageContainer = styled.div`
   bottom: 0%;
 `;
 const UserContainer = styled.div`
-  z-index: 1;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
   width: 207px;
   height: 26px;
   border-radius: 26px;
@@ -259,6 +203,10 @@ const UserContainer = styled.div`
 const ScoreContainer = styled.div`
   z-index: 1001;
   width: 207px;
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translate(-50%, 0);
 
   margin-top: 17px;
   display: flex;
@@ -295,9 +243,15 @@ const Btn = styled.button`
   text-align: center;
 `;
 const Footer = styled.div`
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  bottom: 8%;
+  transform: translate(-50%, 0);
   z-index: 1002;
   margin-top: 274px;
   display: flex;
+  justify-content: center;
   & h4 {
     color: var(--87, rgba(255, 255, 255, 0.87));
     text-align: center;
@@ -310,9 +264,9 @@ const Footer = styled.div`
 
 const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
   position: relative;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   border-radius: 15px;
   width: 289px;
   height: 430px;
