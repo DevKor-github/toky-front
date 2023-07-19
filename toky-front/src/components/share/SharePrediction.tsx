@@ -2,13 +2,16 @@
 import Image from "next/image";
 import { css, styled } from "styled-components";
 //data 받아오기
-import Character from "../../../public/image/ShareCharacter.png";
-import TestCharacter from "../../../public/image/TestCharacter.svg";
-import Divider from "../../../public/image/divider.svg";
-import ShareIcon from "../../../public/image/ShareIcon.svg";
-import DownloadIcon from "../../../public/image/DownloadIcon.svg";
-import CloseIcon from "../../../public/image/ShareClose.svg";
-import { toPng } from "html-to-image";
+// import Character from "../../../public/image/ShareCharacter.png";
+// import TestCharacter1 from "../../../public/image/TestCharacter.svg";
+// import TestCharacter2 from "../../../public/image/TestCharacter2.svg";
+// import TestCharacter3 from "../../../public/image/TestCharacter3.svg";
+
+// import Divider from "../../../public/image/divider.svg";
+// import ShareIcon from "../../../public/image/ShareIcon.svg";
+// import DownloadIcon from "../../../public/image/DownloadIcon.svg";
+// import CloseIcon from "../../../public/image/ShareClose.svg";
+// import { toPng } from "html-to-image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 
@@ -31,7 +34,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   const downloadImage = async () => {
     if (ref.current === null) return;
     setIsLoading(true);
-    const canvas = await html2canvas(ref.current, { useCORS: true, scale: 2 });
+    const canvas = await html2canvas(ref.current, { useCORS: true, scale: 4 });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     fakelinkDownload(imgUrl, "my-prediction");
     setIsLoading(false);
@@ -48,7 +51,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
 
   const shareImage = async () => {
     if (ref.current === null) return;
-    const canvas = await html2canvas(ref.current, { scale: 2 });
+    const canvas = await html2canvas(ref.current, { scale: 4 });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     const blob = await (await fetch(imgUrl)).blob();
 
@@ -91,14 +94,22 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                   <Footer>
                     <h4>2023정기전 승부예측 토키</h4>
 
-                    <Image
+                    {/* <Image
                       src={Divider}
                       alt="divider"
                       width={0}
                       height={12}
                       style={{ marginRight: "7px", marginLeft: "7px" }}
-                    ></Image>
-
+                    ></Image> */}
+                    <img
+                      src="/image/divider.svg"
+                      alt="divider"
+                      style={{
+                        width: "1px",
+                        marginRight: "7px",
+                        marginLeft: "7px",
+                      }}
+                    />
                     <h4>@toky_official</h4>
                   </Footer>
                   <ImageContainer>
@@ -107,43 +118,81 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                   alt="img"
                   style={{ width: "289px", verticalAlign: "bottom" }}
                 /> */}
+                    {/* 
                     <Image
-                      src={TestCharacter}
+                      src={TestCharacter2}
                       alt="charater"
                       width={289}
-                      style={{ verticalAlign: "bottom", zIndex: "1000" }}
+                      quality={100}
+                      style={{
+                        verticalAlign: "bottom",
+                        zIndex: "1000",
+                      }}
                       priority
-                    ></Image>
+                    ></Image> */}
+                    <img
+                      src="/image/ShareCharacter.png"
+                      alt="character"
+                      style={{
+                        width: "289px",
+                        verticalAlign: "bottom",
+                        zIndex: "1000",
+                      }}
+                    />
                   </ImageContainer>
                 </ShareCard>
               </ShareCardWrapper>
               <BtnContainer>
                 <Btn onClick={clickModal}>
-                  <Image
+                  <img
+                    src="/image/ShareClose.svg"
+                    alt="close icon"
+                    style={{
+                      width: "26px",
+                      paddingTop: "5px",
+                    }}
+                  />
+                  {/* <Image
                     src={CloseIcon}
                     alt="cloase icon"
                     width={26}
                     height={28}
                     style={{ paddingTop: "5px" }}
-                  ></Image>
+                  ></Image> */}
                 </Btn>
                 <Btn onClick={downloadImage}>
-                  <Image
+                  <img
+                    src="/image/DownloadIcon.svg"
+                    alt="Download icon"
+                    style={{
+                      width: "26px",
+                      paddingTop: "4px",
+                    }}
+                  />
+                  {/* <Image
                     src={DownloadIcon}
                     alt="Download icon"
                     width={26}
                     height={28}
                     style={{ paddingTop: "4px" }}
-                  ></Image>
+                  ></Image> */}
                 </Btn>
                 <Btn onClick={shareImage}>
-                  <Image
+                  <img
+                    src="/image/ShareIcon.svg"
+                    alt="Share icon"
+                    style={{
+                      width: "30px",
+                      paddingTop: "8px",
+                    }}
+                  />
+                  {/* <Image
                     src={ShareIcon}
                     alt="share icon"
                     width={30}
                     height={28}
                     style={{ paddingTop: "6px" }}
-                  ></Image>
+                  ></Image> */}
                 </Btn>
               </BtnContainer>
             </ModalContainer>
@@ -231,7 +280,7 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 207px;
-  transform: translateY(-50%);
+  transform: translateY(-100%);
 `;
 
 const Btn = styled.button`
