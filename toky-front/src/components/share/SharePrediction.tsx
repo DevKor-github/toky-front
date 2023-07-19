@@ -31,10 +31,19 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   if (data.numWinKorea == data.numWinYonsei) draw = true;
   else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
   const ref = useRef<HTMLDivElement>(null);
+  const isIpad = () => {
+    return /iPad/i.test(navigator.userAgent);
+  };
   const downloadImage = async () => {
     if (ref.current === null) return;
     setIsLoading(true);
-    const canvas = await html2canvas(ref.current, { useCORS: true, scale: 4 });
+    const canvas = await html2canvas(ref.current, {
+      allowTaint: true,
+      removeContainer: true,
+      useCORS: true,
+      scale: 4,
+      imageTimeout: 15000,
+    });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     fakelinkDownload(imgUrl, "my-prediction");
     setIsLoading(false);
@@ -51,7 +60,13 @@ export default function SharePrediction({ clickModal }: ShareProps) {
 
   const shareImage = async () => {
     if (ref.current === null) return;
-    const canvas = await html2canvas(ref.current, { scale: 4 });
+    const canvas = await html2canvas(ref.current, {
+      allowTaint: true,
+      removeContainer: true,
+      useCORS: true,
+      scale: 4,
+      imageTimeout: 15000,
+    });
     const imgUrl = canvas.toDataURL("image/png", 1.0);
     const blob = await (await fetch(imgUrl)).blob();
 
