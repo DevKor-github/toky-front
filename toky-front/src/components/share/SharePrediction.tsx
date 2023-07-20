@@ -18,9 +18,15 @@ import html2canvas from "html2canvas";
 export interface ShareProps {
   clickModal: () => void;
 }
-
+interface predictionData {
+  numWinKorea: number;
+  numWinYonsei: number;
+  numDraw: number;
+}
 export default function SharePrediction({ clickModal }: ShareProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  /*
+  고정값 테스트용
   const data = {
     numWinKorea: 2,
     numWinYonsei: 1,
@@ -29,14 +35,33 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   let winKorea = false;
   let draw = false;
   if (data.numWinKorea == data.numWinYonsei) draw = true;
-  else if (data.numWinKorea > data.numWinYonsei) winKorea = true;
+  else if (data.numWinKorea > data.numWinYonsei) winKorea = true;*/
+  const [data, setPredictionData] = useState<predictionData | null>(null);
+  const [winKorea, setWinKorea] = useState(false);
+  const [draw, setDraw] = useState(false);
+
+  useEffect(() => {
+    //예측을 완료해주세요 창만들기
+    //여기 수정해주세용
+    fetch("http://localhost:8080/bets/share", {
+      headers: { "Access-Control-Allow-Origin": "http://localhost" },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setPredictionData(data);
+        if (data.numWinKorea == data.numWinYonsei) setDraw(true);
+        else if (data.numWinKorea > data.numWinYonsei) setWinKorea(true);
+      });
+    setIsLoading(false);
+  }, []);
+
   const ref = useRef<HTMLDivElement>(null);
-  const isIpad = () => {
-    return /iPad/i.test(navigator.userAgent);
-  };
   const downloadImage = async () => {
     if (ref.current === null) return;
     setIsLoading(true);
+
     const canvas = await html2canvas(ref.current, {
       allowTaint: true,
       removeContainer: true,
@@ -100,22 +125,19 @@ export default function SharePrediction({ clickModal }: ShareProps) {
 
                   <ScoreContainer>
                     <h4>고려대학교</h4>
-                    <h2 className="score">{data.numWinKorea}</h2>
+                    {data !== null && (
+                      <h2 className="score">{data.numWinKorea}</h2>
+                    )}
                     <h1>:</h1>
-                    <h2 className="score">{data.numWinYonsei}</h2>
+                    {data !== null && (
+                      <h2 className="score">{data.numWinYonsei}</h2>
+                    )}
                     <h4>연세대학교</h4>
                   </ScoreContainer>
 
                   <Footer>
                     <h4>2023정기전 승부예측 토키</h4>
 
-                    {/* <Image
-                      src={Divider}
-                      alt="divider"
-                      width={0}
-                      height={12}
-                      style={{ marginRight: "7px", marginLeft: "7px" }}
-                    ></Image> */}
                     <img
                       src="/image/divider.svg"
                       alt="divider"
@@ -128,23 +150,6 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                     <h4>@toky_official</h4>
                   </Footer>
                   <ImageContainer>
-                    {/* <img
-                  src="/image/TestCharacter.svg"
-                  alt="img"
-                  style={{ width: "289px", verticalAlign: "bottom" }}
-                /> */}
-                    {/* 
-                    <Image
-                      src={TestCharacter2}
-                      alt="charater"
-                      width={289}
-                      quality={100}
-                      style={{
-                        verticalAlign: "bottom",
-                        zIndex: "1000",
-                      }}
-                      priority
-                    ></Image> */}
                     <img
                       src="/image/ShareCharacter.png"
                       alt="character"
@@ -167,13 +172,6 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                       paddingTop: "5px",
                     }}
                   />
-                  {/* <Image
-                    src={CloseIcon}
-                    alt="cloase icon"
-                    width={26}
-                    height={28}
-                    style={{ paddingTop: "5px" }}
-                  ></Image> */}
                 </Btn>
                 <Btn onClick={downloadImage}>
                   <img
@@ -184,13 +182,6 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                       paddingTop: "4px",
                     }}
                   />
-                  {/* <Image
-                    src={DownloadIcon}
-                    alt="Download icon"
-                    width={26}
-                    height={28}
-                    style={{ paddingTop: "4px" }}
-                  ></Image> */}
                 </Btn>
                 <Btn onClick={shareImage}>
                   <img
@@ -201,13 +192,6 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                       paddingTop: "8px",
                     }}
                   />
-                  {/* <Image
-                    src={ShareIcon}
-                    alt="share icon"
-                    width={30}
-                    height={28}
-                    style={{ paddingTop: "6px" }}
-                  ></Image> */}
                 </Btn>
               </BtnContainer>
             </ModalContainer>
