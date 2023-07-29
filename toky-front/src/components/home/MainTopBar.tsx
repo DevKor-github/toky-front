@@ -58,7 +58,6 @@ export default function MainTopBar() {
 				<Image src={MainArrow} alt="main arrow" width={9} height={14} />
 			</Link>
 		</MainTopBarWrapper>
-		//</MainTopBarWrapper>
 	);
 }
 
