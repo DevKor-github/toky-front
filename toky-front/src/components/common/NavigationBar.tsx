@@ -10,37 +10,34 @@ export default function NavigationBar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  return (
-    <Wrapper>
-      <Image src={Logo} alt="logo" width={60} />
-      <NavigationWrapper>
-        <div style={{ display: "flex", gap: 23 }}>
-          <NavigationItem
-            selected={pathname === "/analysis"}
-            onClick={() => {
-              router.push("/analysis");
+	return (
+		<Wrapper>
+			<Image src={Logo} alt='logo' style={{cursor:"pointer"}} width={52} onClick={()=>{router.push('/')}} />
+			<NavigationWrapper>
+				<div style={{ display: 'flex', gap: 23 }}>
+					<NavigationItem
+						selected={pathname === '/analysis'}
+						onClick={() => {
+							router.push('/analysis');
+						}}
+					>
+						전력분석
+					</NavigationItem>
+					<NavigationItem selected={pathname === '/bets'} onClick={() => router.push('/bets')}>
+						승부예측
+					</NavigationItem>
+					<NavigationItem
+						selected={pathname === '/ranking'}
+						onClick={() => router.push('/ranking')}
+					>
+						랭킹
+					</NavigationItem>
+				</div>
+				<SideBar />
+			</NavigationWrapper>
+		</Wrapper>
+	);
 
-            }}
-          >
-            전력분석
-          </NavigationItem>
-          <NavigationItem
-            selected={pathname === "/bets"}
-            onClick={() => router.push("/bets")}
-          >
-            승부예측
-          </NavigationItem>
-          <NavigationItem
-            selected={pathname === "/ranking"}
-            onClick={() => router.push("/ranking")}
-          >
-            랭킹
-          </NavigationItem>
-        </div>
-        <SideBar />
-      </NavigationWrapper>
-    </Wrapper>
-  );
 }
 
 const Wrapper = styled.div`
@@ -64,11 +61,12 @@ const NavigationWrapper = styled.div`
 `;
 
 const NavigationItem = styled.div<{ selected: boolean }>`
-  display: flex;
-  align-items: center;
-  height: 46px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.38);
+	display: flex;
+	align-items: center;
+	height: 46px;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 0.38);
+	cursor: pointer;
 
   ${({ selected }) =>
     selected && "color: #ffffff; border-bottom: 3px solid #ffffff;"}
