@@ -54,22 +54,32 @@ const DivBar = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.15);
 `;
 const NavWrapper = styled.div`
-  margin-left: 26px;
-  margin-top: 30px;
+
+	margin-left: 26px;
+	margin-top: 50px;
 `;
 const NavItem = styled.div`
-  margin-top: 40px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  /* identical to box height */
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.06em;
+	padding-top: 15px;
+	margin-top: 5px;
+	padding-bottom: 15px;
+	margin-bottom: 5px;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 20px;
+	/* identical to box height */
+	display: flex;
+	align-items: center;
+	letter-spacing: -0.06em;
 
-  /* 투명도_87 */
-  color: rgba(255, 255, 255, 0.87);
+	/* 투명도_87 */
+	color: rgba(255, 255, 255, 0.87);
+	cursor:pointer;
+
+	&:hover {
+		color: #f8f8f8;
+		text-decoration:underline;
+	}
 `;
 
 const InfoWrapper = styled.div`

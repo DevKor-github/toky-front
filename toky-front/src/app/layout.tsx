@@ -8,6 +8,7 @@ const NotoSansKR = Noto_Sans_KR({
   subsets: ["latin"],
 });
 
+
 export const metadata = {
   title: "신나는 고연전 승부예측, TOKY",
   description: "고연전 승부예측하고 경품 받자!",
@@ -23,7 +24,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={NotoSansKR.className}>
+
+      <head>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+      </head>
+      <body>
         <div
           style={{
             background: "#121212",
@@ -36,6 +41,7 @@ export default function RootLayout({
               <div id="portal"></div>
             </StyledComponentsRegistry>
           </AuthContextProvider>
+
         </div>
       </body>
     </html>

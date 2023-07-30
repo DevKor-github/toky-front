@@ -100,6 +100,7 @@ const NavigationItem = styled.div<{
     if (props.match === props.index) {
       return css`
         color: white;
+        font-weight: 700;
       `;
     }
   }}/* ${({ selected }) => selected && "color: #ffffff; 	font-weight: 700;"} */
