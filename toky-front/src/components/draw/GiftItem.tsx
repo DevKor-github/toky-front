@@ -12,6 +12,8 @@ interface Props {
   point: number;
   img: string;
   type: number;
+  totalDraw: number;
+  userDraw: number;
   addPointUse: (point: number) => void;
   checkDrawPossible: (point: number) => boolean;
 }
@@ -21,6 +23,8 @@ export default function GiftItem({
   point,
   img,
   type,
+  totalDraw,
+  userDraw,
   addPointUse,
   checkDrawPossible,
 }: Props) {
@@ -42,6 +46,10 @@ export default function GiftItem({
 
   return (
     <Wrapper type={type}>
+      <DrawCount>
+        현재 응모 수 {totalDraw}번 / 내 응모 수 {userDraw}번
+      </DrawCount>
+      <Space h={10} />
       <Title>{title}</Title>
       <Space h={4} />
       <Point>{point}p</Point>
@@ -64,7 +72,7 @@ const Wrapper = styled.div<{ type: number }>`
   width: 168px;
   height: 228.2px;
   border-radius: 6px;
-  padding: 24px 0 11px 0;
+  padding: 9px 0 11px 0;
 
   background: ${({ type }) =>
     type === 1
@@ -72,6 +80,14 @@ const Wrapper = styled.div<{ type: number }>`
       : type === 2
       ? "linear-gradient(180deg, #B7B7B7 0%, #F5F5F5 50.52%, #717171 100%)"
       : "linear-gradient(180deg, #B6A67E 0%, #F6EED7 50.52%, #826E3E 100%)"};
+`;
+
+const DrawCount = styled.div`
+  color: #ffffff;
+  font-family: Spoqa Han Sans Neo;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: -0.36px;
 `;
 
 const Title = styled.div`

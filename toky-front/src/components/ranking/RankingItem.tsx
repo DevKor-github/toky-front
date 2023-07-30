@@ -5,14 +5,9 @@ import Image from "next/image";
 import defaultProfile from "../../../public/image/defaultProfile.svg";
 import { RankingItemT } from "./RankingInfo";
 
-interface Props {
-  item: RankingItemT;
-  idx: number;
-}
-
-export default function RankingItem({ item, idx }: Props) {
+export default function RankingItem(props: RankingItemT) {
   return (
-    <Wrapper key={idx}>
+    <Wrapper>
       <Flex>
         <span
           style={{
@@ -20,12 +15,12 @@ export default function RankingItem({ item, idx }: Props) {
             fontSize: 25,
           }}
         >
-          {idx}
+          {props.rank}
         </span>
         <Space w={17} />
-        <ProfileImage univ={item.univ}>
+        <ProfileImage univ={props.university}>
           <Image
-            src={item.imageUrl || defaultProfile}
+            src={defaultProfile}
             alt="profile-image"
             style={{ width: 37, height: 37, borderRadius: 20 }}
           />
@@ -33,7 +28,7 @@ export default function RankingItem({ item, idx }: Props) {
         <Space w={9} />
         <Flex style={{ flexDirection: "column", alignItems: "flex-start" }}>
           <span style={{ fontSize: 10 }}>
-            {item.univ === 0 ? "고려대학교" : "연세대학교"}
+            {props.university === 0 ? "고려대학교" : "연세대학교"}
           </span>
           <span style={{ fontSize: 16 }}>유저이름열자열자열자</span>
         </Flex>

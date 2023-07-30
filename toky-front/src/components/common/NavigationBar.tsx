@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { usePathname, useRouter } from 'next/navigation';
-import styled from 'styled-components';
-import Image from 'next/image';
-import Logo from '../../../public/image/logo.svg';
-import SideBar from './SideBar';
+import { usePathname, useRouter } from "next/navigation";
+import styled from "styled-components";
+import Image from "next/image";
+import Logo from "../../../public/image/logo.svg";
+import SideBar from "./SideBar";
 
 export default function NavigationBar() {
-	const pathname = usePathname();
-	const router = useRouter();
+  const pathname = usePathname();
+  const router = useRouter();
 
 	return (
 		<Wrapper>
@@ -40,23 +40,23 @@ export default function NavigationBar() {
 }
 
 const Wrapper = styled.div`
-	position: absolute;
-	top: 0px;
-	width: 100%;
-	height: 46px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0px 23px;
-	background-color: #121212;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-	z-index: 10;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 46px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 23px;
+  background-color: #121212;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 10;
 `;
 
 const NavigationWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 25px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
 `;
 
 const NavigationItem = styled.div<{ selected: boolean }>`
@@ -67,5 +67,6 @@ const NavigationItem = styled.div<{ selected: boolean }>`
 	color: rgba(255, 255, 255, 0.38);
 	cursor: pointer;
 
-	${({ selected }) => selected && 'color: #ffffff; border-bottom: 3px solid #ffffff;'}
+  ${({ selected }) =>
+    selected && "color: #ffffff; border-bottom: 3px solid #ffffff;"}
 `;

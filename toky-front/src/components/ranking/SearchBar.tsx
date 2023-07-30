@@ -31,8 +31,6 @@ export default function SearchBar() {
 }
 
 const Wrapper = styled.div`
-  position: fixed;
-  bottom: 0px;
   display: flex;
   justify-content: space-between;
   width: 100%;

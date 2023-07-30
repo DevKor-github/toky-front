@@ -8,7 +8,6 @@ import MainArrow from "../../../public/image/MainArrow.svg";
 
 export default function MainTopBar() {
   return (
-    //<MainTopBarWrapper>
     <MainTopBarWrapper
       className="MainTopBarWrapper"
       initial={{
@@ -59,17 +58,16 @@ export default function MainTopBar() {
         <Image src={MainArrow} alt="main arrow" width={9} height={14} />
       </Link>
     </MainTopBarWrapper>
-    //</MainTopBarWrapper>
   );
 }
 
 const MainTopBarWrapper = styled(motion.div)`
-  position: fixed;
-  color: white;
-  min-width: 375px;
-  width: 100%;
-  height: 58px;
-  background: #121212;
-  box-shadow: 0px 4px 4px rgba(18, 18, 18, 0.25);
-  z-index: 3;
+	position: fixed;
+	color: white;
+	min-width: 375px;
+	width: 100%;
+	height: 58px;
+	background: #121212;
+	box-shadow: 0px 4px 4px rgba(18, 18, 18, 0.25);
+	z-index: 3;
 `;

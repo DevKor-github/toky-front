@@ -5,10 +5,10 @@ import UserInfo from "./UserInfo";
 import RankingItem from "./RankingItem";
 
 export type RankingItemT = {
-  univ: number;
-  userName: string;
+  university: number;
+  name: string;
   point: number;
-  imageUrl?: string;
+  rank: number;
 };
 
 export default function RankingInfo() {
@@ -18,7 +18,7 @@ export default function RankingInfo() {
       <Divider />
       <Ranking>
         {mockData.map((item, idx) => (
-          <RankingItem key={idx} item={item} idx={idx + 1} />
+          <RankingItem key={idx} {...item} />
         ))}
       </Ranking>
     </Wrapper>
@@ -43,65 +43,75 @@ const Divider = styled.div`
 `;
 
 const Ranking = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  height: calc(100vh - 246px);
 `;
 
 const mockData: RankingItemT[] = [
   {
-    univ: 0,
-    userName: "유저이름열자열자",
+    university: 0,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 1,
   },
   {
-    univ: 1,
-    userName: "유저이름열자열자",
+    university: 1,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 2,
   },
   {
-    univ: 0,
-    userName: "유저이름열자열자",
+    university: 0,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 3,
   },
   {
-    univ: 0,
-    userName: "유저이름열자열자",
+    university: 0,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 4,
   },
   {
-    univ: 0,
-    userName: "유저이름열자열자",
+    university: 0,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 5,
   },
   {
-    univ: 1,
-    userName: "유저이름열자열자",
+    university: 1,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 6,
   },
   {
-    univ: 1,
-    userName: "유저이름열자열자",
+    university: 1,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 7,
   },
   {
-    univ: 0,
-    userName: "유저이름열자열자",
+    university: 0,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 8,
   },
   {
-    univ: 1,
-    userName: "유저이름열자열자",
+    university: 1,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 9,
   },
   {
-    univ: 0,
-    userName: "유저이름열자열자",
+    university: 0,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 10,
   },
   {
-    univ: 1,
-    userName: "유저이름열자열자",
+    university: 1,
+    name: "유저이름열자열자",
     point: 300,
+    rank: 11,
   },
 ];

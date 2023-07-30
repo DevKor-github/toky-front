@@ -6,14 +6,14 @@ import MainTopBar from "@/components/home/MainTopBar";
 import PointInfo from "@/components/home/PointInfo";
 
 export default function Home() {
-  return (
-    <div>
-      <MainTopBar />
-      <MainInfo />
-      <BetInfo />
-      <PointInfo />
-      <DrawInfo />
-      <MainFooter />
-    </div>
-  );
+	return (
+		<div>
+			<MainTopBar />
+			<MainInfo />
+			<BetInfo />
+			<PointInfo />
+			<DrawInfo />
+			<MainFooter />
+		</div>
+	);
 }
