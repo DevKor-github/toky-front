@@ -12,13 +12,13 @@ export default function NavigationBar() {
 
 	return (
 		<Wrapper>
-			<Image src={Logo} alt='logo' />
+			<Image src={Logo} alt='logo' style={{cursor:"pointer"}} width={52} onClick={()=>{router.push('/')}} />
 			<NavigationWrapper>
 				<div style={{ display: 'flex', gap: 23 }}>
 					<NavigationItem
-						selected={pathname === '/analyze'}
+						selected={pathname === '/analysis'}
 						onClick={() => {
-							router.push('/analyze');
+							router.push('/analysis');
 						}}
 					>
 						전력분석
@@ -63,8 +63,9 @@ const NavigationItem = styled.div<{ selected: boolean }>`
 	display: flex;
 	align-items: center;
 	height: 46px;
-	font-weight: 500;
+	font-weight: 400;
 	color: rgba(255, 255, 255, 0.38);
+	cursor: pointer;
 
 	${({ selected }) => selected && 'color: #ffffff; border-bottom: 3px solid #ffffff;'}
 `;

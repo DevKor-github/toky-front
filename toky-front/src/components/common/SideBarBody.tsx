@@ -53,10 +53,13 @@ const DivBar = styled.div`
 `;
 const NavWrapper = styled.div`
 	margin-left: 26px;
-	margin-top: 30px;
+	margin-top: 50px;
 `;
 const NavItem = styled.div`
-	margin-top: 40px;
+	padding-top: 15px;
+	margin-top: 5px;
+	padding-bottom: 15px;
+	margin-bottom: 5px;
 	font-style: normal;
 	font-weight: 400;
 	font-size: 16px;
@@ -68,6 +71,12 @@ const NavItem = styled.div`
 
 	/* 투명도_87 */
 	color: rgba(255, 255, 255, 0.87);
+	cursor:pointer;
+
+	&:hover {
+		color: #f8f8f8;
+		text-decoration:underline;
+	}
 `;
 
 const InfoWrapper = styled.div`
