@@ -1,17 +1,6 @@
 "use client";
 import Image from "next/image";
 import { css, styled } from "styled-components";
-//data 받아오기
-// import Character from "../../../public/image/ShareCharacter.png";
-// import TestCharacter1 from "../../../public/image/TestCharacter.svg";
-// import TestCharacter2 from "../../../public/image/TestCharacter2.svg";
-// import TestCharacter3 from "../../../public/image/TestCharacter3.svg";
-
-// import Divider from "../../../public/image/divider.svg";
-// import ShareIcon from "../../../public/image/ShareIcon.svg";
-// import DownloadIcon from "../../../public/image/DownloadIcon.svg";
-// import CloseIcon from "../../../public/image/ShareClose.svg";
-// import { toPng } from "html-to-image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 
@@ -37,13 +26,13 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   if (data.numWinKorea == data.numWinYonsei) draw = true;
   else if (data.numWinKorea > data.numWinYonsei) winKorea = true;*/
   const [data, setPredictionData] = useState<predictionData | null>(null);
-  const [winKorea, setWinKorea] = useState(false);
-  const [draw, setDraw] = useState(false);
-
+  const [winKorea, setWinKorea] = useState<boolean>(false);
+  const [draw, setDraw] = useState<boolean>(false);
+  const [completePredict, setCompletePredict] = useState<boolean>(false);
   useEffect(() => {
     //예측을 완료해주세요 창만들기
     //여기 수정해주세용
-    fetch("http://localhost:8080/bets/share", {
+    fetch("http://localhost:3080/bets/share", {
       headers: { "Access-Control-Allow-Origin": "http://localhost" },
     })
       .then((response) => {
@@ -51,6 +40,8 @@ export default function SharePrediction({ clickModal }: ShareProps) {
       })
       .then((data) => {
         setPredictionData(data);
+        const total = data.numWinKorea + data.numWinYonsei + data.numDraw;
+        if (total >= 5) setCompletePredict(true);
         if (data.numWinKorea == data.numWinYonsei) setDraw(true);
         else if (data.numWinKorea > data.numWinYonsei) setWinKorea(true);
       });
@@ -111,93 +102,103 @@ export default function SharePrediction({ clickModal }: ShareProps) {
     }
   };
 
+  const renderPredictCard = () => {
+    return (
+      <SaveArea id="predictionCard">
+        <ModalContainer>
+          <ShareCardWrapper ref={ref}>
+            <ShareCard $winKorea={winKorea} $draw={draw}>
+              <UserContainer className="userContainer">
+                <h3>유저이름최대열자열자님의 예측</h3>
+              </UserContainer>
+
+              <ScoreContainer>
+                <h4>고려대학교</h4>
+                {data !== null && <h2 className="score">{data.numWinKorea}</h2>}
+                <h1>:</h1>
+                {data !== null && (
+                  <h2 className="score">{data.numWinYonsei}</h2>
+                )}
+                <h4>연세대학교</h4>
+              </ScoreContainer>
+
+              <Footer>
+                <h4>2023정기전 승부예측 토키</h4>
+                <img
+                  src="/image/divider.svg"
+                  alt="divider"
+                  style={{
+                    width: "1px",
+                    marginRight: "7px",
+                    marginLeft: "7px",
+                  }}
+                />
+                <h4>@toky_official</h4>
+              </Footer>
+              <ImageContainer>
+                <img
+                  src="/image/ShareCharacter.png"
+                  alt="character"
+                  style={{
+                    width: "289px",
+                    verticalAlign: "bottom",
+                    zIndex: "1000",
+                  }}
+                />
+              </ImageContainer>
+            </ShareCard>
+          </ShareCardWrapper>
+          <BtnContainer>
+            <Btn onClick={clickModal}>
+              <img
+                src="/image/ShareClose.svg"
+                alt="close icon"
+                style={{
+                  width: "26px",
+                  paddingTop: "5px",
+                }}
+              />
+            </Btn>
+            <Btn onClick={downloadImage}>
+              <img
+                src="/image/DownloadIcon.svg"
+                alt="Download icon"
+                style={{
+                  width: "26px",
+                  paddingTop: "4px",
+                }}
+              />
+            </Btn>
+            <Btn onClick={shareImage}>
+              <img
+                src="/image/ShareIcon.svg"
+                alt="Share icon"
+                style={{
+                  width: "30px",
+                  paddingTop: "8px",
+                }}
+              />
+            </Btn>
+          </BtnContainer>
+        </ModalContainer>
+      </SaveArea>
+    );
+  };
+  const notCompletePrediction = () => {
+    return (
+      <NotCompleteModalContainer>
+        <p>예측을 완료해주세요</p>
+        <CheckContainer onClick={clickModal}>확인</CheckContainer>
+      </NotCompleteModalContainer>
+    );
+  };
+
   return (
     <>
       <ModalWrapper>
-        {!isLoading && (
-          <SaveArea id="predictionCard">
-            <ModalContainer>
-              <ShareCardWrapper ref={ref}>
-                <ShareCard $winKorea={winKorea} $draw={draw}>
-                  <UserContainer className="userContainer">
-                    <h3>유저이름최대열자열자님의 예측</h3>
-                  </UserContainer>
-
-                  <ScoreContainer>
-                    <h4>고려대학교</h4>
-                    {data !== null && (
-                      <h2 className="score">{data.numWinKorea}</h2>
-                    )}
-                    <h1>:</h1>
-                    {data !== null && (
-                      <h2 className="score">{data.numWinYonsei}</h2>
-                    )}
-                    <h4>연세대학교</h4>
-                  </ScoreContainer>
-
-                  <Footer>
-                    <h4>2023정기전 승부예측 토키</h4>
-
-                    <img
-                      src="/image/divider.svg"
-                      alt="divider"
-                      style={{
-                        width: "1px",
-                        marginRight: "7px",
-                        marginLeft: "7px",
-                      }}
-                    />
-                    <h4>@toky_official</h4>
-                  </Footer>
-                  <ImageContainer>
-                    <img
-                      src="/image/ShareCharacter.png"
-                      alt="character"
-                      style={{
-                        width: "289px",
-                        verticalAlign: "bottom",
-                        zIndex: "1000",
-                      }}
-                    />
-                  </ImageContainer>
-                </ShareCard>
-              </ShareCardWrapper>
-              <BtnContainer>
-                <Btn onClick={clickModal}>
-                  <img
-                    src="/image/ShareClose.svg"
-                    alt="close icon"
-                    style={{
-                      width: "26px",
-                      paddingTop: "5px",
-                    }}
-                  />
-                </Btn>
-                <Btn onClick={downloadImage}>
-                  <img
-                    src="/image/DownloadIcon.svg"
-                    alt="Download icon"
-                    style={{
-                      width: "26px",
-                      paddingTop: "4px",
-                    }}
-                  />
-                </Btn>
-                <Btn onClick={shareImage}>
-                  <img
-                    src="/image/ShareIcon.svg"
-                    alt="Share icon"
-                    style={{
-                      width: "30px",
-                      paddingTop: "8px",
-                    }}
-                  />
-                </Btn>
-              </BtnContainer>
-            </ModalContainer>
-          </SaveArea>
-        )}
-        {isLoading && <h1>loading</h1>}
+        {!completePredict && notCompletePrediction()}
+        {completePredict && !isLoading && renderPredictCard()}
+        {completePredict && isLoading && <h1>loading</h1>}
       </ModalWrapper>
     </>
   );
@@ -401,4 +402,34 @@ const ShareCardWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: black;
+`;
+
+const NotCompleteModalContainer = styled.div`
+  border-radius: 6px;
+  background: var(--white-0, #fff);
+  /* 그림자 */
+  box-shadow: 0px 4px 4px 0px rgba(18, 18, 18, 0.25);
+  width: 350px;
+  height: 214px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  p {
+    color: var(--black-6, #2c2c2c);
+    font-family: Spoqa Han Sans Neo;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -1.2px;
+    margin-top: 68px;
+  }
+`;
+const CheckContainer = styled.button`
+  width: 310px;
+  height: 46px;
+  border-radius: 4px;
+  background: #4c0eb0;
+  margin-top: 51px;
 `;
