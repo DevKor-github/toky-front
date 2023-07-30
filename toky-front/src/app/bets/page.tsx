@@ -1,15 +1,15 @@
 "use client";
 import BetBanner from "@/components/bets/BetBanner";
-import BetTopBar from "@/components/bets/BetTopBar";
 import MatchNavBar from "@/components/bets/MatchNavBar";
 import QuestionList from "@/components/bets/QuestionList";
+import AuthContext from "@/components/common/AuthContext";
 import NavigationBar from "@/components/common/NavigationBar";
 import SharePrediction from "@/components/share/SharePrediction";
+import client from "@/lib/httpClient";
 import withAuth from "@/lib/withAuth";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { styled } from "styled-components";
 
 export type QuestionType = {
 	id: number;
@@ -40,8 +40,24 @@ function Bets() {
 	const handleMatch = (m: number) => {
 		setMatch(m);
 	};
+	const authCtx = useContext(AuthContext);
 
 	// 최초 로드 및 match 변경 시 -> 질문 가져오기
+	useEffect(() => {
+		if (authCtx.nickname === "") {
+			client
+				.get("/auth/profile")
+				.then((res) => res.data)
+				.then((user) => {
+					authCtx.setNickname(user.name);
+					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
+					authCtx.setUniv(uni);
+				})
+				.catch((err) => {
+					window.location.href = "/login";
+				});
+		}
+	}, []);
 	useEffect(() => {
 		if (process.env.NEXT_PUBLIC_API_BETS_QUESTIONS) {
 			setIsLoading(true);
@@ -62,7 +78,6 @@ function Bets() {
 				});
 		}
 	}, [match]);
-
 	return (
 		<>
 			<NavigationBar />
