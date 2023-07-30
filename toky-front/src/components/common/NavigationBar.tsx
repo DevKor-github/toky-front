@@ -37,6 +37,7 @@ export default function NavigationBar() {
 			</NavigationWrapper>
 		</Wrapper>
 	);
+
 }
 
 const Wrapper = styled.div`

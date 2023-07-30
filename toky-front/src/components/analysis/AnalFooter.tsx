@@ -12,7 +12,7 @@ export default function AnalFooter() {
         </Link>
       </MoreInfo>
       <BetLink>
-        <Link href="/bets/0">
+        <Link href="/bets">
           <H4>배팅하러 가기</H4>
         </Link>
       </BetLink>
