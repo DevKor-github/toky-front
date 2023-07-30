@@ -16,9 +16,10 @@ export default function NavigationBar() {
       <NavigationWrapper>
         <div style={{ display: "flex", gap: 23 }}>
           <NavigationItem
-            selected={pathname === "/analyze"}
+            selected={pathname === "/analysis"}
             onClick={() => {
-              router.push("/analyze");
+              router.push("/analysis");
+
             }}
           >
             전력분석

@@ -34,7 +34,7 @@ export default function PlayerInfo({ match }: MatchProps) {
       {/* 더 알아보기 버튼 */}
       <MorePlayerWrapper>
         <Link
-          href="/"
+          href="/analysis-more"
           style={{
             display: "flex",
             alignItems: "center",
