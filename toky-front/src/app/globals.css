@@ -8,6 +8,7 @@
       format("woff"),
     url("https://cdn.jsdelivr.net/gh/spoqa/spoqa-han-sans@latest/Subset/SpoqaHanSansNeo/SpoqaHanSansNeo-Bold.ttf")
       format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -20,6 +21,7 @@
       format("woff"),
     url("https://cdn.jsdelivr.net/gh/spoqa/spoqa-han-sans@latest/Subset/SpoqaHanSansNeo/SpoqaHanSansNeo-Medium.ttf")
       format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -32,6 +34,7 @@
       format("woff"),
     url("https://cdn.jsdelivr.net/gh/spoqa/spoqa-han-sans@latest/Subset/SpoqaHanSansNeo/SpoqaHanSansNeo-Regular.ttf")
       format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -44,6 +47,7 @@
       format("woff"),
     url("https://cdn.jsdelivr.net/gh/spoqa/spoqa-han-sans@latest/Subset/SpoqaHanSansNeo/SpoqaHanSansNeo-Light.ttf")
       format("truetype");
+  font-display: swap;
 }
 
 * {
