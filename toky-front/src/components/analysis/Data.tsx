@@ -96,8 +96,8 @@ export const SCHEDULE: scheduleInfo[] = [
     location: "고양 종합운동장",
   },
   {
-    playDate: "2023.0908(금) 야구,빙구,농구",
-    location: "2023.0909(토) 럭비 축구 ",
+    playDate: "",
+    location: "",
   },
 ];
 

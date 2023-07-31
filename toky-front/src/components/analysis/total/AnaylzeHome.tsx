@@ -27,7 +27,8 @@ export default function AnalyzeHome() {
 }
 
 const Wrapper = styled.div`
-  position: relative;
+  margin-top: 43px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,8 +36,7 @@ const Wrapper = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  position: relative;
-  top: 43px;
+  margin-bottom: 25px;
   font-weight: 700;
   font-size: 20px;
   line-height: 25.04px;
@@ -44,11 +44,10 @@ const TitleContainer = styled.div`
 `;
 
 const HistoryContainer = styled.div`
-  position: relative;
   display: flex;
-  top: 81px;
   color: white;
-
+  padding-top: 13px;
+  padding-bottom: 10px;
   align-items: center;
   text-align: center;
 
@@ -70,7 +69,6 @@ const HistoryTitle = styled.div`
 const Divider = styled.div<{ top: number }>`
   width: 350px;
   height: 0px;
-  position: relative;
   top: ${({ top }) => top}px;
   border: 1px solid rgba(255, 255, 255, 0.15);
 `;
