@@ -4,15 +4,17 @@ import styled from "styled-components";
 import Image from "next/image";
 import defaultProfile from "../../../public/image/defaultProfile.svg";
 import arrowRight from "../../../public/image/arrow_right.svg";
+import { useContext } from "react";
+import AuthContext from "../common/AuthContext";
 
 export default function UserInfo() {
-  const name = "이름여섯글자";
-
+  const authCtx = useContext(AuthContext);
+  const univ = authCtx.university === "고려대학교" ? 0 : 1;
   return (
     <Wrapper>
       <Flex style={{ alignItems: "flex-start" }}>
         <div className="small">
-          <div style={{ display: "inline-block" }}>{name}</div>{" "}
+          <div style={{ display: "inline-block" }}>{authCtx.nickname}</div>{" "}
           <div style={{ display: "inline-block" }}> 600명 중</div>
         </div>
         <span className="large">
@@ -21,14 +23,14 @@ export default function UserInfo() {
         <span className="underlined">2000points</span>
       </Flex>
       <Flex style={{ gap: 7 }}>
-        <ProfileImage univ={0}>
+        <ProfileImage univ={univ}>
           <Image
             src={defaultProfile}
             alt="profile-image"
             style={{ width: 61, height: 61, borderRadius: 33 }}
           />
         </ProfileImage>
-        <span>{name}</span>
+        <span>{authCtx.nickname}</span>
       </Flex>
       <ShareButton>
         <span>내 랭킹 공유하기</span>
