@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { TIME } from "../Data";
 import { Countdown, TimerWrapper } from "./TimerComponent";
 
