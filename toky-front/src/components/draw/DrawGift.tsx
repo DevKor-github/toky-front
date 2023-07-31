@@ -4,14 +4,15 @@ import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
 import DrawModal from "./DrawModal";
-
-export default function DrawGift() {
-  const totalPoint = 2000;
+interface DrawGiftProps {
+  remainingPoint: number;
+}
+export default function DrawGift({ remainingPoint }: DrawGiftProps) {
   const [pointUse, setPointUse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const checkDrawPossible = (point: number) => {
-    if (totalPoint - pointUse - point < 0) return false;
+    if (remainingPoint - pointUse - point < 0) return false;
     return true;
   };
 
@@ -51,7 +52,7 @@ export default function DrawGift() {
         >
           <span className="point">응모 시 잔여 포인트</span>
           <span className="point" style={{ fontSize: 20 }}>
-            {totalPoint - pointUse}p
+            {remainingPoint - pointUse}p
           </span>
         </Flex>
         <Space h={8} />
