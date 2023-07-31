@@ -1,9 +1,7 @@
 "use client";
 import Image from "next/image";
 import { styled } from "styled-components";
-import AnalBannerImage from "../../../public/image/AnalBannerImage.png";
 import Link from "next/link";
-import Timer from "./Timer";
 import { MatchProps } from "./MatchType";
 import { SCHEDULE } from "./Data";
 import React from "react";
@@ -17,6 +15,14 @@ function AnalBanner({ match }: MatchProps) {
   //progress 받아오기
   //match별 결과 받아오기
   let progress = 0;
+  const AnalBannerImage = [
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+  ];
   const rederTimer = () => {
     if (match === 0) {
       return <BaseballTimer />;
@@ -34,7 +40,7 @@ function AnalBanner({ match }: MatchProps) {
     <BannerWrapper>
       <BannerImageWrapper>
         <Image
-          src={AnalBannerImage}
+          src={AnalBannerImage[match]}
           fill
           style={{ objectFit: "cover" }}
           alt="Analysis Banner Image"
@@ -100,10 +106,9 @@ const ProgressWrapper = styled.div`
   /* identical to box height */
   color: white;
   position: absolute;
-  top: 55%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 247px;
 `;
 const MatchTimeInfo = styled.div`
   position: absolute;

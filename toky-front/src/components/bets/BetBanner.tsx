@@ -2,7 +2,6 @@
 //import "./BetBanner.css";
 import Image from "next/image";
 import { styled } from "styled-components";
-import BannerImage from "./../../../public/image/bannerimage.jpeg";
 import KLogo from "./../../../public/image/koreaLogo.webp";
 import YLogo from "./../../../public/image/yonseiLogo.webp";
 import ShareArrow from "../../../public/image/ShareArrow.svg";
@@ -34,14 +33,20 @@ export default function BetBanner({ match, clickModal }: BannerProps) {
       time: "12:30",
     },
   ];
-
+  const matchImage = [
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+    "/image/bannerimage.jpeg",
+  ];
   return (
     <BannerWrapper>
       <Banner>
         {/* <ImgContainer> */}
         <Background></Background>
         <Image
-          src={BannerImage}
+          src={matchImage[match]}
           fill
           style={{ objectFit: "cover", zIndex: "0" }}
           alt="bannerImage"
