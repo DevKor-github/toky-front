@@ -4,14 +4,30 @@ import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
 import DrawModal from "./DrawModal";
-
-export default function DrawGift() {
-  const totalPoint = 2000;
+import { IDrawCount } from "@/app/draw/page";
+interface DrawGiftProps {
+  remainingPoint: number;
+  allDrawParticipants: Array<IDrawCount>;
+  myDrawParticipants: Array<IDrawCount>;
+}
+export default function DrawGift({
+  remainingPoint,
+  allDrawParticipants,
+  myDrawParticipants,
+}: DrawGiftProps) {
   const [pointUse, setPointUse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const totalDraw = [0, 0, 0, 0, 0];
+  const myDraw = [0, 0, 0, 0, 0];
+  allDrawParticipants.map((c) => {
+    totalDraw[c.giftId - 1] = c.drawCount;
+  });
+  myDrawParticipants.map((c) => {
+    myDraw[c.giftId - 1] = c.drawCount;
+  });
 
   const checkDrawPossible = (point: number) => {
-    if (totalPoint - pointUse - point < 0) return false;
+    if (remainingPoint - pointUse - point < 0) return false;
     return true;
   };
 
@@ -40,6 +56,8 @@ export default function DrawGift() {
             <GiftItem
               key={idx}
               {...gift}
+              totalDraw={totalDraw[idx]}
+              userDraw={myDraw[idx]}
               addPointUse={addPointUse}
               checkDrawPossible={checkDrawPossible}
             />
@@ -51,7 +69,7 @@ export default function DrawGift() {
         >
           <span className="point">응모 시 잔여 포인트</span>
           <span className="point" style={{ fontSize: 20 }}>
-            {totalPoint - pointUse}p
+            {remainingPoint - pointUse}p
           </span>
         </Flex>
         <Space h={8} />
@@ -136,39 +154,29 @@ const mockGift = [
     point: 300,
     img: "",
     type: 1,
-    totalDraw: 1200,
-    userDraw: 0,
   },
   {
     title: "애플워치 (1명)",
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
-    userDraw: 0,
   },
   {
     title: "애플워치 (1명)",
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
-    userDraw: 0,
   },
   {
     title: "애플워치 (1명)",
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
-    userDraw: 0,
   },
   {
     title: "스타벅스 아메리카노 (10명)",
     point: 100,
     img: "",
     type: 3,
-    totalDraw: 1200,
-    userDraw: 0,
   },
 ];
