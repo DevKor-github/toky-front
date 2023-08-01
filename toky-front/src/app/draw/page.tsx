@@ -44,12 +44,52 @@ function Draw() {
       const drawResponse = await client.get("/points/draw/all");
       const drawData = drawResponse.data;
       const array: IDrawCount[] = drawData.map((c: IRawDrawCount) => {
+
+  const [remainingPoint, setRemainingPoint] = useState<number>(0);
+  const [totalPoint, setTotalPoint] = useState<number>(0);
+  const [isPointLoading, setIsPointLoading] = useState<boolean>(true);
+  const [isDrawLoading, setIsDrawLoading] = useState<boolean>(true);
+  const [allDrawParticipants, setAllDrawParticipants] = useState<IDrawCount[]>(
+    []
+  );
+  const [myDrawParticipants, setMyDrawParticipants] = useState<IDrawCount[]>(
+    []
+  );
+  async function getMyPoint() {
+    try {
+      const pointResponse = await client.get("/points");
+      const pointData = pointResponse.data;
+      setRemainingPoint(pointData.remainingPoint);
+      setTotalPoint(pointData.totalPoint);
+      setIsPointLoading(false);
+    } catch (e) {
+      throw e;
+    }
+  }
+  async function getAllandMyDraw() {
+    try {
+      const drawResponse = await client.get("/points/draw");
+      const allDrawData = drawResponse.data[0];
+      const myDrawData = drawResponse.data[1];
+      const allDrawArray: IDrawCount[] = allDrawData.map((c: IRawDrawCount) => {
+
         return {
           giftId: c.giftid,
           drawCount: Number(c.drawcount),
         } as IDrawCount;
       });
+
       setAllDrawParticipants(array);
+
+      const myDrawArray: IDrawCount[] = myDrawData.map((c: IRawDrawCount) => {
+        return {
+          giftId: c.giftid,
+          drawCount: Number(c.drawcount),
+        } as IDrawCount;
+      });
+      setAllDrawParticipants(allDrawArray);
+      setMyDrawParticipants(myDrawArray);
+
       setIsDrawLoading(false);
     } catch (e) {
       throw e;
