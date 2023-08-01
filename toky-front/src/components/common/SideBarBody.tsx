@@ -125,6 +125,8 @@ function SideBarBodyFC({ isBarOpen = true }, ref: ForwardedRef<HTMLDivElement>) 
 					authCtx.setNickname(user.name);
 					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
 					authCtx.setUniv(uni);
+					authCtx.setScore(user.score);
+					authCtx.setRemain(user.remain);
 				})
 				.catch((err) => {
 					window.location.href = "/login";
@@ -145,15 +147,11 @@ function SideBarBodyFC({ isBarOpen = true }, ref: ForwardedRef<HTMLDivElement>) 
 			<FlexWrapper style={{ justifyContent: "space-around" }}>
 				<InfoWrapper>
 					내 포인트
-					<InfoDetail>100</InfoDetail>
+					<InfoDetail>{authCtx.remain}</InfoDetail>
 				</InfoWrapper>
 				<InfoWrapper>
-					내 적중률
-					<InfoDetail>78%</InfoDetail>
-				</InfoWrapper>
-				<InfoWrapper>
-					내 순위
-					<InfoDetail>378</InfoDetail>
+					총 포인트
+					<InfoDetail>{authCtx.score}</InfoDetail>
 				</InfoWrapper>
 			</FlexWrapper>
 			<DivBar />

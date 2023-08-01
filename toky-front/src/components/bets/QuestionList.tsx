@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import QuestionItem from "./QuestionItem";
 import { QuestionType } from "../../app/bets/page";
 import client from "@/lib/httpClient";
+import AuthContext from "../common/AuthContext";
 
 //  import "./QuestionList.css";
 // match type으로 backend에 쏘고 getBetQuestions(match: Match) 받아서
@@ -15,6 +16,7 @@ interface QuestionListProps {
 export default function QuestionList({ questions, setQuestions, orgQuestions }: QuestionListProps) {
 	// TODO:
 	// 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
+	const authCtx = useContext(AuthContext);
 	const [blockedBet, setBlockedBet] = useState<number>(-1);
 
 	const requestBetting = async (qid: number, answer: number) => {
@@ -24,6 +26,8 @@ export default function QuestionList({ questions, setQuestions, orgQuestions }: 
 				answer,
 			});
 			if (response.status === 201) {
+				authCtx.setScore(authCtx.score + 10);
+				authCtx.setRemain(authCtx.remain + 10);
 				alert("베팅 참여로 10P가 지급되었습니다.");
 			}
 			setQuestions(
@@ -33,7 +37,7 @@ export default function QuestionList({ questions, setQuestions, orgQuestions }: 
 						: question
 				)
 			);
-			console.log(questions);
+
 		} catch (err) {
 			console.log(err);
 			alert("서버에서 배팅을 처리하지 못했습니다.");
