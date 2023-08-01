@@ -22,6 +22,9 @@ function Draw() {
   const [allDrawParticipants, setAllDrawParticipants] = useState<IDrawCount[]>(
     []
   );
+  const [myDrawParticipants, setMyDrawParticipants] = useState<IDrawCount[]>(
+    []
+  );
   async function getMyPoint() {
     try {
       const pointResponse = await client.get("/points");
@@ -33,6 +36,7 @@ function Draw() {
       throw e;
     }
   }
+  /*
   async function getAllDraw() {
     try {
       const drawResponse = await client.get("/points/draw/all");
@@ -49,10 +53,42 @@ function Draw() {
       throw e;
     }
   }
-
+  async function getMyDraw() {
+    try {
+      const myDrawResponse = await client.get("/points/draw");
+    } catch (e) {
+      throw e;
+    }
+  }*/
+  async function getAllandMyDraw() {
+    try {
+      const drawResponse = await client.get("/points/draw");
+      const allDrawData = drawResponse.data[0];
+      const myDrawData = drawResponse.data[1];
+      const allDrawArray: IDrawCount[] = allDrawData.map((c: IRawDrawCount) => {
+        return {
+          giftId: c.giftid,
+          drawCount: Number(c.drawcount),
+        } as IDrawCount;
+      });
+      const myDrawArray: IDrawCount[] = myDrawData.map((c: IRawDrawCount) => {
+        return {
+          giftId: c.giftid,
+          drawCount: Number(c.drawcount),
+        } as IDrawCount;
+      });
+      setAllDrawParticipants(allDrawArray);
+      setMyDrawParticipants(myDrawArray);
+      setIsDrawLoading(false);
+    } catch (e) {
+      throw e;
+    }
+  }
   useEffect(() => {
     getMyPoint();
-    getAllDraw();
+    // getAllDraw();
+    // getMyDraw();
+    getAllandMyDraw();
   }, []);
 
   const render = () => {
@@ -63,6 +99,7 @@ function Draw() {
         <DrawGift
           remainingPoint={remainingPoint}
           allDrawParticipants={allDrawParticipants}
+          myDrawParticipants={myDrawParticipants}
         />
         <Policy />
       </>

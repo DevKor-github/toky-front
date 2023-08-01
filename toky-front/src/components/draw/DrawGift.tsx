@@ -8,17 +8,24 @@ import { IDrawCount } from "@/app/draw/page";
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
+  myDrawParticipants: Array<IDrawCount>;
 }
 export default function DrawGift({
   remainingPoint,
   allDrawParticipants,
+  myDrawParticipants,
 }: DrawGiftProps) {
   const [pointUse, setPointUse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const total = [0, 0, 0, 0, 0];
+  const totalDraw = [0, 0, 0, 0, 0];
+  const myDraw = [0, 0, 0, 0, 0];
   allDrawParticipants.map((c) => {
-    total[c.giftId - 1] = c.drawCount;
+    totalDraw[c.giftId - 1] = c.drawCount;
   });
+  myDrawParticipants.map((c) => {
+    myDraw[c.giftId - 1] = c.drawCount;
+  });
+
   const checkDrawPossible = (point: number) => {
     if (remainingPoint - pointUse - point < 0) return false;
     return true;
@@ -49,7 +56,8 @@ export default function DrawGift({
             <GiftItem
               key={idx}
               {...gift}
-              totalDraw={total[idx]}
+              totalDraw={totalDraw[idx]}
+              userDraw={myDraw[idx]}
               addPointUse={addPointUse}
               checkDrawPossible={checkDrawPossible}
             />
@@ -146,34 +154,29 @@ const mockGift = [
     point: 300,
     img: "",
     type: 1,
-    userDraw: 0,
   },
   {
     title: "애플워치 (1명)",
     point: 300,
     img: "",
     type: 2,
-    userDraw: 0,
   },
   {
     title: "애플워치 (1명)",
     point: 300,
     img: "",
     type: 2,
-    userDraw: 0,
   },
   {
     title: "애플워치 (1명)",
     point: 300,
     img: "",
     type: 2,
-    userDraw: 0,
   },
   {
     title: "스타벅스 아메리카노 (10명)",
     point: 100,
     img: "",
     type: 3,
-    userDraw: 0,
   },
 ];
