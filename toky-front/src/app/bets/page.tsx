@@ -57,6 +57,9 @@ function Bets() {
 					authCtx.setNickname(user.name);
 					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
 					authCtx.setUniv(uni);
+
+					authCtx.setScore(user.score);
+					authCtx.setRemain(user.remain);
 				})
 				.catch((err) => {
 					window.location.href = "/login";
