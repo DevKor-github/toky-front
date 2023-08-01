@@ -1,14 +1,14 @@
 "use client";
 import styled from "styled-components";
 import { Space } from "../common/Space";
-import { HistoryT } from "./PointHistoryList";
+import { IHistory } from "@/app/point-history/page";
 
 export default function HistoryItem({
-  description,
-  pointChange,
-  createdAt,
-  remainingPoint,
-}: HistoryT) {
+  detail: description,
+  usedPoint: pointChange,
+  createdAt: createdAt,
+  remainedPoint: remainingPoint,
+}: IHistory) {
   return (
     <Wrapper>
       <Space h={16} />
