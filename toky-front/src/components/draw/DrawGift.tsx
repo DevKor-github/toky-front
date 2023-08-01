@@ -4,14 +4,23 @@ import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
 import DrawModal from "./DrawModal";
-
-export default function DrawGift() {
-  const totalPoint = 2000;
+import { IDrawCount } from "@/app/draw/page";
+interface DrawGiftProps {
+  remainingPoint: number;
+  allDrawParticipants: Array<IDrawCount>;
+}
+export default function DrawGift({
+  remainingPoint,
+  allDrawParticipants,
+}: DrawGiftProps) {
   const [pointUse, setPointUse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+  const total = [0, 0, 0, 0, 0];
+  allDrawParticipants.map((c) => {
+    total[c.giftId - 1] = c.drawCount;
+  });
   const checkDrawPossible = (point: number) => {
-    if (totalPoint - pointUse - point < 0) return false;
+    if (remainingPoint - pointUse - point < 0) return false;
     return true;
   };
 
@@ -40,6 +49,7 @@ export default function DrawGift() {
             <GiftItem
               key={idx}
               {...gift}
+              totalDraw={total[idx]}
               addPointUse={addPointUse}
               checkDrawPossible={checkDrawPossible}
             />
@@ -51,7 +61,7 @@ export default function DrawGift() {
         >
           <span className="point">응모 시 잔여 포인트</span>
           <span className="point" style={{ fontSize: 20 }}>
-            {totalPoint - pointUse}p
+            {remainingPoint - pointUse}p
           </span>
         </Flex>
         <Space h={8} />
@@ -136,7 +146,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 1,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -144,7 +153,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -152,7 +160,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -160,7 +167,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -168,7 +174,6 @@ const mockGift = [
     point: 100,
     img: "",
     type: 3,
-    totalDraw: 1200,
     userDraw: 0,
   },
 ];

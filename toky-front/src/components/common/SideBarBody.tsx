@@ -1,9 +1,11 @@
-import React, { ForwardedRef, useContext } from "react";
+import React, { ForwardedRef, useContext, useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Setting from "../../../public/image/Setting.svg";
 import Avatar from "../../../public/image/Avatar.png";
 import AuthContext from "./AuthContext";
+import client from "@/lib/httpClient";
+import Link from "next/link";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -54,32 +56,31 @@ const DivBar = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.15);
 `;
 const NavWrapper = styled.div`
-
-	margin-left: 26px;
-	margin-top: 50px;
+  margin-left: 26px;
+  margin-top: 50px;
 `;
 const NavItem = styled.div`
-	padding-top: 15px;
-	margin-top: 5px;
-	padding-bottom: 15px;
-	margin-bottom: 5px;
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 20px;
-	/* identical to box height */
-	display: flex;
-	align-items: center;
-	letter-spacing: -0.06em;
+  padding-top: 15px;
+  margin-top: 5px;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height */
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.06em;
 
-	/* 투명도_87 */
-	color: rgba(255, 255, 255, 0.87);
-	cursor:pointer;
+  /* 투명도_87 */
+  color: rgba(255, 255, 255, 0.87);
+  cursor: pointer;
 
-	&:hover {
-		color: #f8f8f8;
-		text-decoration:underline;
-	}
+  &:hover {
+    color: #f8f8f8;
+    text-decoration: underline;
+  }
 `;
 
 const InfoWrapper = styled.div`
@@ -119,6 +120,21 @@ function SideBarBodyFC(
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const authCtx = useContext(AuthContext);
+  useEffect(() => {
+    if (authCtx.nickname === "") {
+      client
+        .get("/auth/profile")
+        .then((res) => res.data)
+        .then((user) => {
+          authCtx.setNickname(user.name);
+          const uni = user.university === 0 ? "고려대학교" : "연세대학교";
+          authCtx.setUniv(uni);
+        })
+        .catch((err) => {
+          window.location.href = "/login";
+        });
+    }
+  }, []);
   return (
     <Wrapper ref={ref} className={isBarOpen ? "open" : ""}>
       <FlexWrapper style={{ marginTop: 72, paddingLeft: 15 }}>
@@ -150,12 +166,25 @@ function SideBarBodyFC(
       </FlexWrapper>
       <DivBar />
       <NavWrapper>
-        <NavItem>전력분석</NavItem>
-        <NavItem>승부예측</NavItem>
-        <NavItem>랭킹</NavItem>
+        <Link href={"/analysis"}>
+          <NavItem>전력분석</NavItem>
+        </Link>
+        <Link href={"/bets"}>
+          <NavItem>승부예측</NavItem>
+        </Link>
+
+        <Link href={"/ranking"}>
+          <NavItem>랭킹</NavItem>
+        </Link>
+
         <NavItem>라이브</NavItem>
-        <NavItem>내 포인트</NavItem>
+
+        <Link href={"/draw"}>
+          <NavItem>내 포인트</NavItem>
+        </Link>
+
         <NavItem>회원정보 관리</NavItem>
+
         <NavItem>문의하기</NavItem>
         <NavItem>로그아웃</NavItem>
       </NavWrapper>

@@ -1,15 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Image from "next/image";
 import Help from "../../../public/image/help.svg";
 import { Space } from "../common/Space";
 import HelpTip from "./HelpTip";
-
-export default function UserPoint() {
+import AuthContext from "../common/AuthContext";
+export interface UserPointProps {
+  remainingPoint: number;
+  totalPoint: number;
+}
+export default function UserPoint({
+  remainingPoint,
+  totalPoint,
+}: UserPointProps) {
   const [helpTipOpen, setHelpTipOpen] = useState<boolean>(false);
   const router = useRouter();
+  const authCtx = useContext(AuthContext);
 
   return (
     <Wrapper>
@@ -21,7 +29,7 @@ export default function UserPoint() {
           position: "relative",
         }}
       >
-        <span className="text2">유저최대열자열자님의 포인트</span>
+        <span className="text2">{authCtx.nickname}님의 포인트</span>
         <Image
           alt="help"
           src={Help}
@@ -31,9 +39,9 @@ export default function UserPoint() {
         {helpTipOpen && <HelpTip closeHelpTip={() => setHelpTipOpen(false)} />}
       </div>
       <Space h={10} />
-      <span className="text3">2000p</span>
+      <span className="text3">{remainingPoint}p</span>
       <Space h={3} />
-      <span className="text1">누적 포인트: 2500p</span>
+      <span className="text1">누적 포인트: {totalPoint}p</span>
       <Space h={3} />
       <span
         className="text1"
