@@ -8,69 +8,80 @@ import AuthContext from "../common/AuthContext";
 //  import "./QuestionList.css";
 // match type으로 backend에 쏘고 getBetQuestions(match: Match) 받아서
 interface QuestionListProps {
-	questions: QuestionType[];
-	setQuestions: (questions: QuestionType[]) => void;
-	orgQuestions: QuestionType[];
+  questions: QuestionType[];
+  setQuestions: (questions: QuestionType[]) => void;
+  orgQuestions: QuestionType[];
 }
 
-export default function QuestionList({ questions, setQuestions, orgQuestions }: QuestionListProps) {
-	// TODO:
-	// 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
-	const authCtx = useContext(AuthContext);
-	const [blockedBet, setBlockedBet] = useState<number>(-1);
+export default function QuestionList({
+  questions,
+  setQuestions,
+  orgQuestions,
+}: QuestionListProps) {
+  // TODO:
+  // 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
+  const authCtx = useContext(AuthContext);
+  const [blockedBet, setBlockedBet] = useState<number>(-1);
 
-	const requestBetting = async (qid: number, answer: number) => {
-		try {
-			const response = await client.post(`${process.env.NEXT_PUBLIC_API_URL}/bets/bet`, {
-				questionId: qid,
-				answer,
-			});
-			if (response.status === 201) {
-				authCtx.setScore(authCtx.score + 10);
-				authCtx.setRemain(authCtx.remain + 10);
-				alert("베팅 참여로 10P가 지급되었습니다.");
-			}
-			setQuestions(
-				orgQuestions.map((question) =>
-					question.questionId === qid
-						? { ...question, answer: answer, percentage: response.data.percentage }
-						: question
-				)
-			);
+  const requestBetting = async (qid: number, answer: number) => {
+    try {
+      const response = await client.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/bets/bet`,
+        {
+          questionId: qid,
+          answer,
+        }
+      );
+      if (response.status === 201) {
+        authCtx.setScore(authCtx.score + 10);
+        authCtx.setRemain(authCtx.remain + 10);
+        alert("베팅 참여로 10P가 지급되었습니다.");
+      }
+      setQuestions(
+        orgQuestions.map((question) =>
+          question.questionId === qid
+            ? {
+                ...question,
+                answer: answer,
+                percentage: response.data.percentage,
+              }
+            : question
+        )
+      );
+    } catch (err) {
+      console.log(err);
+      alert("서버에서 배팅을 처리하지 못했습니다.");
+    }
+  };
 
-		} catch (err) {
-			console.log(err);
-			alert("서버에서 배팅을 처리하지 못했습니다.");
-		}
-	};
-
-	return (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				alignContent: "center",
-			}}
-		>
-			{
-				/*!isLoading &&*/
-				questions.map((question, i) => (
-					<div key={i}>
-						<QuestionItem
-							qid={question.questionId}
-							key={i}
-							itemIndex={i}
-							description={question.description}
-							choice={question.choices}
-							answer={question.answer}
-							blockedBet={blockedBet}
-							setBlockedBet={setBlockedBet}
-							percentage={question.percentage}
-							requestBetting={requestBetting}
-						/>
-					</div>
-				))
-			}
-		</div>
-	);
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+        paddingBottom: "5vh",
+      }}
+    >
+      {
+        /*!isLoading &&*/
+        questions.map((question, i) => (
+          <div key={i}>
+            <QuestionItem
+              qid={question.questionId}
+              key={i}
+              itemIndex={i}
+              description={question.description}
+              choice={question.choices}
+              answer={question.answer}
+              blockedBet={blockedBet}
+              setBlockedBet={setBlockedBet}
+              percentage={question.percentage}
+              requestBetting={requestBetting}
+            />
+          </div>
+        ))
+      }
+    </div>
+  );
 }
