@@ -4,13 +4,22 @@ import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
 import DrawModal from "./DrawModal";
+import { IDrawCount } from "@/app/draw/page";
 interface DrawGiftProps {
   remainingPoint: number;
+  allDrawParticipants: Array<IDrawCount>;
 }
-export default function DrawGift({ remainingPoint }: DrawGiftProps) {
+export default function DrawGift({
+  remainingPoint,
+  allDrawParticipants,
+}: DrawGiftProps) {
   const [pointUse, setPointUse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+  const total = [0, 0, 0, 0, 0];
+  console.log(allDrawParticipants);
+  allDrawParticipants.map((c) => {
+    total[c.giftId - 1] = c.drawCount;
+  });
   const checkDrawPossible = (point: number) => {
     if (remainingPoint - pointUse - point < 0) return false;
     return true;
@@ -41,6 +50,7 @@ export default function DrawGift({ remainingPoint }: DrawGiftProps) {
             <GiftItem
               key={idx}
               {...gift}
+              totalDraw={total[idx]}
               addPointUse={addPointUse}
               checkDrawPossible={checkDrawPossible}
             />
@@ -137,7 +147,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 1,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -145,7 +154,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -153,7 +161,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -161,7 +168,6 @@ const mockGift = [
     point: 300,
     img: "",
     type: 2,
-    totalDraw: 1200,
     userDraw: 0,
   },
   {
@@ -169,7 +175,6 @@ const mockGift = [
     point: 100,
     img: "",
     type: 3,
-    totalDraw: 1200,
     userDraw: 0,
   },
 ];
