@@ -37,13 +37,11 @@ function Draw() {
     try {
       const drawResponse = await client.get("/points/draw/all");
       const drawData = drawResponse.data;
-      const array: IDrawCount[] = [];
-      drawData.map((c: IRawDrawCount) => {
-        const draw: IDrawCount = {
+      const array: IDrawCount[] = drawData.map((c: IRawDrawCount) => {
+        return {
           giftId: c.giftid,
           drawCount: Number(c.drawcount),
-        };
-        array.push(draw);
+        } as IDrawCount;
       });
       setAllDrawParticipants(array);
       setIsDrawLoading(false);
