@@ -8,40 +8,43 @@ import remove from "../../../public/image/remove.svg";
 import add from "../../../public/image/add.svg";
 
 interface Props {
+  id: number;
   title: string;
   point: number;
-  img: string;
+  img?: string;
   type: number;
   totalDraw: number;
   userDraw: number;
-  addPointUse: (point: number) => void;
+  draw: number[];
   checkDrawPossible: (point: number) => boolean;
+  setDraw: Dispatch<SetStateAction<number[]>>;
 }
 
 export default function GiftItem({
+  id,
   title,
   point,
   img,
   type,
   totalDraw,
   userDraw,
-  addPointUse,
+  draw,
   checkDrawPossible,
+  setDraw,
 }: Props) {
-  const [quantity, setQuantity] = useState<number>(0);
-
   const increaseQuantity = () => {
     if (checkDrawPossible(point)) {
-      setQuantity((quantity) => quantity + 1);
-      addPointUse(point);
+      let newDraw = [...draw];
+      newDraw[id - 1] += 1;
+      setDraw(newDraw);
     }
   };
 
   const decreaseQuantity = () => {
-    if (quantity <= 0) return;
-
-    setQuantity((quantity) => quantity - 1);
-    addPointUse(-point);
+    if (draw[id - 1] <= 0) return;
+    let newDraw = [...draw];
+    newDraw[id - 1] -= 1;
+    setDraw(newDraw);
   };
 
   return (
@@ -58,7 +61,7 @@ export default function GiftItem({
       <Space h={4} />
       <Flex>
         <Image alt="remove" src={remove} onClick={decreaseQuantity} />
-        <Quantity>{quantity}</Quantity>
+        <Quantity>{draw[id - 1]}</Quantity>
         <Image alt="add" src={add} onClick={increaseQuantity} />
       </Flex>
     </Wrapper>
