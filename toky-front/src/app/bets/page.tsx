@@ -5,18 +5,20 @@ import QuestionList from "@/components/bets/QuestionList";
 import AuthContext from "@/components/common/AuthContext";
 import NavigationBar from "@/components/common/NavigationBar";
 import SharePrediction from "@/components/share/SharePrediction";
+
 import client from "@/lib/httpClient";
 import withAuth from "@/lib/withAuth";
-import axios from "axios";
+
 import { useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export type QuestionType = {
-	id: number;
-	match: number;
+export interface QuestionType {
+	questionId: number;
 	description: string;
-	choice: string[];
-};
+	choices: string[];
+	percentage: number[];
+	answer: number | null;
+}
 
 function Bets() {
 	// useeffect로 axios쏘고 이미 있는지 체크
@@ -25,9 +27,11 @@ function Bets() {
 
 	const [showModal, setShowModal] = useState(false);
 	const [portalElement, setProtalElement] = useState<Element | null>(null);
+
 	useEffect(() => {
 		setProtalElement(document.getElementById("portal"));
 	}, [showModal]);
+
 	function clickModal() {
 		setShowModal(!showModal);
 	}
@@ -40,6 +44,7 @@ function Bets() {
 	const handleMatch = (m: number) => {
 		setMatch(m);
 	};
+
 	const authCtx = useContext(AuthContext);
 
 	// 최초 로드 및 match 변경 시 -> 질문 가져오기
@@ -57,33 +62,31 @@ function Bets() {
 					window.location.href = "/login";
 				});
 		}
+		client
+			.get("/bets/questions")
+			.then((res) => res.data)
+			.then((data) => {
+				return data;
+			})
+			.then((data) => setQuestions(data))
+			.finally(() => setIsLoading(false));
 	}, []);
-	useEffect(() => {
-		if (process.env.NEXT_PUBLIC_API_BETS_QUESTIONS) {
-			setIsLoading(true);
+	const questionsInMatch = questions
+		.sort((a, b) => a.questionId - b.questionId)
+		.filter((q) => q.questionId > match * 5 && q.questionId <= match * 5 + 5);
 
-			axios
-				.get(`${process.env.NEXT_PUBLIC_API_BETS_QUESTIONS}/${match}`)
-				.then((res) => {
-					if (res.status === 200) {
-						console.log(res.data);
-						// setQuestions(JSON.parse(res.data));
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-				})
-				.finally(() => {
-					setIsLoading(false);
-				});
-		}
-	}, [match]);
 	return (
 		<>
 			<NavigationBar />
 			<BetBanner match={match} clickModal={clickModal} />
 			<MatchNavBar match={match} handleMatch={handleMatch} />
-			{!isLoading && <QuestionList match={match} questions={questions} />}
+			{!isLoading && (
+				<QuestionList
+					questions={questionsInMatch}
+					setQuestions={setQuestions}
+					orgQuestions={questions}
+				/>
+			)}
 			{showModal && portalElement
 				? createPortal(<SharePrediction clickModal={clickModal} />, portalElement)
 				: null}
