@@ -36,30 +36,6 @@ function Draw() {
       throw e;
     }
   }
-  /*
-  async function getAllDraw() {
-    try {
-      const drawResponse = await client.get("/points/draw/all");
-      const drawData = drawResponse.data;
-      const array: IDrawCount[] = drawData.map((c: IRawDrawCount) => {
-        return {
-          giftId: c.giftid,
-          drawCount: Number(c.drawcount),
-        } as IDrawCount;
-      });
-      setAllDrawParticipants(array);
-      setIsDrawLoading(false);
-    } catch (e) {
-      throw e;
-    }
-  }
-  async function getMyDraw() {
-    try {
-      const myDrawResponse = await client.get("/points/draw");
-    } catch (e) {
-      throw e;
-    }
-  }*/
   async function getAllandMyDraw() {
     try {
       const drawResponse = await client.get("/points/draw");
