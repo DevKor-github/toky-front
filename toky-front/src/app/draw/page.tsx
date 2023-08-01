@@ -28,6 +28,7 @@ function Draw() {
       const pointData = pointResponse.data;
       setRemainingPoint(pointData.remainingPoint);
       setTotalPoint(pointData.totalPoint);
+      setIsPointLoading(false);
     } catch (e) {
       throw e;
     }
@@ -36,23 +37,24 @@ function Draw() {
     try {
       const drawResponse = await client.get("/points/draw/all");
       const drawData = drawResponse.data;
-      await drawData.map((c: IRawDrawCount) => {
+      const array: IDrawCount[] = [];
+      drawData.map((c: IRawDrawCount) => {
         const draw: IDrawCount = {
           giftId: c.giftid,
           drawCount: Number(c.drawcount),
         };
-        setAllDrawParticipants(allDrawParticipants.concat(draw));
+        array.push(draw);
       });
+      setAllDrawParticipants(array);
+      setIsDrawLoading(false);
     } catch (e) {
       throw e;
     }
   }
 
   useEffect(() => {
-    getMyPoint().then(() => setIsPointLoading(false));
-    getAllDraw().then(() => {
-      setIsDrawLoading(false);
-    });
+    getMyPoint();
+    getAllDraw();
   }, []);
 
   const render = () => {

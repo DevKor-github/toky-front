@@ -16,7 +16,6 @@ export default function DrawGift({
   const [pointUse, setPointUse] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const total = [0, 0, 0, 0, 0];
-  console.log(allDrawParticipants);
   allDrawParticipants.map((c) => {
     total[c.giftId - 1] = c.drawCount;
   });
