@@ -74,7 +74,7 @@ export default function DrawGift({
           - 당첨자 발표는 2023년 9월 30일 문자를 통해 개별 공지됩니다.
         </div>
         <Space h={21} />
-        <Flex>
+        <Flex style={{ justifyContent: "center" }}>
           {gifts.map((gift, idx) => (
             <GiftItem
               key={idx}

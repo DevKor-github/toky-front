@@ -50,7 +50,7 @@ export default function GiftItem({
   return (
     <Wrapper type={type}>
       <DrawCount>
-        현재 응모 수 {totalDraw}번 / 내 응모 수 {userDraw}번
+        현재 응모 수 {totalDraw}번 / 내 응모 {userDraw}번
       </DrawCount>
       <Space h={10} />
       <Title>{title}</Title>
@@ -72,10 +72,12 @@ const Wrapper = styled.div<{ type: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 168px;
-  height: 228.2px;
+  padding-top: 10px;
+  width: 45%;
+  max-width: 168px;
   border-radius: 6px;
   padding: 9px 0 11px 0;
+  height: 228.2px;
 
   background: ${({ type }) =>
     type === 1
