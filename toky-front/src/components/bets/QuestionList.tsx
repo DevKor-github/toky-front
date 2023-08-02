@@ -11,12 +11,14 @@ interface QuestionListProps {
   questions: QuestionType[];
   setQuestions: (questions: QuestionType[]) => void;
   orgQuestions: QuestionType[];
+  setModal: () => void;
 }
 
 export default function QuestionList({
   questions,
   setQuestions,
   orgQuestions,
+  setModal,
 }: QuestionListProps) {
   // TODO:
   // 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
@@ -35,7 +37,7 @@ export default function QuestionList({
       if (response.status === 201) {
         authCtx.setScore(authCtx.score + 10);
         authCtx.setRemain(authCtx.remain + 10);
-        alert("베팅 참여로 10P가 지급되었습니다.");
+        setModal();
       }
       setQuestions(
         orgQuestions.map((question) =>

@@ -203,7 +203,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
     </>
   );
 }
-const ModalWrapper = styled.div`
+export const ModalWrapper = styled.div`
   z-index: 10;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
@@ -404,7 +404,7 @@ const ShareCardWrapper = styled.div`
   background-color: black;
 `;
 
-const NotCompleteModalContainer = styled.div`
+export const NotCompleteModalContainer = styled.div`
   border-radius: 6px;
   background: var(--white-0, #fff);
   /* 그림자 */
@@ -426,7 +426,7 @@ const NotCompleteModalContainer = styled.div`
     margin-top: 68px;
   }
 `;
-const CheckContainer = styled.button`
+export const CheckContainer = styled.button`
   width: 310px;
   height: 46px;
   border-radius: 4px;

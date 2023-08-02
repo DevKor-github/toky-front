@@ -40,7 +40,6 @@ export default function QuestionItem({
   // ) => {
   //   setSelectedButton(idx);
   // };
-
   const answerLength = choice.length;
 
   // useEffect(() => {
@@ -63,6 +62,8 @@ export default function QuestionItem({
               onClick={() => {
                 if (blockedBet === itemIndex) {
                   alert("잠시 후에 다시 눌러주세요!");
+                } else if (answer === i) {
+                  //같은 응답 버튼 누르면 do nothing
                 } else {
                   //setBlockedBet(itemIndex);
                   requestBetting(qid, i);
