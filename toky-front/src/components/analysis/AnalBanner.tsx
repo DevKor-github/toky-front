@@ -50,7 +50,7 @@ function AnalBanner({ match }: MatchProps) {
       <MatchTimeInfo>
         <H4>{SCHEDULE[match].playDate}</H4>
 
-        <H4>{SCHEDULE[match].location}</H4>
+        <H4 style={{ fontWeight: 400 }}>{SCHEDULE[match].location}</H4>
       </MatchTimeInfo>
       <ProgressWrapper>
         {progress === 0 ? rederTimer() : null}

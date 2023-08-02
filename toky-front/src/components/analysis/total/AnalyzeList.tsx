@@ -8,11 +8,11 @@ import YonseiBg from "../../../../public/image/YonseiBg.svg";
 
 export default function AnalyzeList() {
   const propsList: Array<AnalyzeItemProps> = [
-    { match: "축구", kWin: 20, yWin: 17 },
-    { match: "럭비", kWin: 20, yWin: 25 },
     { match: "야구", kWin: 25, yWin: 18 },
-    { match: "농구", kWin: 23, yWin: 22 },
     { match: "빙구", kWin: 17, yWin: 23 },
+    { match: "농구", kWin: 23, yWin: 22 },
+    { match: "럭비", kWin: 20, yWin: 25 },
+    { match: "축구", kWin: 20, yWin: 17 },
   ];
   const AnalyzeItems = propsList.map((props) => (
     <AnalyzeItem {...props} key={props.match} />

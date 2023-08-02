@@ -7,6 +7,10 @@ import { StaticImageData } from "next/image";
 interface Props {
   img: StaticImageData;
   name: string;
+  backNum: number;
+  position: string;
+  studentId: number;
+  body: string;
 }
 
 export default function PlayerItem(props: Props) {

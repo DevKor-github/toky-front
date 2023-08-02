@@ -60,7 +60,7 @@ export default function QuestionList({
         display: "flex",
         flexDirection: "column",
         alignContent: "center",
-        paddingBottom: "5vh",
+        paddingBottom: "8vh",
       }}
     >
       {
