@@ -239,7 +239,7 @@ const QuestionContainer = styled.div`
 `;
 
 const QuestionDescription = styled.div`
-  max-width: 320px;
+  width: 80vw;
 `;
 
 const Percentage = styled.div`
