@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
 import { css, styled } from "styled-components";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
+import client from "@/lib/httpClient";
+import AuthContext from "../common/AuthContext";
 
 export interface ShareProps {
   clickModal: () => void;
@@ -29,23 +31,21 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   const [winKorea, setWinKorea] = useState<boolean>(false);
   const [draw, setDraw] = useState<boolean>(false);
   const [completePredict, setCompletePredict] = useState<boolean>(false);
+  const authCtx = useContext(AuthContext);
+  async function getShare() {
+    const response = await client.get("/bets/share");
+    const result = response.data;
+    setPredictionData(result);
+    const total = result.numWinKorea + result.numWinYonsei + result.numDraw;
+    if (total >= 5) setCompletePredict(true);
+    if (result.numWinKorea == result.numWinYonsei) setDraw(true);
+    else if (result.numWinKorea > result.numWinYonsei) setWinKorea(true);
+    setIsLoading(false);
+  }
   useEffect(() => {
     //예측을 완료해주세요 창만들기
     //여기 수정해주세용
-    fetch("http://localhost:3080/bets/share", {
-      headers: { "Access-Control-Allow-Origin": "http://localhost" },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setPredictionData(data);
-        const total = data.numWinKorea + data.numWinYonsei + data.numDraw;
-        if (total >= 5) setCompletePredict(true);
-        if (data.numWinKorea == data.numWinYonsei) setDraw(true);
-        else if (data.numWinKorea > data.numWinYonsei) setWinKorea(true);
-      });
-    setIsLoading(false);
+    getShare();
   }, []);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -109,7 +109,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
           <ShareCardWrapper ref={ref}>
             <ShareCard $winKorea={winKorea} $draw={draw}>
               <UserContainer className="userContainer">
-                <h3>유저이름최대열자열자님의 예측</h3>
+                <h3>{authCtx.nickname}님의 예측</h3>
               </UserContainer>
 
               <ScoreContainer>
@@ -196,7 +196,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   return (
     <>
       <ModalWrapper>
-        {!completePredict && notCompletePrediction()}
+        {!completePredict && !isLoading && notCompletePrediction()}
         {completePredict && !isLoading && renderPredictCard()}
         {completePredict && isLoading && <h1>loading</h1>}
       </ModalWrapper>
