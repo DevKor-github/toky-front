@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
 interface QuestionItemProps {
   qid: number;
@@ -45,7 +45,9 @@ export default function QuestionItem({
   // useEffect(() => {
   //   setSelectedButton(null);
   // }, [choice]);
-
+  const answerOrNull = answer === undefined ? null : answer;
+  console.log(answerOrNull);
+  const notAnswerd = answer === undefined ? true : false;
   return (
     <QuestionContainer>
       {/* index 원 */}
@@ -71,21 +73,26 @@ export default function QuestionItem({
                   //setBet(betList, qid, i);
                 }
               }}
-              selected={answer}
+              selected={answerOrNull}
               length={answerLength}
+              notanswerd={notAnswerd}
             >
-              {el}
-              {
-                <div>
-                  {" "}
-                  {i < percentage.length
-                    ? (percentage[i] * 100)
-                        .toString()
-                        .slice(0, 3)
-                        .replaceAll(".", "")
-                    : ""}
-                </div>
-              }
+              <>
+                <h3>{el}</h3>
+                {!notAnswerd && (
+                  <Percentage>
+                    <strong>
+                      {i < percentage.length
+                        ? (percentage[i] * 100)
+                            .toString()
+                            .slice(0, 3)
+                            .replaceAll(".", "")
+                        : ""}
+                    </strong>
+                    %
+                  </Percentage>
+                )}
+              </>
             </AnswerBtn>
           </form>
         ))}
@@ -112,18 +119,40 @@ const AnswerBtn = styled.button<{
   index: number;
   length: number;
   selected: number | null;
+  notanswerd: boolean;
 }>`
   border: 0;
   width: 100%;
   height: 67px;
+  text-align: center;
+  font-style: normal;
 
+  ${(props) => {
+    if (props.notanswerd) {
+      return css`
+        h3 {
+          font-size: 14px;
+          font-weight: 700;
+          letter-spacing: -0.48px;
+        }
+      `;
+    } else {
+      return css`
+        h3 {
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: -0.72px;
+        }
+      `;
+    }
+  }}
   ${(props) => {
     //선택지 2개인 경우
     if (props.length === 2) {
       if (props.selected === null) {
         //아무것도 선택안됨
         return props.index === 0
-          ? `background: #323232; border-radius: 7px 0px 0px 7px; color: white; border-right: solid; border-color: #222222;`
+          ? `background: #323232; border-radius: 7px 0px 0px 7px; color: white; border-right: solid; border-color:var(--black-0, #121212);`
           : `background: #323232; border-radius: 0px 7px 7px 0px; color: white`;
       }
       //왼쪽
@@ -152,8 +181,14 @@ const AnswerBtn = styled.button<{
     // 선택지 3개인 경우
     else {
       if (props.selected === null) {
+        if (props.index === 0) {
+          return `border-radius: 7px 0px 0px 7px; background: #323232;`;
+        } else if (props.index === 2) {
+          return `border-radius: 0px 7px 7px 0px; background: #323232;`;
+        } else {
+          return "background: #323232; border-right : 1.5px solid var(--black-0, #121212) ; border-left: 1.5px solid var(--black-0, #121212);";
+        }
         //아무것도 선택안됨
-        return "background: #323232";
       } else {
         if (props.index === 0) {
           return props.selected === 0
@@ -175,16 +210,6 @@ box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25)`
     }
   }}
 `;
-const SelectedAnswerText = styled.h4`
-  color: var(--white-0, #fff);
-  text-align: center;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: -0.72px;
-`;
-const UnselectedAnswerText = styled.h3``;
 const QuestionIndex = styled.div`
   width: 18px;
   height: 18px;
@@ -215,4 +240,18 @@ const QuestionContainer = styled.div`
 
 const QuestionDescription = styled.div`
   max-width: 320px;
+`;
+
+const Percentage = styled.div`
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  strong {
+    margin-right: 3px;
+    font-size: 28px;
+    letter-spacing: -3px;
+  }
 `;
