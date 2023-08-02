@@ -59,7 +59,8 @@ export default function QuestionItem({
             <AnswerBtn
               type="submit"
               index={i}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (blockedBet === itemIndex) {
                   alert("잠시 후에 다시 눌러주세요!");
                 } else if (answer === i) {
