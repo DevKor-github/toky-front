@@ -1,12 +1,9 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import QuestionItem from "./QuestionItem";
 import { QuestionType } from "../../app/bets/page";
 import client from "@/lib/httpClient";
 import AuthContext from "../common/AuthContext";
-import { match } from "assert";
 import { styled } from "styled-components";
-import { relative } from "path";
 
 //  import "./QuestionList.css";
 // match type으로 backend에 쏘고 getBetQuestions(match: Match) 받아서

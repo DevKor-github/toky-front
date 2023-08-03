@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { Space } from "../common/Space";

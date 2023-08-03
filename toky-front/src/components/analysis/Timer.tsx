@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MatchProps } from "./MatchType";
 import { TIME } from "./Data";
 const Countdown = (targetDate: Date, match: number): String[] => {

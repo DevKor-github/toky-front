@@ -1,7 +1,6 @@
 "use-client";
 import { useState } from "react";
 import styled from "styled-components";
-import player from "../../../public/image/player.jpg";
 import { StaticImageData } from "next/image";
 
 interface Props {

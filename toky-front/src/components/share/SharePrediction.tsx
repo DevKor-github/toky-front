@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import { css, styled } from "styled-components";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import client from "@/lib/httpClient";
 import AuthContext from "../common/AuthContext";
