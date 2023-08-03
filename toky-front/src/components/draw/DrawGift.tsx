@@ -7,6 +7,7 @@ import DrawModal from "./DrawModal";
 import { IDrawCount } from "@/app/draw/page";
 import client from "@/lib/httpClient";
 import { ProgressCheck } from "../common/ProgressCheck";
+import { Finish } from "../bets/QuestionList";
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
@@ -119,7 +120,7 @@ export default function DrawGift({
           <Space h={11} />
           <DrawButton onClick={onClickDraw}>응모하기</DrawButton>
         </div>
-        {!drawProgress && <FinishDraw />}
+        {!drawProgress && <Finish />}
       </Wrapper>
       {modalOpen && <DrawModal closeModal={() => setModalOpen(false)} />}
     </>
@@ -179,20 +180,6 @@ const DrawButton = styled.div`
   font-family: Spoqa Han Sans Neo;
   font-size: 16px;
   letter-spacing: -0.96px;
-`;
-
-const FinishDraw = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0%;
-  left: 0%;
-  background-color: black;
-  opacity: 0.5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
 `;
 
 const getTypeFromPoint = (point: number) => {

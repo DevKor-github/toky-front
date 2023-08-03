@@ -32,6 +32,7 @@ export default function RootLayout({
         <div
           style={{
             background: "#121212",
+            minHeight: "100vh",
           }}
         >
           <AuthContextProvider>

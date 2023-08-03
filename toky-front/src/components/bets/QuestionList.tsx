@@ -94,13 +94,13 @@ export default function QuestionList({
             </div>
           ))
         }
-        {!matchProgress && <FinishBet />}
+        {!matchProgress && <Finish />}
       </div>
     </>
   );
 }
 
-const FinishBet = styled.div`
+export const Finish = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -110,4 +110,6 @@ const FinishBet = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 5;
+  top: 0%;
+  left: 0%;
 `;
