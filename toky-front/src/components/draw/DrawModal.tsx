@@ -1,16 +1,25 @@
 "use client";
 
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 interface Props {
   closeModal: () => void;
+  completeDraw: () => void;
 }
 
-export default function DrawModal(props: Props) {
+export default function DrawModal({ closeModal, completeDraw }: Props) {
+  const router = useRouter();
+  const onClick = () => {
+    closeModal();
+    completeDraw();
+    router.push("/draw");
+  };
+
   return (
     <Wrapper>
       <span className="content">응모가 완료되었습니다.</span>
-      <Button onClick={props.closeModal}>확인</Button>
+      <Button onClick={onClick}>확인</Button>
     </Wrapper>
   );
 }
