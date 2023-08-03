@@ -1,7 +1,6 @@
 "use client";
 
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 
 interface Props {
   closeModal: () => void;
@@ -9,11 +8,10 @@ interface Props {
 }
 
 export default function DrawModal({ closeModal, completeDraw }: Props) {
-  const router = useRouter();
   const onClick = () => {
     closeModal();
     completeDraw();
-    router.push("/draw");
+    window.scrollTo(0, 0);
   };
 
   return (
