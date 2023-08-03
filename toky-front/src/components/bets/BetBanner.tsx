@@ -1,35 +1,40 @@
 "use client";
 //import "./BetBanner.css";
 import Image from "next/image";
-import { styled } from "styled-components";
-import KLogo from "./../../../public/image/koreaLogo.webp";
-import YLogo from "./../../../public/image/yonseiLogo.webp";
+import { css, styled } from "styled-components";
+import KLogo from "./../../../public/image/koreaLogo.png";
+import YLogo from "./../../../public/image/yonseiLogo.png";
 import ShareArrow from "../../../public/image/ShareArrow.svg";
 
 interface BannerProps {
   match: number;
+  matchProgress: boolean;
   clickModal: () => void;
 }
-export default function BetBanner({ match, clickModal }: BannerProps) {
+export default function BetBanner({
+  match,
+  clickModal,
+  matchProgress,
+}: BannerProps) {
   const matchTime = [
     {
-      date: "9/8(금)",
+      date: "09/08(금)",
       time: "11:30",
     },
     {
-      date: "9/8(금)",
+      date: "09/08(금)",
       time: "15:30",
     },
     {
-      date: "9/8(금)",
+      date: "09/08(금)",
       time: "17:30",
     },
     {
-      date: "9/9(토)",
+      date: "09/09(토)",
       time: "09:30",
     },
     {
-      date: "9/9(토)",
+      date: "09/09(토)",
       time: "12:30",
     },
   ];
@@ -40,6 +45,9 @@ export default function BetBanner({ match, clickModal }: BannerProps) {
     "/image/bannerimage.jpeg",
     "/image/bannerimage.jpeg",
   ];
+
+  const matchProgressString = matchProgress ? "예측 진행중" : "예측 마감";
+
   return (
     <BannerWrapper>
       <Banner>
@@ -52,18 +60,25 @@ export default function BetBanner({ match, clickModal }: BannerProps) {
           alt="bannerImage"
         />
         {/* </ImgContainer> */}
-        <ProgressBox>예측 진행중</ProgressBox>
+        <ProgressBox matchProgress={matchProgress}>
+          {matchProgressString}
+        </ProgressBox>
         <MatchInfo>
-          <UniLogo>
+          <UniLogo style={{ justifyContent: "flex-end" }}>
             <H3>고려대학교</H3>
-            <Image src={KLogo} width={40} alt="koreaUniLogo" />
+            <ImageContainer>
+              <Image src={KLogo} width={30} height={42} alt="koreaUniLogo" />
+            </ImageContainer>
           </UniLogo>
           <TimeInfo>
-            <H4>{matchTime[match].date}</H4>
-            <H5>{matchTime[match].time}</H5>
+            <H4>{matchTime[match].time}</H4>
+            <H5>{matchTime[match].date}</H5>
           </TimeInfo>
           <UniLogo>
-            <Image src={YLogo} width={40} alt="koreaUniLogo" />
+            <ImageContainer>
+              <Image src={YLogo} width={40} height={40} alt="koreaUniLogo" />
+            </ImageContainer>
+
             <H3>연세대학교</H3>
           </UniLogo>
         </MatchInfo>
@@ -101,25 +116,36 @@ const Background = styled.div`
   );
 `;
 
-const ProgressBox = styled.div`
+const ProgressBox = styled.div<{ matchProgress: boolean }>`
   z-index: 2;
   position: absolute;
   box-sizing: border-box;
   top: 20%;
   left: 50%;
-  line-height: 20px;
+  line-height: 22px;
   transform: translate(-50%, -50%);
   width: 80px;
   height: 22px;
   border-radius: 20px;
-  border: 0.5px solid #f95669;
   background: rgba(249, 87, 106, 0.1);
   backdrop-filter: blur(2px);
   /* Note: backdrop-filter has minimal browser support */
   text-align: center;
   font-size: 12px;
   letter-spacing: -0.04em;
-  color: #fe6c7d;
+  ${(props) => {
+    if (props.matchProgress) {
+      return css`
+        border: 0.5px solid #f95669;
+        color: #fe6c7d;
+      `;
+    } else {
+      return css`
+        border: 0.5px solid gray;
+        color: gray;
+      `;
+    }
+  }}
 `;
 const MatchInfo = styled.div`
   position: absolute;
@@ -134,6 +160,7 @@ const MatchInfo = styled.div`
 const UniLogo = styled.div`
   display: flex;
   align-items: center;
+  width: 130px;
 `;
 const TimeInfo = styled.div`
   text-align: center;
@@ -155,12 +182,17 @@ const H4 = styled.h4`
   font-weight: 700;
   font-size: 12px;
   line-height: 15px;
+  color: #fdfdfd;
+  text-align: center;
 `;
 const H5 = styled.h5`
+  text-align: center;
+  font-size: 11px;
   font-style: normal;
   font-weight: 300;
-  font-size: 11px;
-  letter-spacing: -0.04em;
+  line-height: normal;
+  letter-spacing: -0.44px;
+  color: var(--white-0, #fff);
 `;
 
 const ShareBtn = styled.button`
@@ -191,3 +223,9 @@ const ShareBtn = styled.button`
 {
   /* 현재 x 명이 참여했어요!  */
 }
+
+const ImageContainer = styled.div`
+  height: 42px;
+  display: flex;
+  align-items: center;
+`;

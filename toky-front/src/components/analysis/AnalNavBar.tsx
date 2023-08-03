@@ -1,7 +1,6 @@
 "use client";
 
 import styled, { css } from "styled-components";
-import Image from "next/image";
 
 interface AnalNavProps {
   match: number;

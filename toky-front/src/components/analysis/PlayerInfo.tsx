@@ -5,7 +5,6 @@ import Image from "next/image";
 import testPlayer from "../../../public/image/playerTest.png";
 // link href 수정하기
 import { PLAYER } from "./Data";
-import PlayerItem from "./PlayerItem";
 import { MatchProps } from "./MatchType";
 
 export default function PlayerInfo({ match }: MatchProps) {

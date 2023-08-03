@@ -25,13 +25,14 @@ export default function RootLayout({
     <html lang="kr">
       <head>
         <meta charSet="utf-8" />
-        <link rel="icon" href="../../public/image/favicon.svg" />
+        <link rel="icon" href="/image/favicon.svg" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
       </head>
       <body>
         <div
           style={{
             background: "#121212",
+            minHeight: "100vh",
           }}
         >
           <AuthContextProvider>

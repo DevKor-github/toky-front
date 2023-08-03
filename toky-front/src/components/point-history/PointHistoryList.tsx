@@ -2,7 +2,6 @@
 import styled from "styled-components";
 import HistoryItem from "./HistoryItem";
 import { IHistory } from "@/app/point-history/page";
-import { useState } from "react";
 interface PointHistoryProps {
   historyList: IHistory[];
 }

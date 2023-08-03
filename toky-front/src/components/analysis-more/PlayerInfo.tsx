@@ -15,7 +15,7 @@ export default function PlayerInfo() {
           야구
         </MatchOption>
         <MatchOption isSelected={match === 1} onClick={() => setMatch(1)}>
-          축구
+          빙구
         </MatchOption>
         <MatchOption isSelected={match === 2} onClick={() => setMatch(2)}>
           농구
@@ -24,11 +24,11 @@ export default function PlayerInfo() {
           럭비
         </MatchOption>
         <MatchOption isSelected={match === 4} onClick={() => setMatch(4)}>
-          빙구
+          축구
         </MatchOption>
       </MatchSelector>
-      <PlayerList univ={0} />
-      <PlayerList univ={1} />
+      <PlayerList univ={0} match={match} />
+      <PlayerList univ={1} match={match} />
     </Wrapper>
   );
 }

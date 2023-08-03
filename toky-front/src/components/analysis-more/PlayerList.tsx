@@ -1,25 +1,41 @@
 "user-client";
 import { useState } from "react";
 import styled from "styled-components";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import PlayerItem from "./PlayerItem";
-import player from "../../../public/image/player.svg";
-import player2 from "../../../public/image/player2.svg";
 import arrowDown from "../../../public/image/arrow_down.svg";
 import arrowUp from "../../../public/image/arrow_up.svg";
+import { koreaPlayer } from "./PlayerData/KoreaPlayerData";
+import { yonseiPlayer } from "./PlayerData/YonseiPlayerData";
 
 interface Props {
   univ: number;
+  match: number;
 }
-
-export default function PlayerList({ univ }: Props) {
+export interface IPlayer {
+  img: StaticImageData;
+  name: string;
+  backNum: number;
+  position: string;
+  studentId: number;
+  body: string;
+}
+export default function PlayerList({ univ, match }: Props) {
   const [open, setOpen] = useState(false);
-  const players = univ === 0 ? koreaPlayerMock : yonseiPlayerMock;
+  const players = univ === 0 ? koreaPlayer[match] : yonseiPlayer[match];
   return (
     <>
       <Wrapper open={open}>
         {players.map((item, idx) => (
-          <PlayerItem key={idx} img={item.img} name={item.name} />
+          <PlayerItem
+            key={idx}
+            img={item.img}
+            name={item.name}
+            backNum={item.backNum}
+            position={item.position}
+            studentId={item.studentId}
+            body={item.body}
+          />
         ))}
       </Wrapper>
       <Open onClick={() => setOpen(!open)}>
@@ -53,27 +69,3 @@ const Open = styled.div`
   font-family: Spoqa Han Sans Neo;
   letter-spacing: -0.84px;
 `;
-
-const koreaPlayerMock = [
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-  { img: player, name: "김기현" },
-];
-
-const yonseiPlayerMock = [
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-  { img: player2, name: "이민혁" },
-];
