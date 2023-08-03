@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { css, styled } from "styled-components";
+import { ProgressCheck } from "./ProgressCheck";
+import { TIME } from "../analysis/Data";
+import { match } from "assert";
 
 interface QuestionItemProps {
   qid: number;
@@ -10,6 +13,7 @@ interface QuestionItemProps {
   choice: string[];
   answer: number | null;
   percentage: number[];
+  match: number;
   //bet: number | null;
   //betList: BettedSchema[];
   //setBet: (betList: BettedSchema[], qid: number, ans: number) => void;
@@ -26,6 +30,7 @@ export default function QuestionItem({
   choice,
   answer,
   percentage,
+  match,
   blockedBet,
   setBlockedBet,
   requestBetting,
@@ -46,7 +51,6 @@ export default function QuestionItem({
   //   setSelectedButton(null);
   // }, [choice]);
   const answerOrNull = answer === undefined ? null : answer;
-  console.log(answerOrNull);
   const notAnswerd = answer === undefined ? true : false;
   return (
     <QuestionContainer>
@@ -69,7 +73,9 @@ export default function QuestionItem({
                   //같은 응답 버튼 누르면 do nothing
                 } else {
                   //setBlockedBet(itemIndex);
-                  requestBetting(qid, i);
+                  if (ProgressCheck(TIME[match])) {
+                    requestBetting(qid, i);
+                  }
                   //setBet(betList, qid, i);
                 }
               }}

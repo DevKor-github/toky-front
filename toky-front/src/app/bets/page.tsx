@@ -1,7 +1,9 @@
 "use client";
+import { TIME } from "@/components/analysis/Data";
 import BetBanner from "@/components/bets/BetBanner";
 import MatchNavBar from "@/components/bets/MatchNavBar";
 import PointModal from "@/components/bets/PointModal";
+import { ProgressCheck } from "@/components/bets/ProgressCheck";
 import QuestionList from "@/components/bets/QuestionList";
 import AuthContext from "@/components/common/AuthContext";
 import NavigationBar from "@/components/common/NavigationBar";
@@ -51,6 +53,7 @@ function Bets() {
   };
 
   const authCtx = useContext(AuthContext);
+  const [matchProgress, setMatchProgress] = useState<boolean>(false);
 
   // 최초 로드 및 match 변경 시 -> 질문 가져오기
   useEffect(() => {
@@ -79,6 +82,9 @@ function Bets() {
       .then((data) => setQuestions(data))
       .finally(() => setIsLoading(false));
   }, []);
+  useEffect(() => {
+    setMatchProgress(ProgressCheck(TIME[match]));
+  }, [match]);
   const questionsInMatch = questions
     .sort((a, b) => a.questionId - b.questionId)
     .filter((q) => q.questionId > match * 5 && q.questionId <= match * 5 + 5);
@@ -86,7 +92,11 @@ function Bets() {
   return (
     <>
       <NavigationBar />
-      <BetBanner match={match} clickModal={clickShareModal} />
+      <BetBanner
+        match={match}
+        matchProgress={matchProgress}
+        clickModal={clickShareModal}
+      />
       <MatchNavBar match={match} handleMatch={handleMatch} />
       {!isLoading && (
         <QuestionList
@@ -94,6 +104,8 @@ function Bets() {
           setQuestions={setQuestions}
           orgQuestions={questions}
           setModal={clickPointModal}
+          match={match}
+          matchProgress={matchProgress}
         />
       )}
       {showPointModal && portalElement

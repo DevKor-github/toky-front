@@ -1,16 +1,21 @@
 "use client";
 //import "./BetBanner.css";
 import Image from "next/image";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import KLogo from "./../../../public/image/koreaLogo.png";
 import YLogo from "./../../../public/image/yonseiLogo.png";
 import ShareArrow from "../../../public/image/ShareArrow.svg";
 
 interface BannerProps {
   match: number;
+  matchProgress: boolean;
   clickModal: () => void;
 }
-export default function BetBanner({ match, clickModal }: BannerProps) {
+export default function BetBanner({
+  match,
+  clickModal,
+  matchProgress,
+}: BannerProps) {
   const matchTime = [
     {
       date: "09/08(금)",
@@ -40,6 +45,9 @@ export default function BetBanner({ match, clickModal }: BannerProps) {
     "/image/bannerimage.jpeg",
     "/image/bannerimage.jpeg",
   ];
+
+  const matchProgressString = matchProgress ? "예측 진행중" : "예측 마감";
+
   return (
     <BannerWrapper>
       <Banner>
@@ -52,7 +60,9 @@ export default function BetBanner({ match, clickModal }: BannerProps) {
           alt="bannerImage"
         />
         {/* </ImgContainer> */}
-        <ProgressBox>예측 진행중</ProgressBox>
+        <ProgressBox matchProgress={matchProgress}>
+          {matchProgressString}
+        </ProgressBox>
         <MatchInfo>
           <UniLogo style={{ justifyContent: "flex-end" }}>
             <H3>고려대학교</H3>
@@ -106,25 +116,36 @@ const Background = styled.div`
   );
 `;
 
-const ProgressBox = styled.div`
+const ProgressBox = styled.div<{ matchProgress: boolean }>`
   z-index: 2;
   position: absolute;
   box-sizing: border-box;
   top: 20%;
   left: 50%;
-  line-height: 20px;
+  line-height: 22px;
   transform: translate(-50%, -50%);
   width: 80px;
   height: 22px;
   border-radius: 20px;
-  border: 0.5px solid #f95669;
   background: rgba(249, 87, 106, 0.1);
   backdrop-filter: blur(2px);
   /* Note: backdrop-filter has minimal browser support */
   text-align: center;
   font-size: 12px;
   letter-spacing: -0.04em;
-  color: #fe6c7d;
+  ${(props) => {
+    if (props.matchProgress) {
+      return css`
+        border: 0.5px solid #f95669;
+        color: #fe6c7d;
+      `;
+    } else {
+      return css`
+        border: 0.5px solid gray;
+        color: gray;
+      `;
+    }
+  }}
 `;
 const MatchInfo = styled.div`
   position: absolute;

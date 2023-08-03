@@ -4,6 +4,9 @@ import QuestionItem from "./QuestionItem";
 import { QuestionType } from "../../app/bets/page";
 import client from "@/lib/httpClient";
 import AuthContext from "../common/AuthContext";
+import { match } from "assert";
+import { styled } from "styled-components";
+import { relative } from "path";
 
 //  import "./QuestionList.css";
 // match type으로 backend에 쏘고 getBetQuestions(match: Match) 받아서
@@ -11,6 +14,8 @@ interface QuestionListProps {
   questions: QuestionType[];
   setQuestions: (questions: QuestionType[]) => void;
   orgQuestions: QuestionType[];
+  match: number;
+  matchProgress: boolean;
   setModal: () => void;
 }
 
@@ -18,7 +23,9 @@ export default function QuestionList({
   questions,
   setQuestions,
   orgQuestions,
+  match,
   setModal,
+  matchProgress,
 }: QuestionListProps) {
   // TODO:
   // 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
@@ -57,33 +64,50 @@ export default function QuestionList({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignContent: "center",
-        paddingBottom: "8vh",
-      }}
-    >
-      {
-        /*!isLoading &&*/
-        questions.map((question, i) => (
-          <div key={i}>
-            <QuestionItem
-              qid={question.questionId}
-              key={i}
-              itemIndex={i}
-              description={question.description}
-              choice={question.choices}
-              answer={question.answer}
-              blockedBet={blockedBet}
-              setBlockedBet={setBlockedBet}
-              percentage={question.percentage}
-              requestBetting={requestBetting}
-            />
-          </div>
-        ))
-      }
-    </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          paddingBottom: "8vh",
+          position: "relative",
+        }}
+      >
+        {
+          /*!isLoading &&*/
+          questions.map((question, i) => (
+            <div key={i}>
+              <QuestionItem
+                qid={question.questionId}
+                key={i}
+                itemIndex={i}
+                description={question.description}
+                choice={question.choices}
+                answer={question.answer}
+                blockedBet={blockedBet}
+                setBlockedBet={setBlockedBet}
+                percentage={question.percentage}
+                requestBetting={requestBetting}
+                match={match}
+              />
+            </div>
+          ))
+        }
+        {!matchProgress && <FinishBet />}
+      </div>
+    </>
   );
 }
+
+const FinishBet = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+`;
