@@ -4,13 +4,20 @@ import styled from "styled-components";
 
 interface Props {
   closeModal: () => void;
+  completeDraw: () => void;
 }
 
-export default function DrawModal(props: Props) {
+export default function DrawModal({ closeModal, completeDraw }: Props) {
+  const onClick = () => {
+    closeModal();
+    completeDraw();
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Wrapper>
       <span className="content">응모가 완료되었습니다.</span>
-      <Button onClick={props.closeModal}>확인</Button>
+      <Button onClick={onClick}>확인</Button>
     </Wrapper>
   );
 }
