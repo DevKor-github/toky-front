@@ -12,32 +12,39 @@ interface Props {
   body: string;
 }
 
-export default function PlayerItem(props: Props) {
+export default function PlayerItem({
+  img,
+  name,
+  backNum,
+  position,
+  studentId,
+  body,
+}: Props) {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
-    <Wrapper img={props.img} onClick={() => setIsClicked(!isClicked)}>
+    <Wrapper img={img} onClick={() => setIsClicked(!isClicked)}>
       {isClicked && (
         <Info>
           <div className="detail">
             <span className="detail-label">백넘버</span>
-            <span className="detail-value">10</span>
+            <span className="detail-value">{backNum}</span>
           </div>
           <div className="detail">
             <span className="detail-label">포지션</span>
-            <span className="detail-value">SH</span>
+            <span className="detail-value">{position}</span>
           </div>
           <div className="detail">
             <span className="detail-label">학번</span>
-            <span className="detail-value">21</span>
+            <span className="detail-value">{studentId}</span>
           </div>
           <div className="detail">
             <span className="detail-label">키/몸무게</span>
-            <span className="detail-value">180/70</span>
+            <span className="detail-value">{body}</span>
           </div>
         </Info>
       )}
-      <Name isClicked={isClicked}>{props.name}</Name>
+      <Name isClicked={isClicked}>{name}</Name>
     </Wrapper>
   );
 }
