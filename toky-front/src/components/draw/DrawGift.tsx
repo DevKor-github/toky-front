@@ -6,6 +6,7 @@ import GiftItem from "./GiftItem";
 import DrawModal from "./DrawModal";
 import { IDrawCount } from "@/app/draw/page";
 import client from "@/lib/httpClient";
+import { ProgressCheck } from "../common/ProgressCheck";
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
@@ -16,9 +17,13 @@ export default function DrawGift({
   allDrawParticipants,
   myDrawParticipants,
 }: DrawGiftProps) {
+  const drawDate = new Date("2023-09-16 23:59:59");
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
-
+  const [drawProgress, setDrawProgress] = useState<boolean>(
+    ProgressCheck(drawDate)
+  );
   const totalDraw = [0, 0, 0, 0, 0];
   const myDraw = [0, 0, 0, 0, 0];
   allDrawParticipants.forEach((c) => {
@@ -56,61 +61,65 @@ export default function DrawGift({
     if (remainingPoint - pointUse - point < 0) return false;
     return true;
   };
-
   const onClickDraw = () => {
-    drawGifts();
+    if (ProgressCheck(drawDate)) {
+      drawGifts();
+    }
     setModalOpen(true);
   };
 
   return (
     <>
       <Wrapper>
-        <span className="title">경품 응모하기</span>
-        <Space h={11} />
-        <div className="description">
-          - 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.
+        <div>
+          <span className="title">경품 응모하기</span>
+          <Space h={11} />
+          <div className="description">
+            - 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.
+          </div>
+          <div className="description">
+            - 당첨자 발표는 2023년 9월 30일 문자를 통해 개별 공지됩니다.
+          </div>
+          <Space h={21} />
+          <Flex style={{ justifyContent: "center" }}>
+            {gifts.map((gift, idx) => (
+              <GiftItem
+                key={idx}
+                {...gift}
+                totalDraw={totalDraw[idx]}
+                userDraw={myDraw[idx]}
+                draw={draw}
+                checkDrawPossible={checkDrawPossible}
+                setDraw={setDraw}
+              />
+            ))}
+          </Flex>
+          <Space h={20} />
+          <Flex
+            style={{ justifyContent: "space-between", alignContent: "center" }}
+          >
+            <span className="point">응모 시 잔여 포인트</span>
+            <span className="point" style={{ fontSize: 20 }}>
+              {remainingPoint - pointUse}p
+            </span>
+          </Flex>
+          <Space h={8} />
+          <Divider />
+          <Space h={8} />
+          <Flex
+            style={{ justifyContent: "space-between", alignContent: "center" }}
+          >
+            <span className="point" style={{ color: "#ffffff" }}>
+              사용 포인트
+            </span>
+            <span className="point" style={{ fontSize: 20, color: "#ffffff" }}>
+              {pointUse}p
+            </span>
+          </Flex>
+          <Space h={11} />
+          <DrawButton onClick={onClickDraw}>응모하기</DrawButton>
         </div>
-        <div className="description">
-          - 당첨자 발표는 2023년 9월 30일 문자를 통해 개별 공지됩니다.
-        </div>
-        <Space h={21} />
-        <Flex style={{ justifyContent: "center" }}>
-          {gifts.map((gift, idx) => (
-            <GiftItem
-              key={idx}
-              {...gift}
-              totalDraw={totalDraw[idx]}
-              userDraw={myDraw[idx]}
-              draw={draw}
-              checkDrawPossible={checkDrawPossible}
-              setDraw={setDraw}
-            />
-          ))}
-        </Flex>
-        <Space h={20} />
-        <Flex
-          style={{ justifyContent: "space-between", alignContent: "center" }}
-        >
-          <span className="point">응모 시 잔여 포인트</span>
-          <span className="point" style={{ fontSize: 20 }}>
-            {remainingPoint - pointUse}p
-          </span>
-        </Flex>
-        <Space h={8} />
-        <Divider />
-        <Space h={8} />
-        <Flex
-          style={{ justifyContent: "space-between", alignContent: "center" }}
-        >
-          <span className="point" style={{ color: "#ffffff" }}>
-            사용 포인트
-          </span>
-          <span className="point" style={{ fontSize: 20, color: "#ffffff" }}>
-            {pointUse}p
-          </span>
-        </Flex>
-        <Space h={11} />
-        <DrawButton onClick={onClickDraw}>응모하기</DrawButton>
+        {!drawProgress && <FinishDraw />}
       </Wrapper>
       {modalOpen && <DrawModal closeModal={() => setModalOpen(false)} />}
     </>
@@ -120,7 +129,7 @@ export default function DrawGift({
 const Wrapper = styled.div`
   padding: 24px 20px 34px 20px;
   background: #222222;
-
+  position: relative;
   .title {
     color: rgba(255, 255, 255, 0.87);
     font-family: Spoqa Han Sans Neo;
@@ -170,6 +179,20 @@ const DrawButton = styled.div`
   font-family: Spoqa Han Sans Neo;
   font-size: 16px;
   letter-spacing: -0.96px;
+`;
+
+const FinishDraw = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  background-color: black;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
 `;
 
 const getTypeFromPoint = (point: number) => {

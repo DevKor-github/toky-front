@@ -3,7 +3,7 @@ import { TIME } from "@/components/analysis/Data";
 import BetBanner from "@/components/bets/BetBanner";
 import MatchNavBar from "@/components/bets/MatchNavBar";
 import PointModal from "@/components/bets/PointModal";
-import { ProgressCheck } from "@/components/bets/ProgressCheck";
+import { ProgressCheck } from "@/components/common/ProgressCheck";
 import QuestionList from "@/components/bets/QuestionList";
 import AuthContext from "@/components/common/AuthContext";
 import NavigationBar from "@/components/common/NavigationBar";

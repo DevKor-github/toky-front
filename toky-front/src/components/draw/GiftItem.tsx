@@ -59,10 +59,15 @@ export default function GiftItem({
       <Space h={9} />
       <TempImg />
       <Space h={4} />
-      <Flex>
-        <Image alt="remove" src={remove} onClick={decreaseQuantity} />
+      <Flex style={{ gap: "30px" }}>
+        <ImageContainer onClick={decreaseQuantity}>
+          <Image alt="remove" src={remove} />
+        </ImageContainer>
+
         <Quantity>{draw[id - 1]}</Quantity>
-        <Image alt="add" src={add} onClick={increaseQuantity} />
+        <ImageContainer onClick={increaseQuantity}>
+          <Image alt="add" src={add} />
+        </ImageContainer>
       </Flex>
     </Wrapper>
   );
@@ -138,4 +143,13 @@ const Quantity = styled.div`
   color: #ffffff;
   font-family: Spoqa Han Sans Neo;
   font-size: 22px;
+`;
+
+const ImageContainer = styled.button`
+  width: 18px;
+  height: 27.5px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

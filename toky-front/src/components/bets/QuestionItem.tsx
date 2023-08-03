@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { css, styled } from "styled-components";
-import { ProgressCheck } from "./ProgressCheck";
+import { ProgressCheck } from "../common/ProgressCheck";
 import { TIME } from "../analysis/Data";
 import { match } from "assert";
 
