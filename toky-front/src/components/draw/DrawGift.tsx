@@ -22,8 +22,6 @@ export default function DrawGift({
 }: DrawGiftProps) {
   const drawDate = new Date("2023-09-16 23:59:59");
   const authCtx = useContext(AuthContext);
-
-  const authCtx = useContext(AuthContext);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [drawProgress, setDrawProgress] = useState<boolean>(
