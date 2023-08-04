@@ -9,6 +9,7 @@ import client from "@/lib/httpClient";
 import { ProgressCheck } from "../common/ProgressCheck";
 import { Finish } from "../bets/QuestionList";
 import AuthContext from "../common/AuthContext";
+
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
@@ -22,6 +23,7 @@ export default function DrawGift({
   const drawDate = new Date("2023-09-16 23:59:59");
   const authCtx = useContext(AuthContext);
 
+  const authCtx = useContext(AuthContext);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [drawProgress, setDrawProgress] = useState<boolean>(
@@ -45,18 +47,23 @@ export default function DrawGift({
   }, [draw]);
 
   const drawGifts = async () => {
+    let draws = [];
+
     for (let i = 0; i < gifts.length; i++) {
       const gift = gifts[i];
 
-      for (let j = 0; j < draw[gift.id - 1]; j++) {
-        try {
-          const res = await client.post("/points/draw", {
-            giftId: gift.id,
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      if (draw[gift.id - 1] < 1) continue;
+      draws.push({
+        giftId: gift.id,
+        count: draw[gift.id - 1],
+      });
+    }
+
+    try {
+      const res = await client.post("/points/draw", { draws });
+      return res;
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -131,7 +138,12 @@ export default function DrawGift({
         </div>
         {!drawProgress && <Finish />}
       </Wrapper>
-      {modalOpen && <DrawModal closeModal={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <DrawModal
+          closeModal={() => setModalOpen(false)}
+          completeDraw={completeDraw}
+        />
+      )}
     </>
   );
 }
