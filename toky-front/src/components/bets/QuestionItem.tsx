@@ -36,8 +36,25 @@ export default function QuestionItem({
 }: QuestionItemProps) {
   //기본 답을 밥음
   // const [selectedButton, setSelectedButton] = useState<number | null>(bet); // useeffect async로 유저의 기존 답변 받아올 수 있게 하기
-
+  function AnswerBet(i: number) {
+    if (answer === i) {
+      //같은 응답 버튼 누르면 do nothing
+    } else if (isRequesting) {
+      alert("잠시 후에 다시 눌러주세요!");
+    } else {
+      //setBlockedBet(itemIndex);
+      setIsRequesting(true);
+      if (ProgressCheck(TIME[match])) {
+        requestBetting(qid, i);
+        setTimeout(() => {
+          setIsRequesting(false);
+        }, 1000);
+      }
+      //setBet(betList, qid, i);
+    }
+  }
   const [isLoding, setIsLoding] = useState(true);
+  const [isRequesting, setIsRequesting] = useState<boolean>(false);
   // const handleButtonClick = (
   //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   //   idx: number
@@ -66,17 +83,7 @@ export default function QuestionItem({
               index={i}
               onClick={(e) => {
                 e.preventDefault();
-                if (blockedBet === itemIndex) {
-                  alert("잠시 후에 다시 눌러주세요!");
-                } else if (answer === i) {
-                  //같은 응답 버튼 누르면 do nothing
-                } else {
-                  //setBlockedBet(itemIndex);
-                  if (ProgressCheck(TIME[match])) {
-                    requestBetting(qid, i);
-                  }
-                  //setBet(betList, qid, i);
-                }
+                AnswerBet(i);
               }}
               selected={answerOrNull}
               length={answerLength}

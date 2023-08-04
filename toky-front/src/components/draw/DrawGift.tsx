@@ -62,11 +62,18 @@ export default function DrawGift({
     if (remainingPoint - pointUse - point < 0) return false;
     return true;
   };
-  const onClickDraw = () => {
+
+  const onClickDraw = async () => {
     if (ProgressCheck(drawDate)) {
-      drawGifts();
+      const res = await drawGifts();
+      if (res && res.status === 201) setModalOpen(true);
     }
-    setModalOpen(true);
+    //실패 시 실패했다는 모달 띄우기 ?
+  };
+
+  const completeDraw = () => {
+    authCtx.setRemain(authCtx.remain - pointUse);
+    setDraw([0, 0, 0, 0, 0]);
   };
 
   return (
@@ -79,7 +86,7 @@ export default function DrawGift({
             - 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.
           </div>
           <div className="description">
-            - 당첨자 발표는 2023년 9월 30일 문자를 통해 개별 공지됩니다.
+            - 당첨자 발표는 2023년 9월 16일 문자를 통해 개별 공지됩니다.
           </div>
           <Space h={21} />
           <Flex style={{ justifyContent: "center" }}>
