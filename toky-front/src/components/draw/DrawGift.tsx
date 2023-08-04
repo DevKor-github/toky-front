@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
@@ -8,6 +8,7 @@ import { IDrawCount } from "@/app/draw/page";
 import client from "@/lib/httpClient";
 import { ProgressCheck } from "../common/ProgressCheck";
 import { Finish } from "../bets/QuestionList";
+import AuthContext from "../common/AuthContext";
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
@@ -19,6 +20,7 @@ export default function DrawGift({
   myDrawParticipants,
 }: DrawGiftProps) {
   const drawDate = new Date("2023-09-16 23:59:59");
+  const authCtx = useContext(AuthContext);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
