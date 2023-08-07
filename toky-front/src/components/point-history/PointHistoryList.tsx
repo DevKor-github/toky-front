@@ -3,7 +3,7 @@ import styled from "styled-components";
 import HistoryItem from "./HistoryItem";
 import { useEffect, useRef, useState } from "react";
 import client from "@/lib/httpClient";
-interface IHistory {
+export interface IHistory {
   detail: string;
   usedPoint: number;
   remainedPoint: number;

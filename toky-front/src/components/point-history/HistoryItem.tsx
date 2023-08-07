@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 import { Space } from "../common/Space";
-import { IHistory } from "@/app/point-history/page";
+import { IHistory } from "./PointHistoryList";
 
 export default function HistoryItem({
   detail: description,
