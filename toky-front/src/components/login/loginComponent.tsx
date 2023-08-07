@@ -2,8 +2,8 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import Logo from "../../../public/image/Logo.webp";
-
+import Logo from "../../../public/image/LoginLogo.png";
+import Character from "../../../public/image/LoginCharacter.png";
 export default function LoginComponent() {
   const kakaoLogin = async () => {
     window.location.href = process.env.NEXT_PUBLIC_API_URL + "/auth/kakao";
@@ -15,15 +15,21 @@ export default function LoginComponent() {
 
   return (
     <LoginContainer>
-      <LogoWrapper>
+      {/* <LogoWrapper>
         <Image src={Logo} alt="logo" />
-      </LogoWrapper>
-      <LoginBtn className="kakao" onClick={kakaoLogin}>
-        카카오톡으로 시작하기
-      </LoginBtn>
-      <LoginBtn className="naver" onClick={naverLogin}>
-        네이버로 시작하기
-      </LoginBtn>
+      </LogoWrapper> */}
+      <ImageContainer>
+        <LogoImage src={Logo} width={239} height={76.5} alt="logo" />
+        <CharacterImage src={Character} alt="character" fill />
+        <LoginBtnContainer>
+          <LoginBtn className="kakao" onClick={kakaoLogin}>
+            카카오톡으로 시작하기
+          </LoginBtn>
+          <LoginBtn className="naver" onClick={naverLogin}>
+            네이버로 시작하기
+          </LoginBtn>
+        </LoginBtnContainer>
+      </ImageContainer>
     </LoginContainer>
   );
 }
@@ -31,8 +37,31 @@ export default function LoginComponent() {
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 95vh;
+  width: 100%;
 `;
+const ImageContainer = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
 
+  text-align: center;
+`;
+const LogoImage = styled(Image)`
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+`;
+const CharacterImage = styled(Image)`
+  /* position: absolute;
+  left: 62%;
+  transform: translate(-50%, 0); */
+  object-fit: cover;
+  object-position: 42% bottom;
+  max-width: 1000px;
+`;
 const LogoWrapper = styled.div`
   width: 180px;
   height: 147px;
@@ -41,7 +70,15 @@ const LogoWrapper = styled.div`
   margin-bottom: 54px;
   margin-top: 134px; // temporary
 `;
-
+const LoginBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  bottom: 1%;
+`;
 const LoginBtn = styled.button`
   width: 90%;
   height: 46px;
