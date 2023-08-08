@@ -139,6 +139,7 @@ const Info = styled.div`
 `;
 
 const Content = styled.div`
+  padding-left: 4px;
   color: #ffffff;
   font-family: Spoqa Han Sans Neo;
   font-size: 17px;
