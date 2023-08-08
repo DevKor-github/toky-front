@@ -2,7 +2,8 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import Logo from "../../../public/image/Logo.webp";
+import toky_bg from "../../../public/image/toky_login_img.png";
+import Logo from "../../../public/image/logo.svg";
 
 export default function LoginComponent() {
   const kakaoLogin = async () => {
@@ -15,31 +16,63 @@ export default function LoginComponent() {
 
   return (
     <LoginContainer>
-      <LogoWrapper>
-        <Image src={Logo} alt="logo" />
-      </LogoWrapper>
-      <LoginBtn className="kakao" onClick={kakaoLogin}>
-        카카오톡으로 시작하기
-      </LoginBtn>
-      <LoginBtn className="naver" onClick={naverLogin}>
-        네이버로 시작하기
-      </LoginBtn>
+      <div className="logo">
+        <Image className="toky_logo" src={Logo} alt="logo" />
+      </div>
+      <div className="bg">
+        <Image className="toky_bg" src={toky_bg} alt="bg" />
+        <div className="login">
+          <LoginBtn className="kakao" onClick={kakaoLogin}>
+            카카오톡으로 시작하기
+          </LoginBtn>
+          <LoginBtn className="naver" onClick={naverLogin}>
+            네이버로 시작하기
+          </LoginBtn>
+        </div>
+      </div>
     </LoginContainer>
   );
 }
 
 const LoginContainer = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
-`;
 
-const LogoWrapper = styled.div`
-  width: 180px;
-  height: 147px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 54px;
-  margin-top: 134px; // temporary
+  & .logo {
+    margin-top: 4vh;
+    z-index: 2;
+    & img {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+      height: auto;
+    }
+  }
+  & .bg {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100%;
+
+    & img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+  .login {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    margin: 0 auto;
+    width: 100%;
+
+    transform: translateY(-12%);
+  }
 `;
 
 const LoginBtn = styled.button`
@@ -58,7 +91,7 @@ const LoginBtn = styled.button`
   line-height: 20px;
   letter-spacing: -0.06em;
   border: none;
-
+  /* transform: translateY(-25px); */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
