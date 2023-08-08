@@ -10,9 +10,10 @@ import AuthContext from "../common/AuthContext";
 export interface UserInfoProps {
 	total: number;
 	rank: number;
+	searchMyRank: () => void;
 }
 
-export default function UserInfo({ total, rank }: UserInfoProps) {
+export default function UserInfo({ total, rank, searchMyRank }: UserInfoProps) {
 	const authCtx = useContext(AuthContext);
 	const univ = authCtx.university === "고려대학교" ? 0 : 1;
 	return (
@@ -21,7 +22,7 @@ export default function UserInfo({ total, rank }: UserInfoProps) {
 				<div className="small">
 					<div style={{ display: "inline-block" }}> {total}명 중</div>
 				</div>
-				<span className="large">
+				<span className="large" onClick={searchMyRank}>
 					{rank} <span className="middle">등</span>
 				</span>
 				<span className="underlined">{authCtx.score}points</span>
@@ -34,7 +35,7 @@ export default function UserInfo({ total, rank }: UserInfoProps) {
 						style={{ width: 61, height: 61, borderRadius: 33 }}
 					/>
 				</ProfileImage>
-				<span>{authCtx.nickname}</span> <button>내 랭킹 보기</button>
+				<span>{authCtx.nickname}</span>
 			</Flex>
 			<ShareButton>
 				<span>내 랭킹 공유하기</span>
@@ -75,12 +76,12 @@ const Flex = styled.div`
 	.large {
 		font-weight: 700;
 		font-size: 27px;
+		text-decoration-line: underline;
 	}
 
 	.underlined {
 		font-weight: 400;
 		font-size: 12px;
-		text-decoration-line: underline;
 	}
 `;
 

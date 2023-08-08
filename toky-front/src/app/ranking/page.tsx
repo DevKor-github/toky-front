@@ -14,9 +14,9 @@ export default function Ranking() {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [totalCount, setTotalCount] = useState(0);
-	const [myRank, setMyRank] = useState(-1);
 
-	const [searchedRank, setSearchedRank] = useState(-1);
+	// 여기에 하이라이팅
+	const [myRank, setMyRank] = useState(-1);
 
 	const [rankInfoList, setRankInfoList] = useState<RankingItemT[]>([]);
 
@@ -54,6 +54,35 @@ export default function Ranking() {
 		}
 	}, [totalCount, topPage, bottomPage]);
 
+	const searchRank = async () => {
+		const res = await client.get(`points/rank/search?name=${searchValue}`);
+		const data = res.data;
+
+		if (data.users === undefined) {
+			setRankInfoList([]);
+			setTopPage(0);
+			setBottomPage(Math.ceil(totalCount / 10));
+		}
+		setRankInfoList(data.users);
+
+		setTopPage(data.page);
+		setBottomPage(data.page);
+	};
+
+	const searchMyRank = async () => {
+		const res = await client.get("points/rank/my");
+		const data = res.data;
+
+		if (data.users === undefined) {
+			setRankInfoList([]);
+			setTopPage(0);
+			setBottomPage(Math.ceil(totalCount / 10));
+		}
+		setRankInfoList(data.users);
+		setTopPage(data.page);
+		setBottomPage(data.page);
+	};
+
 	const getRankByPage = async (page: number) => {
 		const result = await client.get(`points/rank?page=${page}`);
 		const data = result.data;
@@ -63,10 +92,15 @@ export default function Ranking() {
 	const getRankInfo = async () => {
 		const res = await client.get("points/rank/info");
 		const data = res.data;
-
+		setBottomPage(1);
+		setTopPage(1);
 		setMyRank(data.rank);
 		setTotalCount(data.total);
 		setRankInfoList(data.rankList);
+		const divElement = scrollRef.current;
+		if (divElement) {
+			divElement.scrollTop = 0;
+		}
 	};
 
 	useEffect(() => {
@@ -81,8 +115,14 @@ export default function Ranking() {
 				total={totalCount}
 				rank={myRank}
 				rankInfoList={rankInfoList}
+				searchMyRank={searchMyRank}
 			/>
-			<SearchBar />
+			<SearchBar
+				searchValue={searchValue}
+				setSearchValue={setSearchValue}
+				getRankInfo={getRankInfo}
+				searchRank={searchRank}
+			/>
 		</div>
 	);
 }

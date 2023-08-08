@@ -17,17 +17,24 @@ export interface RankingInfoProps {
 	rank: number;
 	rankInfoList: RankingItemT[];
 	scrollRef: React.RefObject<HTMLDivElement>;
+	searchMyRank: () => void;
 }
 
-export default function RankingInfo({ total, rank, rankInfoList, scrollRef }: RankingInfoProps) {
+export default function RankingInfo({
+	total,
+	rank,
+	rankInfoList,
+	scrollRef,
+	searchMyRank,
+}: RankingInfoProps) {
 	return (
 		<Wrapper id="ranking-info">
-			<UserInfo total={total} rank={rank} />
+			<UserInfo total={total} rank={rank} searchMyRank={searchMyRank} />
 			<Divider />
 			<Ranking ref={scrollRef}>
-				{rankInfoList.map((item, idx) => (
-					<RankingItem key={idx} {...item} />
-				))}
+				{rankInfoList
+					? rankInfoList.map((item, idx) => <RankingItem key={idx} {...item} />)
+					: "검색결과가 없습니다"}
 			</Ranking>
 		</Wrapper>
 	);
