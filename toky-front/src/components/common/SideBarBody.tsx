@@ -131,6 +131,7 @@ function SideBarBodyFC(
           authCtx.setUniv(uni);
           authCtx.setScore(user.score);
           authCtx.setRemain(user.remain);
+          authCtx.setPhoneNum(user.phoneNumber);
         })
         .catch((err) => {
           window.location.href = "/login";
