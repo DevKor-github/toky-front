@@ -144,11 +144,13 @@ function SideBarBodyFC(
           <UnivName>{authCtx.university}</UnivName>
           <UserName>{authCtx.nickname}</UserName>
         </FlexWrapper>
-        <Image
-          src={Setting}
-          alt="setting"
-          style={{ marginTop: 32.5, marginLeft: 6 }}
-        />
+        <Link href="/mypage">
+          <Image
+            src={Setting}
+            alt="setting"
+            style={{ marginTop: 32.5, marginLeft: 6 }}
+          />
+        </Link>
         <Image src={Avatar} alt="avatar" style={{ marginLeft: "auto" }} />
       </FlexWrapper>
       <DivBar />
