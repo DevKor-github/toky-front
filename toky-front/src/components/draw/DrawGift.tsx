@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState, useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
@@ -8,7 +8,7 @@ import { IDrawCount } from "@/app/draw/page";
 import client from "@/lib/httpClient";
 import { ProgressCheck } from "../common/ProgressCheck";
 import { Finish } from "../bets/QuestionList";
-import AuthContext from "@/components/common/AuthContext";
+import AuthContext from "../common/AuthContext";
 
 interface DrawGiftProps {
   remainingPoint: number;
@@ -21,7 +21,6 @@ export default function DrawGift({
   myDrawParticipants,
 }: DrawGiftProps) {
   const drawDate = new Date("2023-09-16 23:59:59");
-
   const authCtx = useContext(AuthContext);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
@@ -71,12 +70,11 @@ export default function DrawGift({
     return true;
   };
 
-
   const onClickDraw = async () => {
     if (ProgressCheck(drawDate)) {
       const res = await drawGifts();
       if (res && res.status === 201) setModalOpen(true);
-     }
+    }
     //실패 시 실패했다는 모달 띄우기 ?
   };
 
@@ -95,7 +93,7 @@ export default function DrawGift({
             - 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.
           </div>
           <div className="description">
-            - 당첨자 발표는 2023년 9월 30일 문자를 통해 개별 공지됩니다.
+            - 당첨자 발표는 2023년 9월 16일 문자를 통해 개별 공지됩니다.
           </div>
           <Space h={21} />
           <Flex style={{ justifyContent: "center" }}>
