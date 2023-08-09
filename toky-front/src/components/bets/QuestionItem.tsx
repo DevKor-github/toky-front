@@ -67,7 +67,7 @@ export default function QuestionItem({
   //   setSelectedButton(null);
   // }, [choice]);
   const answerOrNull = answer === undefined ? null : answer;
-  const notAnswerd = answer === undefined ? true : false;
+  const notAnswerd: boolean = answer === undefined ? true : false;
   return (
     <QuestionContainer>
       {/* index 원 */}
