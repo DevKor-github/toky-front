@@ -16,20 +16,28 @@ export default function LoginComponent() {
 
   return (
     <LoginContainer>
-      <div className="logo">
-        <Image className="toky_logo" src={Logo} alt="logo" />
-      </div>
-      <div className="bg">
-        <Image className="toky_bg" src={toky_bg} alt="bg" />
-        <div className="login">
-          <LoginBtn className="kakao" onClick={kakaoLogin}>
-            카카오톡으로 시작하기
-          </LoginBtn>
-          <LoginBtn className="naver" onClick={naverLogin}>
-            네이버로 시작하기
-          </LoginBtn>
-        </div>
-      </div>
+      <Image
+        className="toky_logo"
+        src={Logo}
+        width={239}
+        height={76.5}
+        alt="logo"
+      />
+      <Image
+        width={390}
+        height={468}
+        className="toky_bg"
+        src={toky_bg}
+        alt="bg"
+      />
+      <LoginBtnContainer>
+        <LoginBtn className="kakao" onClick={kakaoLogin}>
+          카카오톡으로 시작하기
+        </LoginBtn>
+        <LoginBtn className="naver" onClick={naverLogin}>
+          네이버로 시작하기
+        </LoginBtn>
+      </LoginBtnContainer>
     </LoginContainer>
   );
 }
@@ -38,39 +46,24 @@ const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-
-  & .logo {
-    margin-top: 4vh;
-    z-index: 2;
-    & img {
-      display: block;
-      margin: 0 auto;
-      width: 80%;
-      height: auto;
-    }
+  justify-content: flex-end;
+  height: 100vh;
+  position: relative;
+  & .toky_logo {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    z-index: 3;
   }
-  & .bg {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    width: 100%;
-
-    & img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
+  & .toky_bg {
+    vertical-align: bottom;
   }
-  .login {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    margin: 0 auto;
-    width: 100%;
-  }
+  padding-bottom: 7vh;
+`;
+const CharacterContainer = styled.div`
+  width: 100%;
+  text-align: center;
 `;
 const LogoWrapper = styled.div`
   width: 180px;
@@ -85,9 +78,7 @@ const LoginBtnContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  position: absolute;
   width: 100%;
-  bottom: 1%;
 `;
 const LoginBtn = styled.button`
   width: 90%;
