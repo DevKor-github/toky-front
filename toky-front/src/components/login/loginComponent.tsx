@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import toky_bg from "../../../public/image/toky_login_img.png";
 import Logo from "../../../public/image/logo.svg";
+import { easeIn, motion } from "framer-motion";
 
 export default function LoginComponent() {
   const kakaoLogin = async () => {
@@ -15,7 +16,11 @@ export default function LoginComponent() {
   };
 
   return (
-    <LoginContainer>
+    <LoginContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: easeIn }}
+    >
       <Image
         className="toky_logo"
         src={Logo}
@@ -42,7 +47,7 @@ export default function LoginComponent() {
   );
 }
 
-const LoginContainer = styled.div`
+const LoginContainer = styled(motion.div)`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -61,18 +66,7 @@ const LoginContainer = styled.div`
   }
   padding-bottom: 7vh;
 `;
-const CharacterContainer = styled.div`
-  width: 100%;
-  text-align: center;
-`;
-const LogoWrapper = styled.div`
-  width: 180px;
-  height: 147px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 54px;
-  margin-top: 134px; // temporary
-`;
+
 const LoginBtnContainer = styled.div`
   display: flex;
   justify-content: center;

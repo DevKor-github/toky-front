@@ -14,6 +14,7 @@ import withAuth from "@/lib/withAuth";
 
 import { useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import PageTransitionWrapper from "@/components/common/PageTransition";
 
 export interface QuestionType {
   questionId: number;
@@ -92,35 +93,37 @@ function Bets() {
   return (
     <>
       <NavigationBar />
-      <BetBanner
-        match={match}
-        matchProgress={matchProgress}
-        clickModal={clickShareModal}
-      />
-      <MatchNavBar match={match} handleMatch={handleMatch} />
-      {!isLoading && (
-        <QuestionList
-          questions={questionsInMatch}
-          setQuestions={setQuestions}
-          orgQuestions={questions}
-          setModal={clickPointModal}
+      <PageTransitionWrapper>
+        <BetBanner
           match={match}
           matchProgress={matchProgress}
+          clickModal={clickShareModal}
         />
-      )}
-      {showPointModal && portalElement
-        ? createPortal(
-            // <SharePrediction clickModal={clickShareModal} />
-            <PointModal clickModal={clickPointModal} />,
-            portalElement
-          )
-        : null}
-      {showShareModal && portalElement
-        ? createPortal(
-            <SharePrediction clickModal={clickShareModal} />,
-            portalElement
-          )
-        : null}
+        <MatchNavBar match={match} handleMatch={handleMatch} />
+        {!isLoading && (
+          <QuestionList
+            questions={questionsInMatch}
+            setQuestions={setQuestions}
+            orgQuestions={questions}
+            setModal={clickPointModal}
+            match={match}
+            matchProgress={matchProgress}
+          />
+        )}
+        {showPointModal && portalElement
+          ? createPortal(
+              // <SharePrediction clickModal={clickShareModal} />
+              <PointModal clickModal={clickPointModal} />,
+              portalElement
+            )
+          : null}
+        {showShareModal && portalElement
+          ? createPortal(
+              <SharePrediction clickModal={clickShareModal} />,
+              portalElement
+            )
+          : null}
+      </PageTransitionWrapper>
     </>
   );
 }
