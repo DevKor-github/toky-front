@@ -15,6 +15,7 @@ import withAuth from "@/lib/withAuth";
 import { useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PageTransitionWrapper from "@/components/common/PageTransition";
+import { AnimatePresence } from "framer-motion";
 
 export interface QuestionType {
   questionId: number;
@@ -116,12 +117,9 @@ function Bets() {
             matchProgress={matchProgress}
           />
         )}
-        {showPointModal && portalElement
-          ? createPortal(
-              <PointModal clickModal={clickPointModal} />,
-              portalElement
-            )
-          : null}
+        <AnimatePresence>
+          {showPointModal && <PointModal clickModal={clickPointModal} />}
+        </AnimatePresence>
         {showShareModal && portalElement
           ? createPortal(
               <SharePrediction clickModal={clickShareModal} />,
