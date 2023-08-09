@@ -40,8 +40,14 @@ function Bets() {
   function clickShareModal() {
     setShowShareModal(!showShareModal);
   }
+  function autoPointModal() {
+    setShowPointModal(true);
+    setTimeout(() => {
+      setShowPointModal(false);
+    }, 1000);
+  }
   function clickPointModal() {
-    setShowPointModal(!showPointModal);
+    setShowPointModal(false);
   }
 
   const [match, setMatch] = useState<number>(0);
@@ -105,14 +111,13 @@ function Bets() {
             questions={questionsInMatch}
             setQuestions={setQuestions}
             orgQuestions={questions}
-            setModal={clickPointModal}
+            setModal={autoPointModal}
             match={match}
             matchProgress={matchProgress}
           />
         )}
         {showPointModal && portalElement
           ? createPortal(
-              // <SharePrediction clickModal={clickShareModal} />
               <PointModal clickModal={clickPointModal} />,
               portalElement
             )
