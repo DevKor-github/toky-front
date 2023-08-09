@@ -99,6 +99,5 @@ function Signup() {
     </div>
   );
 }
-export default Signup;
-// export default withAuth(Signup);
+export default withAuth(Signup);
 export type { valueType };
