@@ -131,6 +131,7 @@ function SideBarBodyFC(
           authCtx.setUniv(uni);
           authCtx.setScore(user.score);
           authCtx.setRemain(user.remain);
+          authCtx.setPhoneNum(user.phoneNumber);
         })
         .catch((err) => {
           window.location.href = "/login";
@@ -144,11 +145,13 @@ function SideBarBodyFC(
           <UnivName>{authCtx.university}</UnivName>
           <UserName>{authCtx.nickname}</UserName>
         </FlexWrapper>
-        <Image
-          src={Setting}
-          alt="setting"
-          style={{ marginTop: 32.5, marginLeft: 6 }}
-        />
+        <Link href="/mypage">
+          <Image
+            src={Setting}
+            alt="setting"
+            style={{ marginTop: 32.5, marginLeft: 6 }}
+          />
+        </Link>
         <Image src={Avatar} alt="avatar" style={{ marginLeft: "auto" }} />
       </FlexWrapper>
       <DivBar />

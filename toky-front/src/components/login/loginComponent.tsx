@@ -2,8 +2,9 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import Logo from "../../../public/image/LoginLogo.png";
-import Character from "../../../public/image/LoginCharacter.png";
+import toky_bg from "../../../public/image/toky_login_img.png";
+import Logo from "../../../public/image/logo.svg";
+
 export default function LoginComponent() {
   const kakaoLogin = async () => {
     window.location.href = process.env.NEXT_PUBLIC_API_URL + "/auth/kakao";
@@ -15,52 +16,61 @@ export default function LoginComponent() {
 
   return (
     <LoginContainer>
-      {/* <LogoWrapper>
-        <Image src={Logo} alt="logo" />
-      </LogoWrapper> */}
-      <ImageContainer>
-        <LogoImage src={Logo} width={239} height={76.5} alt="logo" />
-        <CharacterImage src={Character} alt="character" fill />
-        <LoginBtnContainer>
+      <div className="logo">
+        <Image className="toky_logo" src={Logo} alt="logo" />
+      </div>
+      <div className="bg">
+        <Image className="toky_bg" src={toky_bg} alt="bg" />
+        <div className="login">
           <LoginBtn className="kakao" onClick={kakaoLogin}>
             카카오톡으로 시작하기
           </LoginBtn>
           <LoginBtn className="naver" onClick={naverLogin}>
             네이버로 시작하기
           </LoginBtn>
-        </LoginBtnContainer>
-      </ImageContainer>
+        </div>
+      </div>
     </LoginContainer>
   );
 }
 
 const LoginContainer = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
-  height: 95vh;
-  width: 100%;
-`;
-const ImageContainer = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
 
-  text-align: center;
-`;
-const LogoImage = styled(Image)`
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  z-index: 1;
-  transform: translate(-50%, -50%);
-`;
-const CharacterImage = styled(Image)`
-  /* position: absolute;
-  left: 62%;
-  transform: translate(-50%, 0); */
-  object-fit: cover;
-  object-position: 42% bottom;
-  max-width: 1000px;
+  & .logo {
+    margin-top: 4vh;
+    z-index: 2;
+    & img {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+      height: auto;
+    }
+  }
+  & .bg {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100%;
+
+    & img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+  .login {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    margin: 0 auto;
+    width: 100%;
+  }
 `;
 const LogoWrapper = styled.div`
   width: 180px;
@@ -95,7 +105,7 @@ const LoginBtn = styled.button`
   line-height: 20px;
   letter-spacing: -0.06em;
   border: none;
-
+  /* transform: translateY(-25px); */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
