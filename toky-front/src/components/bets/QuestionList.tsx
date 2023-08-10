@@ -13,7 +13,9 @@ interface QuestionListProps {
   orgQuestions: QuestionType[];
   match: number;
   matchProgress: boolean;
-  setModal: () => void;
+  setPointModal: () => void;
+  setWaitModal: () => void;
+  setFailModal: () => void;
 }
 
 export default function QuestionList({
@@ -21,8 +23,10 @@ export default function QuestionList({
   setQuestions,
   orgQuestions,
   match,
-  setModal,
   matchProgress,
+  setPointModal,
+  setWaitModal,
+  setFailModal,
 }: QuestionListProps) {
   // TODO:
   // 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
@@ -41,7 +45,7 @@ export default function QuestionList({
       if (response.status === 201) {
         authCtx.setScore(authCtx.score + 10);
         authCtx.setRemain(authCtx.remain + 10);
-        setModal();
+        setPointModal();
       }
       setQuestions(
         orgQuestions.map((question) =>
@@ -56,7 +60,7 @@ export default function QuestionList({
       );
     } catch (err) {
       console.log(err);
-      alert("서버에서 배팅을 처리하지 못했습니다.");
+      setFailModal();
     }
   };
 
@@ -87,6 +91,7 @@ export default function QuestionList({
                 percentage={question.percentage}
                 requestBetting={requestBetting}
                 match={match}
+                setWaitModal={setWaitModal}
               />
             </div>
           ))

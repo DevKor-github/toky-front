@@ -7,70 +7,76 @@ import search from "../../../public/image/search.svg";
 import verticalAlignTop from "../../../public/image/vertical_align_top.svg";
 
 interface SearchBarProps {
-	searchValue: string;
-	setSearchValue: (value: string) => void;
-	getRankInfo: () => void;
-	searchRank: () => void;
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  getRankInfo: () => void;
+  searchRank: () => void;
 }
 
 export default function SearchBar({
-	searchValue,
-	setSearchValue,
-	searchRank,
-	getRankInfo,
+  searchValue,
+  setSearchValue,
+  searchRank,
+  getRankInfo,
 }: SearchBarProps) {
-	const [inputFocus, setInputFocus] = useState(false);
+  const [inputFocus, setInputFocus] = useState<boolean>(false);
 
-	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value);
-	};
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
-	return (
-		<Wrapper>
-			<SearchArea focused={inputFocus}>
-				<SearchInput
-					value={searchValue}
-					onChange={onInputChange}
-					className="input"
-					placeholder="닉네임을 검색하세요"
-					onFocus={() => setInputFocus(true)}
-					onBlur={() => setInputFocus(false)}
-				/>
-				<Image src={search} alt="search" onClick={searchRank} />
-			</SearchArea>
-			<Image src={verticalAlignTop} alt="top" style={{ marginTop: 14 }} onClick={getRankInfo} />
-		</Wrapper>
-	);
+  return (
+    <Wrapper>
+      <SearchArea focused={inputFocus}>
+        <SearchInput
+          value={searchValue}
+          onChange={onInputChange}
+          className="input"
+          placeholder="닉네임을 검색하세요"
+          onFocus={() => setInputFocus(true)}
+          onBlur={() => setInputFocus(false)}
+        />
+        <Image src={search} alt="search" onClick={searchRank} />
+      </SearchArea>
+      <Image
+        src={verticalAlignTop}
+        alt="top"
+        style={{ marginTop: 14 }}
+        onClick={getRankInfo}
+      />
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.div`
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	height: 64px;
-	padding: 0 20px;
-	background-color: #121212;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 64px;
+  padding: 0 20px;
+  background-color: #121212;
 `;
 
 const SearchArea = styled.div<{ focused: boolean }>`
-	box-sizing: border-box;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: calc(100% - 32px);
-	height: 38px;
-	margin-top: 5px;
-	padding: 0 16px;
-	border: 1px solid
-		${({ focused }) => (focused ? "rgba(255, 255, 255, 0.87)" : "rgba(255, 255, 255, 0.38)")};
-	border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 32px);
+  height: 38px;
+  margin-top: 5px;
+  padding: 0 16px;
+  border: 1px solid
+    ${({ focused }) =>
+      focused ? "rgba(255, 255, 255, 0.87)" : "rgba(255, 255, 255, 0.38)"};
+  border-radius: 4px;
 `;
 
 const SearchInput = styled.input`
-	width: calc(100% - 35px);
-	height: 100%;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #121212;
-	outline: none;
-	border: none;
+  width: calc(100% - 35px);
+  height: 100%;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #121212;
+  outline: none;
+  border: none;
 `;

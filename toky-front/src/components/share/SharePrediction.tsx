@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import client from "@/lib/httpClient";
 import AuthContext from "../common/AuthContext";
+import Modal from "../common/Modal";
 
 export interface ShareProps {
   clickModal: () => void;
@@ -185,10 +186,9 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   };
   const notCompletePrediction = () => {
     return (
-      <NotCompleteModalContainer>
+      <Modal clickModal={clickModal}>
         <p>예측을 완료해주세요</p>
-        <CheckContainer onClick={clickModal}>확인</CheckContainer>
-      </NotCompleteModalContainer>
+      </Modal>
     );
   };
 
@@ -401,34 +401,4 @@ const ShareCardWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: black;
-`;
-
-export const NotCompleteModalContainer = styled.div`
-  border-radius: 6px;
-  background: var(--white-0, #fff);
-  /* 그림자 */
-  box-shadow: 0px 4px 4px 0px rgba(18, 18, 18, 0.25);
-  width: 350px;
-  height: 214px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  p {
-    color: var(--black-6, #2c2c2c);
-    font-family: Spoqa Han Sans Neo;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: -1.2px;
-    margin-top: 68px;
-  }
-`;
-export const CheckContainer = styled.button`
-  width: 310px;
-  height: 46px;
-  border-radius: 4px;
-  background: #4c0eb0;
-  margin-top: 51px;
 `;

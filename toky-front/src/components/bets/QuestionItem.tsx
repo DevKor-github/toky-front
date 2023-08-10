@@ -19,6 +19,7 @@ interface QuestionItemProps {
   blockedBet: number;
   setBlockedBet: (n: number) => void;
   requestBetting: (qid: number, answer: number) => Promise<void>;
+  setWaitModal: () => void;
 }
 // props로 i 받고 description choices + style에 index랑 choice.size넣어서 구분
 // 이미 저장해뒀다면 받아와야함
@@ -33,6 +34,7 @@ export default function QuestionItem({
   blockedBet,
   setBlockedBet,
   requestBetting,
+  setWaitModal,
 }: QuestionItemProps) {
   //기본 답을 밥음
   // const [selectedButton, setSelectedButton] = useState<number | null>(bet); // useeffect async로 유저의 기존 답변 받아올 수 있게 하기
@@ -40,7 +42,7 @@ export default function QuestionItem({
     if (answer === i) {
       //같은 응답 버튼 누르면 do nothing
     } else if (isRequesting) {
-      alert("잠시 후에 다시 눌러주세요!");
+      setWaitModal();
     } else {
       //setBlockedBet(itemIndex);
       setIsRequesting(true);
@@ -67,7 +69,7 @@ export default function QuestionItem({
   //   setSelectedButton(null);
   // }, [choice]);
   const answerOrNull = answer === undefined ? null : answer;
-  const notAnswerd = answer === undefined ? true : false;
+  const notAnswerd: boolean = answer === undefined ? true : false;
   return (
     <QuestionContainer>
       {/* index 원 */}

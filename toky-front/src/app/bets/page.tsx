@@ -8,12 +8,13 @@ import QuestionList from "@/components/bets/QuestionList";
 import AuthContext from "@/components/common/AuthContext";
 import NavigationBar from "@/components/common/NavigationBar";
 import SharePrediction from "@/components/share/SharePrediction";
-
 import client from "@/lib/httpClient";
 import withAuth from "@/lib/withAuth";
-
 import { useContext, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import PageTransitionWrapper from "@/components/common/PageTransition";
+import BetWaitModal from "@/components/bets/BetWaitModal";
+import ModalPortal from "@/components/common/ModalPortal";
+import BetFailModal from "@/components/bets/BetFailModal";
 
 export interface QuestionType {
   questionId: number;
@@ -29,23 +30,30 @@ function Bets() {
   // 서버로 유지 위해 use client를 question list로?
 
   const [showShareModal, setShowShareModal] = useState(false);
-  const [portalElement, setProtalElement] = useState<Element | null>(null);
   const [showPointModal, setShowPointModal] = useState(false);
-
-  useEffect(() => {
-    setProtalElement(document.getElementById("portal"));
-  }, [showShareModal]);
-
+  const [showWaitModal, setShowWaitModal] = useState(false);
+  const [showFailModal, setShowFailModal] = useState(false);
   function clickShareModal() {
     setShowShareModal(!showShareModal);
   }
+  function autoPointModal() {
+    setShowPointModal(true);
+    setTimeout(() => {
+      setShowPointModal(false);
+    }, 1000);
+  }
   function clickPointModal() {
-    setShowPointModal(!showPointModal);
+    setShowPointModal(false);
+  }
+  function clickFailModal() {
+    setShowFailModal(!showFailModal);
+  }
+  function clickWaitModal() {
+    setShowWaitModal(!showWaitModal);
   }
 
   const [match, setMatch] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [questions, setQuestions] = useState<QuestionType[]>([]);
 
   const handleMatch = (m: number) => {
@@ -92,35 +100,38 @@ function Bets() {
   return (
     <>
       <NavigationBar />
-      <BetBanner
-        match={match}
-        matchProgress={matchProgress}
-        clickModal={clickShareModal}
-      />
-      <MatchNavBar match={match} handleMatch={handleMatch} />
-      {!isLoading && (
-        <QuestionList
-          questions={questionsInMatch}
-          setQuestions={setQuestions}
-          orgQuestions={questions}
-          setModal={clickPointModal}
+      <PageTransitionWrapper>
+        <BetBanner
           match={match}
           matchProgress={matchProgress}
+          clickModal={clickShareModal}
         />
-      )}
-      {showPointModal && portalElement
-        ? createPortal(
-            // <SharePrediction clickModal={clickShareModal} />
-            <PointModal clickModal={clickPointModal} />,
-            portalElement
-          )
-        : null}
-      {showShareModal && portalElement
-        ? createPortal(
-            <SharePrediction clickModal={clickShareModal} />,
-            portalElement
-          )
-        : null}
+        <MatchNavBar match={match} handleMatch={handleMatch} />
+        {!isLoading && (
+          <QuestionList
+            questions={questionsInMatch}
+            setQuestions={setQuestions}
+            orgQuestions={questions}
+            setPointModal={autoPointModal}
+            setWaitModal={clickWaitModal}
+            setFailModal={clickFailModal}
+            match={match}
+            matchProgress={matchProgress}
+          />
+        )}
+        <ModalPortal isShowing={showPointModal}>
+          <PointModal />
+        </ModalPortal>
+        <ModalPortal isShowing={showShareModal}>
+          <SharePrediction clickModal={clickShareModal} />
+        </ModalPortal>
+        <ModalPortal isShowing={showWaitModal}>
+          <BetWaitModal clickModal={clickWaitModal} />
+        </ModalPortal>
+        <ModalPortal isShowing={showFailModal}>
+          <BetFailModal clickModal={clickFailModal} />
+        </ModalPortal>
+      </PageTransitionWrapper>
     </>
   );
 }

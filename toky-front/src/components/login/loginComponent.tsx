@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import toky_bg from "../../../public/image/toky_login_img.png";
 import Logo from "../../../public/image/logo.svg";
+import { easeIn, motion } from "framer-motion";
 
 export default function LoginComponent() {
   const kakaoLogin = async () => {
@@ -15,66 +16,64 @@ export default function LoginComponent() {
   };
 
   return (
-    <LoginContainer>
-      <div className="logo">
-        <Image className="toky_logo" src={Logo} alt="logo" />
-      </div>
-      <div className="bg">
-        <Image className="toky_bg" src={toky_bg} alt="bg" />
-        <div className="login">
-          <LoginBtn className="kakao" onClick={kakaoLogin}>
-            카카오톡으로 시작하기
-          </LoginBtn>
-          <LoginBtn className="naver" onClick={naverLogin}>
-            네이버로 시작하기
-          </LoginBtn>
-        </div>
-      </div>
+    <LoginContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: easeIn }}
+    >
+      <Image
+        className="toky_logo"
+        src={Logo}
+        width={239}
+        height={76.5}
+        alt="logo"
+      />
+      <Image
+        width={390}
+        height={468}
+        className="toky_bg"
+        src={toky_bg}
+        alt="bg"
+      />
+      <LoginBtnContainer>
+        <LoginBtn className="kakao" onClick={kakaoLogin}>
+          카카오톡으로 시작하기
+        </LoginBtn>
+        <LoginBtn className="naver" onClick={naverLogin}>
+          네이버로 시작하기
+        </LoginBtn>
+      </LoginBtnContainer>
     </LoginContainer>
   );
 }
 
-const LoginContainer = styled.div`
+const LoginContainer = styled(motion.div)`
   display: flex;
   align-items: center;
   flex-direction: column;
-
-  & .logo {
-    margin-top: 4vh;
-    z-index: 2;
-    & img {
-      display: block;
-      margin: 0 auto;
-      width: 80%;
-      height: auto;
-    }
+  justify-content: flex-end;
+  height: 100vh;
+  position: relative;
+  & .toky_logo {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    z-index: 3;
   }
-  & .bg {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    width: 100%;
-
-    & img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
+  & .toky_bg {
+    vertical-align: bottom;
   }
-  .login {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    margin: 0 auto;
-    width: 100%;
-
-    transform: translateY(-12%);
-  }
+  padding-bottom: 7vh;
 `;
 
+const LoginBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
 const LoginBtn = styled.button`
   width: 90%;
   height: 46px;
