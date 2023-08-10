@@ -12,9 +12,9 @@ import client from "@/lib/httpClient";
 import withAuth from "@/lib/withAuth";
 import { useContext, useEffect, useState } from "react";
 import PageTransitionWrapper from "@/components/common/PageTransition";
-import { AnimatePresence } from "framer-motion";
 import BetWaitModal from "@/components/bets/BetWaitModal";
 import ModalPortal from "@/components/common/ModalPortal";
+import BetFailModal from "@/components/bets/BetFailModal";
 
 export interface QuestionType {
   questionId: number;
@@ -32,7 +32,7 @@ function Bets() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showPointModal, setShowPointModal] = useState(false);
   const [showWaitModal, setShowWaitModal] = useState(false);
-
+  const [showFailModal, setShowFailModal] = useState(false);
   function clickShareModal() {
     setShowShareModal(!showShareModal);
   }
@@ -44,6 +44,9 @@ function Bets() {
   }
   function clickPointModal() {
     setShowPointModal(false);
+  }
+  function clickFailModal() {
+    setShowFailModal(!showFailModal);
   }
   function clickWaitModal() {
     setShowWaitModal(!showWaitModal);
@@ -111,18 +114,22 @@ function Bets() {
             orgQuestions={questions}
             setPointModal={autoPointModal}
             setWaitModal={clickWaitModal}
+            setFailModal={clickFailModal}
             match={match}
             matchProgress={matchProgress}
           />
         )}
         <ModalPortal isShowing={showPointModal}>
-          <PointModal clickModal={clickPointModal} />
+          <PointModal />
         </ModalPortal>
         <ModalPortal isShowing={showShareModal}>
           <SharePrediction clickModal={clickShareModal} />
         </ModalPortal>
         <ModalPortal isShowing={showWaitModal}>
           <BetWaitModal clickModal={clickWaitModal} />
+        </ModalPortal>
+        <ModalPortal isShowing={showFailModal}>
+          <BetFailModal clickModal={clickFailModal} />
         </ModalPortal>
       </PageTransitionWrapper>
     </>

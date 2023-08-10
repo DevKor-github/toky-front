@@ -15,6 +15,7 @@ interface QuestionListProps {
   matchProgress: boolean;
   setPointModal: () => void;
   setWaitModal: () => void;
+  setFailModal: () => void;
 }
 
 export default function QuestionList({
@@ -22,9 +23,10 @@ export default function QuestionList({
   setQuestions,
   orgQuestions,
   match,
-  setPointModal,
   matchProgress,
+  setPointModal,
   setWaitModal,
+  setFailModal,
 }: QuestionListProps) {
   // TODO:
   // 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
@@ -58,7 +60,7 @@ export default function QuestionList({
       );
     } catch (err) {
       console.log(err);
-      alert("서버에서 배팅을 처리하지 못했습니다.");
+      setFailModal();
     }
   };
 
