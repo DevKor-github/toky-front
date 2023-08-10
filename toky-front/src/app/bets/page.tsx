@@ -16,6 +16,7 @@ import { useContext, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PageTransitionWrapper from "@/components/common/PageTransition";
 import { AnimatePresence } from "framer-motion";
+import BetWaitModal from "@/components/bets/BetWaitModal";
 
 export interface QuestionType {
   questionId: number;
@@ -33,6 +34,7 @@ function Bets() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [portalElement, setProtalElement] = useState<Element | null>(null);
   const [showPointModal, setShowPointModal] = useState(false);
+  const [showWaitModal, setShowWaitModal] = useState(false);
 
   useEffect(() => {
     setProtalElement(document.getElementById("portal"));
@@ -49,6 +51,9 @@ function Bets() {
   }
   function clickPointModal() {
     setShowPointModal(false);
+  }
+  function clickWaitModal() {
+    setShowWaitModal(!showWaitModal);
   }
 
   const [match, setMatch] = useState<number>(0);
@@ -112,7 +117,8 @@ function Bets() {
             questions={questionsInMatch}
             setQuestions={setQuestions}
             orgQuestions={questions}
-            setModal={autoPointModal}
+            setPointModal={autoPointModal}
+            setWaitModal={clickWaitModal}
             match={match}
             matchProgress={matchProgress}
           />
@@ -123,6 +129,12 @@ function Bets() {
         {showShareModal && portalElement
           ? createPortal(
               <SharePrediction clickModal={clickShareModal} />,
+              portalElement
+            )
+          : null}
+        {showWaitModal && portalElement
+          ? createPortal(
+              <BetWaitModal clickModal={clickWaitModal} />,
               portalElement
             )
           : null}
