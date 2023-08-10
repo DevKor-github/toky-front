@@ -11,10 +11,10 @@ import BasketballTimer from "./timer/BasketballTimer";
 import RugbyTimer from "./timer/RugbyTimer";
 import FootballTimer from "./timer/FootballTimer";
 
-function AnalBanner({ match }: MatchProps) {
+function AnalBanner({ match, progress }: { match: number; progress: number }) {
   //progress 받아오기
   //match별 결과 받아오기
-  let progress = 0;
+
   const AnalBannerImage = [
     "/image/bannerimage.jpeg",
     "/image/bannerimage.jpeg",
