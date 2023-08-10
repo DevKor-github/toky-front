@@ -12,10 +12,17 @@ export default function Modal({
   clickModal: () => void;
 }) {
   return (
-    <ModalWrapper>
+    <ModalWrapper onClick={clickModal}>
       <ModalContainer
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        exit={{
+          opacity: 0,
+          y: 100,
+          transition: {
+            duration: 0.5,
+          },
+        }}
         transition={{
           duration: 0.3,
           ease: easeInOut,
