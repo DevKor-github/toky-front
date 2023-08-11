@@ -53,7 +53,6 @@ const Wrapper = styled.div<{ img: StaticImageData }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  flex-shrink: 0;
   width: 110px;
   height: 110px;
   border-radius: 4px;
