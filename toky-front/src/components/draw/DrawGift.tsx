@@ -8,6 +8,7 @@ import { IDrawCount } from "@/app/draw/page";
 import client from "@/lib/httpClient";
 import { ProgressCheck } from "../common/ProgressCheck";
 import { Finish } from "../bets/QuestionList";
+import ModalPortal from "../common/ModalPortal";
 import AuthContext from "../common/AuthContext";
 
 interface DrawGiftProps {
@@ -15,6 +16,9 @@ interface DrawGiftProps {
   allDrawParticipants: Array<IDrawCount>;
   myDrawParticipants: Array<IDrawCount>;
 }
+
+export type modalStatusT = "success" | "fail" | "close";
+
 export default function DrawGift({
   remainingPoint,
   allDrawParticipants,
@@ -22,7 +26,7 @@ export default function DrawGift({
 }: DrawGiftProps) {
   const drawDate = new Date("2023-09-16 23:59:59");
   const authCtx = useContext(AuthContext);
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalStatus, setModalStatus] = useState<modalStatusT>("close");
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [drawProgress, setDrawProgress] = useState<boolean>(
     ProgressCheck(drawDate)
@@ -73,9 +77,9 @@ export default function DrawGift({
   const onClickDraw = async () => {
     if (ProgressCheck(drawDate)) {
       const res = await drawGifts();
-      if (res && res.status === 201) setModalOpen(true);
+      if (res && res.status === 201) setModalStatus("success");
+      else setModalStatus("fail");
     }
-    //실패 시 실패했다는 모달 띄우기 ?
   };
 
   const completeDraw = () => {
@@ -136,12 +140,13 @@ export default function DrawGift({
         </div>
         {!drawProgress && <Finish />}
       </Wrapper>
-      {modalOpen && (
+      <ModalPortal isShowing={modalStatus !== "close"}>
         <DrawModal
-          closeModal={() => setModalOpen(false)}
+          modalStatus={modalStatus}
+          closeModal={() => setModalStatus("close")}
           completeDraw={completeDraw}
         />
-      )}
+      </ModalPortal>
     </>
   );
 }
