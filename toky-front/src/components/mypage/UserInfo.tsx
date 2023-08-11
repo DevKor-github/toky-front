@@ -5,12 +5,15 @@ import { Space } from "../common/Space";
 import ProfileImg from "./ProfileImg";
 import FooterBtn from "./FooterBtn";
 import AuthContext from "../common/AuthContext";
+import ModalPortal from "../common/ModalPortal";
+import NameChangeModal from "./NameChangeModal";
 import client from "@/lib/httpClient";
 
 export default function UserInfo() {
   const authCtx = useContext(AuthContext);
   const [nickname, setNickname] = useState<string>(authCtx.nickname);
   const [duplicate, setDuplicate] = useState<boolean | undefined>(undefined);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const clickable =
     authCtx.nickname !== nickname && duplicate === false ? "true" : "false";
@@ -48,6 +51,7 @@ export default function UserInfo() {
     console.log("res", res);
     setDuplicate(undefined);
     authCtx.setNickname(nickname);
+    setModalOpen(true);
   };
 
   useEffect(() => {
@@ -113,6 +117,9 @@ export default function UserInfo() {
         </Flex>
       </InfoWrapper>
       <FooterBtn clickable={clickable} onClick={updateNickname} />
+      <ModalPortal isShowing={modalOpen}>
+        <NameChangeModal clickModal={() => setModalOpen(false)} />
+      </ModalPortal>
     </>
   );
 }
