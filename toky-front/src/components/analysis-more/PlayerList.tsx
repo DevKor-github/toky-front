@@ -21,12 +21,24 @@ export interface IPlayer {
   body: string;
 }
 export default function PlayerList({ univ, match }: Props) {
-  const [open, setOpen] = useState(false);
+  const [playerNum, setPlayerNum] = useState<number>(3);
+
   const players = univ === 0 ? koreaPlayer[match] : yonseiPlayer[match];
+  const totalPlayer = players.length;
+  const expandAll = playerNum >= totalPlayer;
+
+  const expandList = () => {
+    if (playerNum < totalPlayer) {
+      setPlayerNum(playerNum + 3);
+    } else {
+      setPlayerNum(3);
+    }
+  };
+
   return (
     <>
-      <Wrapper open={open}>
-        {players.map((item, idx) => (
+      <Wrapper>
+        {players.slice(0, playerNum).map((item, idx) => (
           <PlayerItem
             key={idx}
             img={item.img}
@@ -38,22 +50,24 @@ export default function PlayerList({ univ, match }: Props) {
           />
         ))}
       </Wrapper>
-      <Open onClick={() => setOpen(!open)}>
-        <span>{open ? "접기" : "펼쳐서 보기"}</span>
-        <Image src={open ? arrowUp : arrowDown} alt="arrow" />
+      <Open onClick={expandList}>
+        <span>
+          {expandAll
+            ? "접기"
+            : `선수 더보기 ${playerNum / 3} / ${Math.ceil(totalPlayer / 3)}`}
+        </span>
+        <Image src={expandAll ? arrowUp : arrowDown} alt="arrow" />
       </Open>
     </>
   );
 }
 
-const Wrapper = styled.div<{ open: boolean }>`
+const Wrapper = styled.div`
   display: flex;
   gap: 10px;
   padding: 12px 0 0 20px;
-  overflow: hidden;
-
-  ${({ open }) =>
-    !open ? "max-height: 122px;  flex-wrap: nowrap" : "flex-wrap: wrap;"}
+  flex-wrap: wrap;
+  max-width: 400px;
 `;
 
 const Open = styled.div`
