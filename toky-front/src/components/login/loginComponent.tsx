@@ -32,6 +32,7 @@ export default function LoginComponent() {
         width={390}
         height={468}
         className="toky_bg"
+        priority={true}
         src={toky_bg}
         alt="bg"
       />
