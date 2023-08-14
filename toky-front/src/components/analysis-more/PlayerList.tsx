@@ -1,5 +1,5 @@
 "user-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image, { StaticImageData } from "next/image";
 import PlayerItem from "./PlayerItem";
@@ -26,7 +26,9 @@ export default function PlayerList({ univ, match }: Props) {
   const players = univ === 0 ? koreaPlayer[match] : yonseiPlayer[match];
   const totalPlayer = players.length;
   const expandAll = playerNum >= totalPlayer;
-
+  useEffect(() => {
+    setPlayerNum(3);
+  }, [match]);
   const expandList = () => {
     if (playerNum < totalPlayer) {
       setPlayerNum(playerNum + 3);
