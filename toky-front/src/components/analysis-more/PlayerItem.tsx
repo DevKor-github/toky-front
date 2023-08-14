@@ -1,7 +1,7 @@
 "use-client";
 import { useState } from "react";
 import styled from "styled-components";
-import { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface Props {
   img: StaticImageData;
@@ -23,7 +23,8 @@ export default function PlayerItem({
   const [isClicked, setIsClicked] = useState(false);
 
   return (
-    <Wrapper img={img} onClick={() => setIsClicked(!isClicked)}>
+    <Wrapper onClick={() => setIsClicked(!isClicked)}>
+      <Image src={img.src} alt="player" fill style={{ objectFit: "cover" }} />
       {isClicked && (
         <Info>
           <div className="detail">
@@ -49,14 +50,18 @@ export default function PlayerItem({
   );
 }
 
-const Wrapper = styled.div<{ img: StaticImageData }>`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 110px;
   height: 110px;
   border-radius: 4px;
-  ${({ img }) => `background-image: url(${img.src})`}
+  position: relative;
+  background-color: white;
+  img {
+    border-radius: 4px;
+  }
 `;
 
 const Info = styled.div`
