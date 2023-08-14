@@ -49,6 +49,7 @@ export default function PlayerList({ univ, match }: Props) {
             position={item.position}
             studentId={item.studentId}
             body={item.body}
+            univ={univ}
           />
         ))}
       </Wrapper>

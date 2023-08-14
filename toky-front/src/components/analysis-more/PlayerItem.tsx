@@ -1,5 +1,5 @@
 "use-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image, { StaticImageData } from "next/image";
 
@@ -10,6 +10,7 @@ interface Props {
   position: string;
   studentId: number;
   body: string;
+  univ: number;
 }
 
 export default function PlayerItem({
@@ -19,11 +20,19 @@ export default function PlayerItem({
   position,
   studentId,
   body,
+  univ,
 }: Props) {
   const [isClicked, setIsClicked] = useState(false);
-
+  useEffect(() => {
+    setIsClicked(false);
+  }, [name]);
   return (
     <Wrapper onClick={() => setIsClicked(!isClicked)}>
+      {univ === 0 && (
+        <CopyRight>
+          <p>©SPORTS KU</p>
+        </CopyRight>
+      )}
       <Image src={img.src} alt="player" fill style={{ objectFit: "cover" }} />
       {isClicked && (
         <Info>
@@ -112,4 +121,14 @@ const Name = styled.div<{ isClicked: boolean }>`
 
   ${({ isClicked }) =>
     isClicked && "color: #ffffff; background: rgba(18, 18, 18, 0.8);"}
+`;
+
+const CopyRight = styled.div`
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  p {
+    font-size: 1px;
+  }
+  color: var(--red, #f3233c);
 `;
