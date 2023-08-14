@@ -154,7 +154,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                 src="/image/ShareClose.svg"
                 alt="close icon"
                 style={{
-                  width: "26px",
+                  width: "15px",
                   paddingTop: "5px",
                 }}
               />
@@ -164,8 +164,8 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                 src="/image/DownloadIcon.svg"
                 alt="Download icon"
                 style={{
-                  width: "26px",
-                  paddingTop: "4px",
+                  width: "17px",
+                  paddingTop: "3px",
                 }}
               />
             </Btn>
@@ -174,8 +174,9 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                 src="/image/ShareIcon.svg"
                 alt="Share icon"
                 style={{
-                  width: "30px",
-                  paddingTop: "8px",
+                  width: "22px",
+                  paddingTop: "10px",
+                  paddingRight: "1px",
                 }}
               />
             </Btn>
