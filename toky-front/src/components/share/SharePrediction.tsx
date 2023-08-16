@@ -23,7 +23,7 @@ const TokyKoreaCharacter: tokyUrl[] = [
 const TokyYonseiCharacter: tokyUrl[] = [
   { imgUrl: "/image/ShareToky/YonseiToky/YonseiToky0.png" },
   { imgUrl: "/image/ShareToky/YonseiToky/YonseiToky1.png" },
-  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareToky/YonseiToky/YonseiToky3.png" },
   { imgUrl: "/image/ShareCharacter.png" },
   { imgUrl: "/image/ShareCharacter.png" },
   { imgUrl: "/image/ShareCharacter.png" },
