@@ -33,7 +33,13 @@ export default function PlayerItem({
           <p>©SPORTS KU</p>
         </CopyRight>
       )}
-      <Image src={img.src} alt="player" fill style={{ objectFit: "cover" }} />
+      <Image
+        src={img.src}
+        alt="player"
+        fill
+        sizes="110px;"
+        style={{ objectFit: "cover" }}
+      />
       {isClicked && (
         <Info>
           <div className="detail">
@@ -54,7 +60,7 @@ export default function PlayerItem({
           </div>
         </Info>
       )}
-      <Name isClicked={isClicked}>{name}</Name>
+      <Name $isClicked={isClicked}>{name}</Name>
     </Wrapper>
   );
 }
@@ -104,7 +110,7 @@ const Info = styled.div`
   }
 `;
 
-const Name = styled.div<{ isClicked: boolean }>`
+const Name = styled.div<{ $isClicked: boolean }>`
   display: flex;
   justify-content: flex-end;
   height: 24px;
@@ -119,8 +125,8 @@ const Name = styled.div<{ isClicked: boolean }>`
   line-height: 24px;
   letter-spacing: -0.56px;
 
-  ${({ isClicked }) =>
-    isClicked && "color: #ffffff; background: rgba(18, 18, 18, 0.8);"}
+  ${({ $isClicked }) =>
+    $isClicked && "color: #ffffff; background: rgba(18, 18, 18, 0.8);"}
 `;
 
 const CopyRight = styled.div`
