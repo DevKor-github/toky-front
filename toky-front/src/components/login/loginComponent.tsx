@@ -25,13 +25,14 @@ export default function LoginComponent() {
         className="toky_logo"
         src={Logo}
         width={239}
-        height={76.5}
+        height={78}
         alt="logo"
       />
       <Image
         width={390}
         height={468}
         className="toky_bg"
+        priority={true}
         src={toky_bg}
         alt="bg"
       />

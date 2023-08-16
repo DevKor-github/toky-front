@@ -3,6 +3,8 @@ import Image from "next/image";
 import { styled } from "styled-components";
 import CharImage from "../../../public/image/Logo.webp";
 import { MatchProps } from "./MatchType";
+import { pastMatch } from "./Data";
+import React from "react";
 export default function ScoreInfo({ match }: MatchProps) {
   //10경기 -- 한 종목당 2개
   //match 받아서
@@ -14,20 +16,24 @@ export default function ScoreInfo({ match }: MatchProps) {
     <>
       <ScoreInfowrapper>
         <Container>
-          <LeagueInfo>2022 KUSF 대학축구 U리그</LeagueInfo>
+          <LeagueInfo>최근 두 경기 상대 전적 </LeagueInfo>
           <ResultInfo>대결 경기는 고려대가 승리했어요</ResultInfo>
           <CharImageWrapper>
             <Image src={CharImage} alt="character image" />
           </CharImageWrapper>
         </Container>
       </ScoreInfowrapper>
-      <MatchContainer>
-        <MatchTextContainer>
-          <h1>0:0</h1>
-          <h3>2022년 4월 1일</h3>
-          <h4>KUSF 대학축구 U리그 1권역</h4>
-        </MatchTextContainer>
-      </MatchContainer>
+      {pastMatch[match].map((c, i) => (
+        <React.Fragment key={i}>
+          <MatchContainer>
+            <MatchTextContainer>
+              <h1>{c.score}</h1>
+              <h2>{c.date}</h2>
+              <h4>{c.leagueName}</h4>
+            </MatchTextContainer>
+          </MatchContainer>
+        </React.Fragment>
+      ))}
     </>
   );
 }
@@ -79,4 +85,16 @@ const MatchContainer = styled.div`
 const MatchTextContainer = styled.div`
   color: white;
   text-align: center;
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 13px;
+    font-weight: 700;
+  }
+  h4 {
+    font-size: 8px;
+    font-weight: 500;
+  }
 `;

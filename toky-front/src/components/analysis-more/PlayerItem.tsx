@@ -1,7 +1,7 @@
 "use-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface Props {
   img: StaticImageData;
@@ -10,6 +10,7 @@ interface Props {
   position: string;
   studentId: number;
   body: string;
+  univ: number;
 }
 
 export default function PlayerItem({
@@ -19,11 +20,26 @@ export default function PlayerItem({
   position,
   studentId,
   body,
+  univ,
 }: Props) {
   const [isClicked, setIsClicked] = useState(false);
-
+  useEffect(() => {
+    setIsClicked(false);
+  }, [name]);
   return (
-    <Wrapper img={img} onClick={() => setIsClicked(!isClicked)}>
+    <Wrapper onClick={() => setIsClicked(!isClicked)}>
+      {univ === 0 && (
+        <CopyRight>
+          <p>©SPORTS KU</p>
+        </CopyRight>
+      )}
+      <Image
+        src={img.src}
+        alt="player"
+        fill
+        sizes="110px;"
+        style={{ objectFit: "cover" }}
+      />
       {isClicked && (
         <Info>
           <div className="detail">
@@ -44,19 +60,23 @@ export default function PlayerItem({
           </div>
         </Info>
       )}
-      <Name isClicked={isClicked}>{name}</Name>
+      <Name $isClicked={isClicked}>{name}</Name>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div<{ img: StaticImageData }>`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 110px;
   height: 110px;
   border-radius: 4px;
-  ${({ img }) => `background-image: url(${img.src})`}
+  position: relative;
+  background-color: white;
+  img {
+    border-radius: 4px;
+  }
 `;
 
 const Info = styled.div`
@@ -90,7 +110,7 @@ const Info = styled.div`
   }
 `;
 
-const Name = styled.div<{ isClicked: boolean }>`
+const Name = styled.div<{ $isClicked: boolean }>`
   display: flex;
   justify-content: flex-end;
   height: 24px;
@@ -105,6 +125,16 @@ const Name = styled.div<{ isClicked: boolean }>`
   line-height: 24px;
   letter-spacing: -0.56px;
 
-  ${({ isClicked }) =>
-    isClicked && "color: #ffffff; background: rgba(18, 18, 18, 0.8);"}
+  ${({ $isClicked }) =>
+    $isClicked && "color: #ffffff; background: rgba(18, 18, 18, 0.8);"}
+`;
+
+const CopyRight = styled.div`
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  p {
+    font-size: 1px;
+  }
+  color: var(--red, #f3233c);
 `;

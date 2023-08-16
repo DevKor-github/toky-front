@@ -9,6 +9,15 @@ export default function HistoryItem({
   createdAt: createdAt,
   remainedPoint: remainingPoint,
 }: IHistory) {
+  const convertDateFormat = (inputString: string) => {
+    const parts = inputString.split("-");
+    const formattedDate = `${parts[0].slice(2)}.${parts[1]}.${parts[2]}`;
+    return formattedDate;
+  };
+  const timeArr = createdAt.split("T");
+  const historyDate = convertDateFormat(timeArr[0]);
+  const historyTime = timeArr[1].slice(0, 5);
+
   return (
     <Wrapper>
       <Space h={16} />
@@ -20,7 +29,7 @@ export default function HistoryItem({
       </Flex>
       <Space h={2} />
       <Flex>
-        <div className="sub-content">{createdAt}</div>
+        <div className="sub-content">{historyDate + " " + historyTime}</div>
         <div className="sub-content">{remainingPoint}p</div>
       </Flex>
     </Wrapper>

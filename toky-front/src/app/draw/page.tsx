@@ -134,7 +134,7 @@ function Draw() {
   }
   useEffect(() => {
     getAllandMyDraw();
-  }, []);
+  }, [authCtx.remain]);
 
   const render = () => {
     return (
