@@ -5,6 +5,33 @@ import html2canvas from "html2canvas";
 import client from "@/lib/httpClient";
 import AuthContext from "../common/AuthContext";
 import Modal from "../common/Modal";
+interface tokyUrl {
+  imgUrl: string;
+}
+const TokyKoreaCharacter: tokyUrl[] = [
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky0.png" },
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky1.png" },
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky2.png" },
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky3.png" },
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky4.png" },
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky5.png" },
+  { imgUrl: "/image/ShareToky/KoreaToky/KoreaToky6.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+];
+const TokyYonseiCharacter: tokyUrl[] = [
+  { imgUrl: "/image/ShareToky/YonseiToky/YonseiToky0.png" },
+  { imgUrl: "/image/ShareToky/YonseiToky/YonseiToky1.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+  { imgUrl: "/image/ShareCharacter.png" },
+];
 
 export interface ShareProps {
   clickModal: () => void;
@@ -31,15 +58,26 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   const [winKorea, setWinKorea] = useState<boolean>(false);
   const [draw, setDraw] = useState<boolean>(false);
   const [completePredict, setCompletePredict] = useState<boolean>(false);
+  const [tokyImgUrl, setTokyImgUrl] = useState(
+    "/image/ShareToky/KoreaToky0.png"
+  );
   const authCtx = useContext(AuthContext);
   async function getShare() {
     const response = await client.get("/bets/share");
     const result = response.data;
+    const randomToky = Math.floor(Math.random() * 10);
     setPredictionData(result);
     const total = result.numWinKorea + result.numWinYonsei + result.numDraw;
     if (total >= 5) setCompletePredict(true);
-    if (result.numWinKorea == result.numWinYonsei) setDraw(true);
-    else if (result.numWinKorea > result.numWinYonsei) setWinKorea(true);
+    if (result.numWinKorea == result.numWinYonsei) {
+      setDraw(true);
+    } else if (result.numWinKorea > result.numWinYonsei) {
+      setWinKorea(true);
+      setTokyImgUrl(TokyKoreaCharacter[randomToky].imgUrl);
+    } else {
+      setTokyImgUrl(TokyYonseiCharacter[randomToky].imgUrl);
+    }
+
     setIsLoading(false);
   }
   useEffect(() => {
@@ -137,7 +175,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
               </Footer>
               <ImageContainer>
                 <img
-                  src="/image/ShareCharacter.png"
+                  src={tokyImgUrl}
                   alt="character"
                   style={{
                     width: "289px",
@@ -238,6 +276,7 @@ const ImageContainer = styled.div`
   bottom: 0%;
 `;
 const UserContainer = styled.div`
+  z-index: 1002;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
@@ -325,7 +364,7 @@ const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
   ${(props) =>
     props.$winKorea &&
     css`
-      background: linear-gradient(0deg, #f84853 0%, #ffb1b1 100%);
+      background: linear-gradient(180deg, #f84853 0%, #ffb1b1 100%);
     `}
   ${(props) =>
     !props.$winKorea &&
@@ -348,7 +387,7 @@ const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
     ${(props) =>
       props.$winKorea &&
       css`
-        background: var(--38, rgba(255, 255, 255, 0.38));
+        background: var(--60, rgba(255, 255, 255, 0.6));
         color: var(--red, #f3233c);
       `}
     ${(props) =>
