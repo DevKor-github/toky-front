@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Space } from "../common/Space";
 import GiftItem from "./GiftItem";
@@ -27,18 +27,24 @@ export default function DrawGift({
   const drawDate = new Date("2023-09-16 23:59:59");
   const authCtx = useContext(AuthContext);
   const [modalStatus, setModalStatus] = useState<modalStatusT>("close");
-  const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [drawProgress, setDrawProgress] = useState<boolean>(
     ProgressCheck(drawDate)
   );
-  const totalDraw = [0, 0, 0, 0, 0];
-  const myDraw = [0, 0, 0, 0, 0];
-  allDrawParticipants.forEach((c) => {
-    totalDraw[c.giftId - 1] = c.drawCount;
-  });
-  myDrawParticipants.forEach((c) => {
-    myDraw[c.giftId - 1] = c.drawCount;
-  });
+  const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+  const [totalDraw, setTotalDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+  const [myDraw, setMyDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+  let totalDrawTemp = [0, 0, 0, 0, 0];
+  let myDrawTemp = [0, 0, 0, 0, 0];
+  useEffect(() => {
+    allDrawParticipants.forEach((c) => {
+      totalDrawTemp[c.giftId - 1] = c.drawCount;
+    });
+    myDrawParticipants.forEach((c) => {
+      myDrawTemp[c.giftId - 1] = c.drawCount;
+    });
+    setTotalDraw(totalDrawTemp);
+    setMyDraw(myDrawTemp);
+  }, []);
 
   const pointUse = useMemo(() => {
     let sum = 0;
@@ -77,8 +83,16 @@ export default function DrawGift({
   const onClickDraw = async () => {
     if (ProgressCheck(drawDate)) {
       const res = await drawGifts();
-      if (res && res.status === 201) setModalStatus("success");
-      else setModalStatus("fail");
+      if (res && res.status === 201) {
+        setModalStatus("success");
+        // all + my 업데이트
+        totalDrawTemp = [...totalDraw];
+        myDrawTemp = [...myDraw];
+        let totalDrawChange = totalDrawTemp.map((d, i) => d + draw[i]);
+        let myDrawChange = myDrawTemp.map((d, i) => d + draw[i]);
+        setTotalDraw(totalDrawChange);
+        setMyDraw(myDrawChange);
+      } else setModalStatus("fail");
     }
   };
 
