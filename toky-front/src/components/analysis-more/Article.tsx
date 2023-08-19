@@ -1,27 +1,28 @@
 "use-client";
 import { useState } from "react";
 import styled from "styled-components";
-import Image from "next/image";
-import articleImg1 from "../../../public/image/article1.svg";
-import articleImg2 from "../../../public/image/article2.svg";
+import Image, { StaticImageData } from "next/image";
 import arrowDown from "../../../public/image/arrow_down.svg";
 import ArticleItem from "./ArticleItem";
+import { articleData } from "./ArticleData";
+
+export interface ArticleT {
+  title: string;
+  img?: StaticImageData;
+  src: string;
+  date: string;
+  url: string;
+}
 
 export default function Article() {
   const [articleNum, setArticleNum] = useState(5);
-  const totalArticle = articleMock.length;
+  const totalArticle = articleData.length;
 
   return (
     <Wrapper>
       <span className="title">인터뷰/기사</span>
-      {articleMock.slice(0, articleNum).map((item, idx) => (
-        <ArticleItem
-          key={idx}
-          title={item.title}
-          img={item.img}
-          src={item.src}
-          date={item.date}
-        />
+      {articleData.slice(0, articleNum).map((item, idx) => (
+        <ArticleItem key={idx} {...item} />
       ))}
       <More
         onClick={() =>
@@ -65,126 +66,3 @@ const More = styled.div`
   font-weight: 400;
   letter-spacing: -0.84px;
 `;
-
-const articleMock = [
-  {
-    title:
-      "고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머",
-    img: articleImg1,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전'",
-    img: articleImg2,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전' 사진없고 한줄",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머",
-    img: articleImg1,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전'",
-    img: articleImg2,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전' 사진없고 한줄",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머",
-    img: articleImg1,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전'",
-    img: articleImg2,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전' 사진없고 한줄",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머",
-    img: articleImg1,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전'",
-    img: articleImg2,
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title: "뜨거운 함성 '2022 정기연고전' 사진없고 한줄",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-  {
-    title:
-      "'고연전 승리 이끈 돌격대장' 박무빈 “고려대 팬들이 만든 승리” 머머머머머머머머머머머머머머머머머머머머머머머",
-    src: "KUTV 고려대학교 방송국",
-    date: "2023.09.17. 20:08",
-  },
-];
