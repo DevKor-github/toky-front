@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { RankingItemT } from "@/components/ranking/RankingInfo";
 import client from "@/lib/httpClient";
 import PageTransitionWrapper from "@/components/common/PageTransition";
+import ModalPortal from "@/components/common/ModalPortal";
+import ShareRank from "@/components/share/ShareRank";
 
 export default function Ranking() {
   const [topPage, setTopPage] = useState(1);
@@ -20,9 +22,12 @@ export default function Ranking() {
   const [myRank, setMyRank] = useState(-1);
 
   const [rankInfoList, setRankInfoList] = useState<RankingItemT[]>([]);
+  const [showRankModal, setShowRankModal] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  function clickRankModal() {
+    setShowRankModal(!showRankModal);
+  }
   useEffect(() => {
     const divElement = scrollRef.current;
     if (divElement) {
@@ -109,23 +114,33 @@ export default function Ranking() {
   }, []);
 
   return (
-    <div style={{ overflow: "hidden" }}>
-      <NavigationBar />
-      <PageTransitionWrapper>
-        <RankingInfo
-          scrollRef={scrollRef}
-          total={totalCount}
-          rank={myRank}
-          rankInfoList={rankInfoList}
-          searchMyRank={searchMyRank}
+    <>
+      <div style={{ overflow: "hidden" }}>
+        <NavigationBar />
+        <PageTransitionWrapper>
+          <RankingInfo
+            scrollRef={scrollRef}
+            total={totalCount}
+            rank={myRank}
+            rankInfoList={rankInfoList}
+            searchMyRank={searchMyRank}
+            clickModal={clickRankModal}
+          />
+          <SearchBar
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            getRankInfo={getRankInfo}
+            searchRank={searchRank}
+          />
+        </PageTransitionWrapper>
+      </div>
+      <ModalPortal isShowing={showRankModal}>
+        <ShareRank
+          clickModal={clickRankModal}
+          totalRank={totalCount}
+          myRank={myRank}
         />
-        <SearchBar
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          getRankInfo={getRankInfo}
-          searchRank={searchRank}
-        />
-      </PageTransitionWrapper>
-    </div>
+      </ModalPortal>
+    </>
   );
 }
