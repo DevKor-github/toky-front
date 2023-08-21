@@ -3,7 +3,7 @@
 import styled from "styled-components";
 import UserInfo from "./UserInfo";
 import RankingItem from "./RankingItem";
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import AuthContext from "../common/AuthContext";
 
 export type RankingItemT = {

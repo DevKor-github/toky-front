@@ -104,9 +104,14 @@ export default function Ranking() {
             scrollRef.current.scrollTop -
             scrollRef.current.clientHeight;
           if (top === 0 && topPage > 1) {
+            const currentScrollPosition = scrollRef.current && scrollRef.current.scrollTop;
+            scrollRef.current.style.overflowY = "hidden";
             const fetchedData = await getRankByPage(topPage - 1);
             setTopPage(topPage - 1);
             setRankInfoList([...fetchedData, ...rankInfoList]);
+
+            scrollRef.current.scrollTop = currentScrollPosition + 740;
+            scrollRef.current.style.overflowY = "auto";
           } else if (bottom === 0 && bottomPage < Math.ceil(totalCount / 10)) {
             console.log(bottomPage);
             const fetchedData = await getRankByPage(bottomPage + 1);
