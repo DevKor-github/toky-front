@@ -16,6 +16,7 @@ interface QuestionListProps {
   setPointModal: () => void;
   setWaitModal: () => void;
   setFailModal: () => void;
+  setTimeOutModal: () => void;
 }
 
 export default function QuestionList({
@@ -27,6 +28,7 @@ export default function QuestionList({
   setPointModal,
   setWaitModal,
   setFailModal,
+  setTimeOutModal,
 }: QuestionListProps) {
   // TODO:
   // 중복 베팅 방지, QuestionItem의 itemIndex 값을 사용
@@ -35,29 +37,30 @@ export default function QuestionList({
 
   const requestBetting = async (qid: number, answer: number) => {
     try {
-      const response = await client.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/bets/bet`,
-        {
-          questionId: qid,
-          answer,
-        }
-      );
+      const response = await client.post(`${process.env.NEXT_PUBLIC_API_URL}/bets/bet`, {
+        questionId: qid,
+        answer,
+      });
       if (response.status === 201) {
         authCtx.setScore(authCtx.score + 10);
         authCtx.setRemain(authCtx.remain + 10);
         setPointModal();
       }
-      setQuestions(
-        orgQuestions.map((question) =>
-          question.questionId === qid
-            ? {
-                ...question,
-                answer: answer,
-                percentage: response.data.percentage,
-              }
-            : question
-        )
-      );
+      if (response.status !== 400) {
+        setQuestions(
+          orgQuestions.map((question) =>
+            question.questionId === qid
+              ? {
+                  ...question,
+                  answer: answer,
+                  percentage: response.data.percentage,
+                }
+              : question
+          )
+        );
+      } else if (response.data.message === "베팅 기간이 아닙니다.") {
+        setTimeOutModal();
+      }
     } catch (err) {
       console.log(err);
       setFailModal();
