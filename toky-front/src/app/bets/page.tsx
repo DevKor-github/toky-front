@@ -15,6 +15,7 @@ import PageTransitionWrapper from "@/components/common/PageTransition";
 import BetWaitModal from "@/components/bets/BetWaitModal";
 import ModalPortal from "@/components/common/ModalPortal";
 import BetFailModal from "@/components/bets/BetFailModal";
+import CommonModal from "@/components/common/CommonModal";
 
 export interface QuestionType {
 	questionId: number;
@@ -33,9 +34,43 @@ function Bets() {
 	const [showPointModal, setShowPointModal] = useState(false);
 	const [showWaitModal, setShowWaitModal] = useState(false);
 	const [showFailModal, setShowFailModal] = useState(false);
+	const [showSharePointModal, setShowSharePointModal] = useState(false);
+	const [sharePointModalText, setSharePointModalText] = useState("");
 	function clickShareModal() {
 		setShowShareModal(!showShareModal);
 	}
+	useEffect(() => {
+		if (!showShareModal) {
+			if (
+				!localStorage.getItem("prediction") ||
+				new Date(localStorage.getItem("prediction")!).getTime() <=
+					new Date().getTime() - 24 * 60 * 60 * 1000
+			) {
+				client
+					.get("/points/share/prediction")
+					.then((res) => res.data)
+					.then((data) => {
+						if (data === 300) {
+							setShowSharePointModal(true);
+							setSharePointModalText("최초 예측 공유로 300P 지급!");
+							setTimeout(() => {
+								setShowSharePointModal(false);
+								setSharePointModalText("");
+							}, 2000);
+						} else if (data === 100) {
+							setShowSharePointModal(true);
+							setSharePointModalText("예측 공유로 100P 지급!");
+							setTimeout(() => {
+								setShowSharePointModal(false);
+								setSharePointModalText("");
+							}, 2000);
+						}
+					});
+				localStorage.setItem("prediction", new Date().toISOString());
+			}
+		}
+	}, [showShareModal]);
+
 	function autoPointModal() {
 		setShowPointModal(true);
 		setTimeout(() => {
@@ -126,6 +161,9 @@ function Bets() {
 				</ModalPortal>
 				<ModalPortal isShowing={showFailModal}>
 					<BetFailModal clickModal={clickFailModal} />
+				</ModalPortal>
+				<ModalPortal isShowing={showSharePointModal}>
+					<CommonModal>{sharePointModalText}</CommonModal>
 				</ModalPortal>
 			</PageTransitionWrapper>
 		</>
