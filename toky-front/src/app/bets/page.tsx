@@ -15,6 +15,8 @@ import PageTransitionWrapper from "@/components/common/PageTransition";
 import BetWaitModal from "@/components/bets/BetWaitModal";
 import ModalPortal from "@/components/common/ModalPortal";
 import BetFailModal from "@/components/bets/BetFailModal";
+import CommonModal from "@/components/common/CommonModal";
+import TimeOutModal from "@/components/bets/TimeOutModal";
 
 export interface QuestionType {
   questionId: number;
@@ -29,35 +31,6 @@ function Bets() {
   // useffect로 question 받아와서 question set해주기
   // 서버로 유지 위해 use client를 question list로?
 
-  const [showShareModal, setShowShareModal] = useState<boolean>(false);
-  const [showPointModal, setShowPointModal] = useState<boolean>(false);
-  const [showWaitModal, setShowWaitModal] = useState<boolean>(false);
-  const [showFailModal, setShowFailModal] = useState<boolean>(false);
-  function clickShareModal() {
-    setShowShareModal(!showShareModal);
-  }
-  function autoPointModal() {
-    setShowPointModal(true);
-    setTimeout(() => {
-      setShowPointModal(false);
-    }, 1000);
-  }
-  function clickPointModal() {
-    setShowPointModal(false);
-  }
-  function clickFailModal() {
-    setShowFailModal(!showFailModal);
-  }
-  function clickWaitModal() {
-    setShowWaitModal(!showWaitModal);
-  }
-  const [match, setMatch] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
-
-  const handleMatch = (m: number) => {
-    setMatch(m);
-  };
 
   const authCtx = useContext(AuthContext);
   const [matchProgress, setMatchProgress] = useState<boolean>(false);
@@ -89,6 +62,84 @@ function Bets() {
       .then((data) => setQuestions(data))
       .finally(() => setIsLoading(false));
   }, []);
+
+  const [showShareModal, setShowShareModal] = useState<boolean>(false);
+  const [showPointModal, setShowPointModal] = useState<boolean>(false);
+  const [showWaitModal, setShowWaitModal] = useState<boolean>(false);
+  const [showFailModal, setShowFailModal] = useState<boolean>(false);
+  const [showSharePointModal, setShowSharePointModal] = useState(false);
+  const [timeOutModal, setTimeOutModal] = useState(false);
+  const [sharePointModalText, setSharePointModalText] = useState("");
+  const [clicked, setClicked] = useState(false);
+  function clickShareModal() {
+    setShowShareModal(!showShareModal);
+    setClicked(true);
+  }
+  useEffect(() => {
+    if (!showShareModal && clicked) {
+      if (
+        !localStorage.getItem("prediction") ||
+        new Date(localStorage.getItem("prediction")!).getTime() <=
+          new Date().getTime() - 24 * 60 * 60 * 1000
+      ) {
+        client
+          .get("/points/share/prediction")
+          .then((res) => res.data)
+          .then((data) => {
+            if (data === 300) {
+              setShowSharePointModal(true);
+              setSharePointModalText("최초 예측 공유로 300P 지급!");
+              authCtx.setRemain(authCtx.remain + 300);
+              authCtx.setScore(authCtx.score + 300);
+              setTimeout(() => {
+                setShowSharePointModal(false);
+                setSharePointModalText("");
+              }, 2000);
+            } else if (data === 100) {
+              setShowSharePointModal(true);
+              setSharePointModalText("예측 공유로 100P 지급!");
+              authCtx.setRemain(authCtx.remain + 100);
+              authCtx.setScore(authCtx.score + 100);
+              setTimeout(() => {
+                setShowSharePointModal(false);
+                setSharePointModalText("");
+              }, 2000);
+            }
+          });
+        localStorage.setItem("prediction", new Date().toISOString());
+      }
+    }
+  }, [showShareModal]);
+
+  function autoPointModal() {
+    setShowPointModal(true);
+    setTimeout(() => {
+      setShowPointModal(false);
+    }, 1000);
+  }
+  function clickPointModal() {
+    setShowPointModal(false);
+  }
+  function clickFailModal() {
+    setShowFailModal(!showFailModal);
+  }
+  function clickWaitModal() {
+    setShowWaitModal(!showWaitModal);
+  }
+
+
+  function clickTimeOutModal() {
+    setTimeOutModal(!timeOutModal);
+  }
+
+  const [match, setMatch] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+
+  const handleMatch = (m: number) => {
+    setMatch(m);
+  };
+
   useEffect(() => {
     setMatchProgress(ProgressCheck(TIME[match]));
   }, [match]);
@@ -100,11 +151,7 @@ function Bets() {
     <>
       <NavigationBar />
       <PageTransitionWrapper>
-        <BetBanner
-          match={match}
-          matchProgress={matchProgress}
-          clickModal={clickShareModal}
-        />
+        <BetBanner match={match} matchProgress={matchProgress} clickModal={clickShareModal} />
         <MatchNavBar match={match} handleMatch={handleMatch} />
         {!isLoading && (
           <QuestionList
@@ -114,6 +161,7 @@ function Bets() {
             setPointModal={autoPointModal}
             setWaitModal={clickWaitModal}
             setFailModal={clickFailModal}
+            setTimeOutModal={clickTimeOutModal}
             match={match}
             matchProgress={matchProgress}
           />
@@ -129,6 +177,12 @@ function Bets() {
         </ModalPortal>
         <ModalPortal isShowing={showFailModal}>
           <BetFailModal clickModal={clickFailModal} />
+        </ModalPortal>
+        <ModalPortal isShowing={showSharePointModal}>
+          <CommonModal>{sharePointModalText}</CommonModal>
+        </ModalPortal>
+        <ModalPortal isShowing={timeOutModal}>
+          <TimeOutModal clickModal={clickTimeOutModal} />
         </ModalPortal>
       </PageTransitionWrapper>
     </>
