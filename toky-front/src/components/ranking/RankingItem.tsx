@@ -45,12 +45,12 @@ const Wrapper = styled.div<{ highlight: boolean; rank: number }>`
   align-items: center;
   height: 74px;
   padding: 0 42px;
-
+  background-color: #121212;
   color: rgba(255, 255, 255, 0.87);
   ${(props) =>
     props.highlight &&
     css`
-      background-color: #222222;
+      background-color: #1f1f1f;
     `}
   ${(props) => {
     if (props.rank === 1) {

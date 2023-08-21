@@ -14,17 +14,12 @@ export interface UserInfoProps {
   clickModal: () => void;
 }
 
-export default function UserInfo({
-  total,
-  rank,
-  searchMyRank,
-  clickModal,
-}: UserInfoProps) {
+export default function UserInfo({ total, rank, searchMyRank, clickModal }: UserInfoProps) {
   const authCtx = useContext(AuthContext);
   const univ = authCtx.university === "고려대학교" ? 0 : 1;
   return (
     <Wrapper>
-      <Flex style={{ alignItems: "flex-start" }}>
+      <Flex style={{ alignItems: "flex-start", marginLeft: 14 }}>
         <div className="small">
           <div style={{ display: "inline-block" }}> {total}명 중</div>
         </div>
@@ -33,7 +28,7 @@ export default function UserInfo({
         </span>
         <span className="underlined">{authCtx.score}points</span>
       </Flex>
-      <Flex style={{ gap: 7 }}>
+      <Flex style={{ gap: 7, marginLeft: 40 }}>
         <ProfileImage univ={univ}>
           <Image
             src={defaultProfile}
@@ -53,12 +48,13 @@ export default function UserInfo({
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+
   align-items: center;
   width: 100%;
   height: 135px;
   padding: 0 20px;
-
+  background-color: #1f1f1f;
   color: rgba(255, 255, 255, 0.87);
 `;
 
