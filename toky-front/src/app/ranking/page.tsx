@@ -139,14 +139,14 @@ export default function Ranking() {
         setRankInfoList([]);
         setTopPage(0);
         setBottomPage(Math.ceil(totalCount / 10));
+      } else {
+        const i = data.users.findIndex((user: RankingItemT) => user.name === searchValue);
+        setRankInfoList(data.users);
+        scrollRef.current.scrollTop = 74 * i;
+        scrollRef.current.style.overflowY = "auto";
+        setTopPage(data.page);
+        setBottomPage(data.page);
       }
-
-      const i = data.users.findIndex((user: RankingItemT) => user.name === searchValue);
-      setRankInfoList(data.users);
-      scrollRef.current.scrollTop = 74 * i;
-      scrollRef.current.style.overflowY = "auto";
-      setTopPage(data.page);
-      setBottomPage(data.page);
     }
   };
 
