@@ -15,8 +15,7 @@ export default function UserInfo() {
   const [duplicate, setDuplicate] = useState<boolean | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const clickable =
-    authCtx.nickname !== nickname && duplicate === false ? "true" : "false";
+  const clickable = authCtx.nickname !== nickname && duplicate === false ? "true" : "false";
 
   const phoneNum =
     authCtx.phoneNum.slice(0, 3) +
@@ -47,7 +46,7 @@ export default function UserInfo() {
   const updateNickname = async () => {
     if (clickable === "false") return;
 
-    const res = await client.patch("/auth/update/name", { name: nickname });
+    const res = await client.post("/auth/update/name", { name: nickname });
     console.log("res", res);
     setDuplicate(undefined);
     authCtx.setNickname(nickname);
@@ -77,11 +76,7 @@ export default function UserInfo() {
                 }}
               >
                 <Label>
-                  <input
-                    value={nickname}
-                    onChange={handleNicknameChange}
-                    spellCheck={false}
-                  />
+                  <input value={nickname} onChange={handleNicknameChange} spellCheck={false} />
                   {authCtx.nickname !== nickname && (
                     <button onClick={checkDuplicateName}>중복확인</button>
                   )}
