@@ -36,11 +36,13 @@ function Bets() {
 	const [showFailModal, setShowFailModal] = useState(false);
 	const [showSharePointModal, setShowSharePointModal] = useState(false);
 	const [sharePointModalText, setSharePointModalText] = useState("");
+	const [clicked, setClicked] = useState(false);
 	function clickShareModal() {
 		setShowShareModal(!showShareModal);
+		setClicked(true);
 	}
 	useEffect(() => {
-		if (!showShareModal) {
+		if (!showShareModal && clicked) {
 			if (
 				!localStorage.getItem("prediction") ||
 				new Date(localStorage.getItem("prediction")!).getTime() <=
