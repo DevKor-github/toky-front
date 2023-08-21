@@ -127,7 +127,7 @@ export default function MainInfo() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: easeInOut, delay: 0.5 }}
-          style={{ zIndex: "1", marginTop: "5vh" }}
+          style={{ zIndex: "1", marginTop: "3vh" }}
         >
           <div
             style={{
@@ -141,7 +141,7 @@ export default function MainInfo() {
           >
             {"정기전 승부예측 하고"}
             <br />
-            {"아이패드 받자 !"}
+            {"애플워치 받자 !"}
           </div>
         </motion.div>
 
