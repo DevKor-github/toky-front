@@ -11,7 +11,9 @@ import { Finish } from "../bets/QuestionList";
 import ModalPortal from "../common/ModalPortal";
 import AuthContext from "../common/AuthContext";
 import TimeOutModal from "./TimeOutModal";
-
+import Link from "next/link";
+import ShareArrow from "../../../public/image/MainArrow.svg";
+import Image from "next/image";
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
@@ -28,7 +30,9 @@ export default function DrawGift({
   const drawDate = new Date("2023-09-16 23:59:59");
   const authCtx = useContext(AuthContext);
   const [modalStatus, setModalStatus] = useState<modalStatusT>("close");
-  const [drawProgress, setDrawProgress] = useState<boolean>(ProgressCheck(drawDate));
+  const [drawProgress, setDrawProgress] = useState<boolean>(
+    ProgressCheck(drawDate)
+  );
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [totalDraw, setTotalDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [myDraw, setMyDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
@@ -114,7 +118,9 @@ export default function DrawGift({
         <div>
           <span className="title">경품 응모하기</span>
           <Space h={11} />
-          <div className="description">- 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.</div>
+          <div className="description">
+            - 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.
+          </div>
           <div className="description">
             - 당첨자 발표는 2023년 9월 16일 문자를 통해 개별 공지됩니다.
           </div>
@@ -131,9 +137,36 @@ export default function DrawGift({
                 setDraw={setDraw}
               />
             ))}
+            <ShareCard>
+              <h1>
+                인스타그램 스토리
+                <br />
+                공유 이벤트
+              </h1>
+              <p>
+                나의 예측을
+                <br /> @official.toky를 태그해서 스토리에 공유해주세요. <br />{" "}
+                <br /> 추첨을 통해 20분께
+                <br /> 스타벅스 아메리카노를 <br />
+                드립니다.
+              </p>
+              <Link href="/ranking">
+                <ShareDirectBtn>
+                  공유 바로가기
+                  <Image
+                    src={ShareArrow}
+                    alt="arrow"
+                    width={7}
+                    style={{ marginLeft: "5px", marginTop: "5px" }}
+                  />
+                </ShareDirectBtn>
+              </Link>
+            </ShareCard>
           </Flex>
           <Space h={20} />
-          <Flex style={{ justifyContent: "space-between", alignContent: "center" }}>
+          <Flex
+            style={{ justifyContent: "space-between", alignContent: "center" }}
+          >
             <span className="point">응모 시 잔여 포인트</span>
             <span className="point" style={{ fontSize: 20 }}>
               {remainingPoint - pointUse}p
@@ -142,7 +175,9 @@ export default function DrawGift({
           <Space h={8} />
           <Divider />
           <Space h={8} />
-          <Flex style={{ justifyContent: "space-between", alignContent: "center" }}>
+          <Flex
+            style={{ justifyContent: "space-between", alignContent: "center" }}
+          >
             <span className="point" style={{ color: "#ffffff" }}>
               사용 포인트
             </span>
@@ -230,6 +265,46 @@ const getTypeFromPoint = (point: number) => {
   else return 3;
 };
 
+const ShareCard = styled.div`
+  width: 168px;
+  height: 228.2px;
+  border-radius: 6px;
+  background: var(--black-4, #272727);
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+  h1 {
+    color: var(--87, rgba(255, 255, 255, 0.87));
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 21px;
+  }
+  p {
+    width: 141px;
+    color: var(--60, rgba(255, 255, 255, 0.6));
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 9px;
+  }
+`;
+const ShareDirectBtn = styled.button`
+  color: var(--87, rgba(255, 255, 255, 0.87));
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.84px;
+  background: none;
+  margin-top: 22px;
+`;
 interface giftT {
   id: number;
   title: string;
@@ -241,31 +316,31 @@ interface giftT {
 const gifts: giftT[] = [
   {
     id: 1,
-    title: "애플워치 (1명)",
-    point: 300,
+    title: "애플워치SE 40mm (1명)",
+    point: 500,
     type: 1,
   },
   {
     id: 2,
-    title: "애플워치 (1명)",
+    title: "배달의 민족 3만원 상품권 (5명)",
     point: 300,
     type: 2,
   },
   {
     id: 3,
-    title: "애플워치 (1명)",
-    point: 200,
+    title: "뿌링클+콜라 세트 (5명)",
+    point: 300,
     type: 2,
   },
   {
     id: 4,
-    title: "애플워치 (1명)",
-    point: 200,
-    type: 2,
+    title: "스타벅스 세트(10명)",
+    point: 100,
+    type: 3,
   },
   {
     id: 5,
-    title: "스타벅스 아메리카노 (10명)",
+    title: "설빙 인절미 빙수(10명)",
     point: 100,
     type: 3,
   },

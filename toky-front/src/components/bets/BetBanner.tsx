@@ -23,23 +23,23 @@ export default function BetBanner({
   const matchTime = [
     {
       date: "09/08(금)",
-      time: "11:30",
+      time: "",
     },
     {
       date: "09/08(금)",
-      time: "15:30",
+      time: "",
     },
     {
       date: "09/08(금)",
-      time: "17:30",
+      time: "",
     },
     {
       date: "09/09(토)",
-      time: "09:30",
+      time: "",
     },
     {
       date: "09/09(토)",
-      time: "12:30",
+      time: "",
     },
   ];
   const matchImage = [

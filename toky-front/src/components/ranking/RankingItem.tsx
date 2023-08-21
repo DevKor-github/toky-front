@@ -59,11 +59,11 @@ const Wrapper = styled.div<{ highlight: boolean; rank: number }>`
       `;
     } else if (props.rank === 2) {
       return css`
-        color: silver;
+        color: rgba(255, 190, 64, 1);
       `;
     } else if (props.rank === 3) {
       return css`
-        color: #cd7f32;
+        color: #f09e00;
       `;
     }
   }}

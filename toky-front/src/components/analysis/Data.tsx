@@ -76,23 +76,23 @@ interface scheduleInfo {
 }
 export const SCHEDULE: scheduleInfo[] = [
   {
-    playDate: "2023.09.08(금) 14:00",
+    playDate: "2023.09.08(금)",
     location: "목동 야구장",
   },
   {
-    playDate: "2023.09.08(금) 16:00",
+    playDate: "2023.09.08(금)",
     location: "목동 아이스링크장",
   },
   {
-    playDate: "2023.09.08(금) 17:00",
+    playDate: "2023.09.08(금)",
     location: "고양 실내체육관",
   },
   {
-    playDate: "2023.09.09(금) 14:00",
+    playDate: "2023.09.09(금)",
     location: "고양 종합운동장",
   },
   {
-    playDate: "2023.09.09(토) 14:00",
+    playDate: "2023.09.09(토)",
     location: "고양 종합운동장",
   },
   {

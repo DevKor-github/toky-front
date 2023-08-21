@@ -24,6 +24,8 @@ const AnalFooterWrapper = styled.div`
   display: flex;
   justify-content: center;
   background-color: #121212;
+  padding-bottom: 50px;
+  padding-top: 20px;
 `;
 const MoreInfo = styled.button`
   width: 170px;

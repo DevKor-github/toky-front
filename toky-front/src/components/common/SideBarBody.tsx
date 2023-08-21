@@ -156,14 +156,18 @@ function SideBarBodyFC(
       </FlexWrapper>
       <DivBar />
       <FlexWrapper style={{ justifyContent: "space-around" }}>
-        <InfoWrapper>
-          남은 포인트
-          <InfoDetail>{authCtx.remain}</InfoDetail>
-        </InfoWrapper>
-        <InfoWrapper>
-          누적 포인트
-          <InfoDetail>{authCtx.score}</InfoDetail>
-        </InfoWrapper>
+        <Link href="/draw">
+          <InfoWrapper>
+            남은 포인트
+            <InfoDetail>{authCtx.remain}</InfoDetail>
+          </InfoWrapper>
+        </Link>
+        <Link href="/draw">
+          <InfoWrapper>
+            누적 포인트
+            <InfoDetail>{authCtx.score}</InfoDetail>
+          </InfoWrapper>
+        </Link>
       </FlexWrapper>
       <DivBar />
       <NavWrapper>

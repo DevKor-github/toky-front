@@ -13,7 +13,7 @@ export default function Policy() {
     <Wrapper>
       <div className="title">응모 기간</div>
       <Space h={10} />
-      <div className="content">2023.09.01 ~ 2023.09.15 23:59 (익일 추첨)</div>
+      <div className="content"> ~ 2023.09.15 23:59 (익일 추첨)</div>
       <Space h={26} />
       <div className="title">포인트 지급 방침</div>
       <Space h={9} />

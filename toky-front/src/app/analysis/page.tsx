@@ -45,7 +45,7 @@ export default function Analysis() {
           <>
             <ScoreInfo match={match} />
             <PlayerInfo match={match} />
-            <PredictInfo match={match} />
+            {/* <PredictInfo match={match} /> */}
             <AnalFooter />
           </>
         )}

@@ -105,7 +105,7 @@ const MatchContainer = styled.div<{ $result: number }>`
           90deg,
           #f3233c,
           rgba(243, 35, 60, 0.1) 50%,
-          rgba(41, 72, 255, 0.3) 100%
+          rgba(20, 50, 255, 0.3) 100%
         );
       `;
     } else {

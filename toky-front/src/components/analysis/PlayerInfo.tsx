@@ -31,7 +31,7 @@ export default function PlayerInfo({ match }: MatchProps) {
         })} */}
       </PlayerInfoWrapper>
       {/* 더 알아보기 버튼 */}
-      <MorePlayerWrapper>
+      {/* <MorePlayerWrapper>
         <Link
           href="/analysis-more"
           style={{
@@ -49,14 +49,14 @@ export default function PlayerInfo({ match }: MatchProps) {
             style={{ marginBottom: "2px" }}
           />
         </Link>
-      </MorePlayerWrapper>
+      </MorePlayerWrapper> */}
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   /* min-width: 390px; */
-  padding-top: 40px;
+  padding-top: 20px;
   background-color: #121212;
 `;
 const PlayerInfoWrapper = styled.div``;
