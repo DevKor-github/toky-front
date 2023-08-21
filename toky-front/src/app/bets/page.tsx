@@ -30,6 +30,37 @@ function Bets() {
 	// useffect로 question 받아와서 question set해주기
 	// 서버로 유지 위해 use client를 question list로?
 
+	const authCtx = useContext(AuthContext);
+	const [matchProgress, setMatchProgress] = useState<boolean>(false);
+
+	// 최초 로드 및 match 변경 시 -> 질문 가져오기
+	useEffect(() => {
+		if (authCtx.nickname === "") {
+			client
+				.get("/auth/profile")
+				.then((res) => res.data)
+				.then((user) => {
+					authCtx.setNickname(user.name);
+					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
+					authCtx.setUniv(uni);
+					authCtx.setScore(user.score);
+					authCtx.setRemain(user.remain);
+					authCtx.setPhoneNum(user.phoneNumber);
+				})
+				.catch((err) => {
+					window.location.href = "/login";
+				});
+		}
+		client
+			.get("/bets/questions")
+			.then((res) => res.data)
+			.then((data) => {
+				return data;
+			})
+			.then((data) => setQuestions(data))
+			.finally(() => setIsLoading(false));
+	}, []);
+
 	const [showShareModal, setShowShareModal] = useState(false);
 	const [showPointModal, setShowPointModal] = useState(false);
 	const [showWaitModal, setShowWaitModal] = useState(false);
@@ -55,6 +86,8 @@ function Bets() {
 						if (data === 300) {
 							setShowSharePointModal(true);
 							setSharePointModalText("최초 예측 공유로 300P 지급!");
+							authCtx.setRemain(authCtx.remain + 300);
+							authCtx.setScore(authCtx.score + 300);
 							setTimeout(() => {
 								setShowSharePointModal(false);
 								setSharePointModalText("");
@@ -62,6 +95,8 @@ function Bets() {
 						} else if (data === 100) {
 							setShowSharePointModal(true);
 							setSharePointModalText("예측 공유로 100P 지급!");
+							authCtx.setRemain(authCtx.remain + 100);
+							authCtx.setScore(authCtx.score + 100);
 							setTimeout(() => {
 								setShowSharePointModal(false);
 								setSharePointModalText("");
@@ -97,36 +132,6 @@ function Bets() {
 		setMatch(m);
 	};
 
-	const authCtx = useContext(AuthContext);
-	const [matchProgress, setMatchProgress] = useState<boolean>(false);
-
-	// 최초 로드 및 match 변경 시 -> 질문 가져오기
-	useEffect(() => {
-		if (authCtx.nickname === "") {
-			client
-				.get("/auth/profile")
-				.then((res) => res.data)
-				.then((user) => {
-					authCtx.setNickname(user.name);
-					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
-					authCtx.setUniv(uni);
-					authCtx.setScore(user.score);
-					authCtx.setRemain(user.remain);
-					authCtx.setPhoneNum(user.phoneNumber);
-				})
-				.catch((err) => {
-					window.location.href = "/login";
-				});
-		}
-		client
-			.get("/bets/questions")
-			.then((res) => res.data)
-			.then((data) => {
-				return data;
-			})
-			.then((data) => setQuestions(data))
-			.finally(() => setIsLoading(false));
-	}, []);
 	useEffect(() => {
 		setMatchProgress(ProgressCheck(TIME[match]));
 	}, [match]);

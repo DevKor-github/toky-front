@@ -2,15 +2,38 @@
 import NavigationBar from "@/components/common/NavigationBar";
 import RankingInfo from "@/components/ranking/RankingInfo";
 import SearchBar from "@/components/ranking/SearchBar";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { RankingItemT } from "@/components/ranking/RankingInfo";
 import client from "@/lib/httpClient";
 import PageTransitionWrapper from "@/components/common/PageTransition";
 import ModalPortal from "@/components/common/ModalPortal";
 import ShareRank from "@/components/share/ShareRank";
 import CommonModal from "@/components/common/CommonModal";
+import AuthContext from "@/components/common/AuthContext";
 
 export default function Ranking() {
+	const authCtx = useContext(AuthContext);
+
+	// 최초 로드 및 match 변경 시 -> 질문 가져오기
+	useEffect(() => {
+		if (authCtx.nickname === "") {
+			client
+				.get("/auth/profile")
+				.then((res) => res.data)
+				.then((user) => {
+					authCtx.setNickname(user.name);
+					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
+					authCtx.setUniv(uni);
+					authCtx.setScore(user.score);
+					authCtx.setRemain(user.remain);
+					authCtx.setPhoneNum(user.phoneNumber);
+				})
+				.catch((err) => {
+					window.location.href = "/login";
+				});
+		}
+	}, []);
+
 	const [topPage, setTopPage] = useState(1);
 	const [bottomPage, setBottomPage] = useState(1);
 
@@ -42,6 +65,8 @@ export default function Ranking() {
 						if (data === 300) {
 							setShowRankShareModal(true);
 							setRankShareModalText("최초 랭킹 공유로 300P 지급!");
+							authCtx.setRemain(authCtx.remain + 300);
+							authCtx.setScore(authCtx.score + 300);
 							setTimeout(() => {
 								setShowRankShareModal(false);
 								setRankShareModalText("");
@@ -49,6 +74,8 @@ export default function Ranking() {
 						} else if (data === 100) {
 							setShowRankShareModal(true);
 							setRankShareModalText("랭킹 공유로 100P 지급!");
+							authCtx.setRemain(authCtx.remain + 100);
+							authCtx.setScore(authCtx.score + 100);
 							setTimeout(() => {
 								setShowRankShareModal(false);
 								setRankShareModalText("");
