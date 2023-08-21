@@ -20,7 +20,14 @@ export default function ArticleItem(props: ArticleT) {
           </Detail>
         </div>
         {props.img && (
-          <Img src={props.img} alt="img" style={{ objectFit: "cover" }} />
+          <Img
+            src={props.img}
+            alt="img"
+            width={74}
+            height={74}
+            sizes="74px"
+            style={{ objectFit: "cover" }}
+          />
         )}
       </Wrapper>
     </Link>
@@ -62,8 +69,6 @@ const Detail = styled.div`
 `;
 
 const Img = styled(Image)`
-  width: 74px;
-  height: 74px;
   border-radius: 4px;
   opacity: 0.8;
 `;
