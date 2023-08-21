@@ -22,7 +22,7 @@ export default function LoginComponent() {
 			<Image width={390} height={468} className="toky_bg" priority={true} src={toky_bg} alt="bg" />
 			<LoginBtnContainer>
 				<LoginBtn className="kakao" onClick={kakaoLogin}>
-					<Image src={kakaoSymbol} width={30} height={30} />
+					<Image src={kakaoSymbol} width={30} height={30} alt={"kakao"} />
 					카카오톡으로 시작하기
 				</LoginBtn>
 			</LoginBtnContainer>
