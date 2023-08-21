@@ -10,6 +10,7 @@ import { ProgressCheck } from "../common/ProgressCheck";
 import { Finish } from "../bets/QuestionList";
 import ModalPortal from "../common/ModalPortal";
 import AuthContext from "../common/AuthContext";
+import TimeOutModal from "./TimeOutModal";
 
 interface DrawGiftProps {
   remainingPoint: number;
@@ -27,12 +28,16 @@ export default function DrawGift({
   const drawDate = new Date("2023-09-16 23:59:59");
   const authCtx = useContext(AuthContext);
   const [modalStatus, setModalStatus] = useState<modalStatusT>("close");
-  const [drawProgress, setDrawProgress] = useState<boolean>(
-    ProgressCheck(drawDate)
-  );
+  const [drawProgress, setDrawProgress] = useState<boolean>(ProgressCheck(drawDate));
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [totalDraw, setTotalDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [myDraw, setMyDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+
+  const [timeOutModal, setTimeOutModal] = useState<boolean>(false);
+  function clickTimeOutModal() {
+    setTimeOutModal(!timeOutModal);
+  }
+
   let totalDrawTemp = [0, 0, 0, 0, 0];
   let myDrawTemp = [0, 0, 0, 0, 0];
   useEffect(() => {
@@ -83,7 +88,9 @@ export default function DrawGift({
   const onClickDraw = async () => {
     if (ProgressCheck(drawDate)) {
       const res = await drawGifts();
-      if (res && res.status === 201) {
+      if (res && res.data.message === "응모 기간이 아닙니다.") {
+        clickTimeOutModal();
+      } else if (res && res.status === 201) {
         setModalStatus("success");
         // all + my 업데이트
         totalDrawTemp = [...totalDraw];
@@ -107,9 +114,7 @@ export default function DrawGift({
         <div>
           <span className="title">경품 응모하기</span>
           <Space h={11} />
-          <div className="description">
-            - 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.
-          </div>
+          <div className="description">- 포인트를 사용해서 원하는 상품에 응모할 수 있습니다.</div>
           <div className="description">
             - 당첨자 발표는 2023년 9월 16일 문자를 통해 개별 공지됩니다.
           </div>
@@ -128,9 +133,7 @@ export default function DrawGift({
             ))}
           </Flex>
           <Space h={20} />
-          <Flex
-            style={{ justifyContent: "space-between", alignContent: "center" }}
-          >
+          <Flex style={{ justifyContent: "space-between", alignContent: "center" }}>
             <span className="point">응모 시 잔여 포인트</span>
             <span className="point" style={{ fontSize: 20 }}>
               {remainingPoint - pointUse}p
@@ -139,9 +142,7 @@ export default function DrawGift({
           <Space h={8} />
           <Divider />
           <Space h={8} />
-          <Flex
-            style={{ justifyContent: "space-between", alignContent: "center" }}
-          >
+          <Flex style={{ justifyContent: "space-between", alignContent: "center" }}>
             <span className="point" style={{ color: "#ffffff" }}>
               사용 포인트
             </span>
@@ -160,6 +161,9 @@ export default function DrawGift({
           closeModal={() => setModalStatus("close")}
           completeDraw={completeDraw}
         />
+      </ModalPortal>
+      <ModalPortal isShowing={timeOutModal}>
+        <TimeOutModal clickModal={clickTimeOutModal} />
       </ModalPortal>
     </>
   );
