@@ -133,15 +133,21 @@ export default function Ranking() {
     const res = await client.get(`points/rank/search?name=${searchValue}`);
     const data = res.data;
 
-    if (data.users === undefined) {
-      setRankInfoList([]);
-      setTopPage(0);
-      setBottomPage(Math.ceil(totalCount / 10));
-    }
-    setRankInfoList(data.users);
+    if (scrollRef.current) {
+      scrollRef.current.style.overflowY = "hidden";
+      if (data.users === undefined) {
+        setRankInfoList([]);
+        setTopPage(0);
+        setBottomPage(Math.ceil(totalCount / 10));
+      }
 
-    setTopPage(data.page);
-    setBottomPage(data.page);
+      const i = data.users.findIndex((user: RankingItemT) => user.name === searchValue);
+      setRankInfoList(data.users);
+      scrollRef.current.scrollTop = 74 * i;
+      scrollRef.current.style.overflowY = "auto";
+      setTopPage(data.page);
+      setBottomPage(data.page);
+    }
   };
 
   const searchMyRank = async () => {
