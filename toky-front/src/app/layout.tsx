@@ -29,19 +29,20 @@ export default function RootLayout({
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
       </head>
       <body>
-        <div
-          style={{
-            background: "#121212",
-            minHeight: "100vh",
-          }}
-        >
-          <AuthContextProvider>
-            <StyledComponentsRegistry>
+        <AuthContextProvider>
+          <StyledComponentsRegistry>
+            <div id="portal"></div>
+
+            <div
+              style={{
+                background: "#121212",
+                minHeight: "100vh",
+              }}
+            >
               {children}
-              <div id="portal"></div>
-            </StyledComponentsRegistry>
-          </AuthContextProvider>
-        </div>
+            </div>
+          </StyledComponentsRegistry>
+        </AuthContextProvider>
       </body>
     </html>
   );

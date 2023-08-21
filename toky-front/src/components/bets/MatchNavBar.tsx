@@ -42,7 +42,7 @@ export default function MatchNavBar({ match, handleMatch }: MatchNavBarProps) {
             padding: "10px",
           }}
         >
-          농구
+          빙구
         </button>
         <button
           onClick={() => {
@@ -57,7 +57,7 @@ export default function MatchNavBar({ match, handleMatch }: MatchNavBarProps) {
             padding: "10px",
           }}
         >
-          빙구
+          농구
         </button>
         <button
           onClick={() => {

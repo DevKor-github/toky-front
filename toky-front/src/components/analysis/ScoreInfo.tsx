@@ -8,18 +8,19 @@ import React from "react";
 import KoreaLogo from "../../../public/image/PastMatchKoreaLogo.png";
 import YonseiLogo from "../../../public/image/PastMatchYonseiLogo.png";
 export default function ScoreInfo({ match }: MatchProps) {
-  //10경기 -- 한 종목당 2개
-  //match 받아서
-  //과거 결과 데이터 받아오기
-  //몇개 안되니까 하드코딩으로 박아버리고 매치에 따라 다르게 표시하는 것만 해주기
-
-  const score = [{}, {}];
+  const winner = [
+    "막상막하에요",
+    "막상막하에요",
+    "고려대학교가 앞서요",
+    "고려대학교가 앞서요",
+    "막상막하에요",
+  ];
   return (
     <>
       <ScoreInfowrapper>
         <Container>
           <LeagueInfo>최근 두 경기 상대 전적 </LeagueInfo>
-          <ResultInfo>대결 경기는 고려대가 승리했어요</ResultInfo>
+          <ResultInfo>상대 전적은 {winner[match]}</ResultInfo>
           <CharImageWrapper>
             <Image src={CharImage} alt="character image" />
           </CharImageWrapper>

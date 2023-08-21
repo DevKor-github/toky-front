@@ -31,6 +31,7 @@ function Bets() {
   // useffect로 question 받아와서 question set해주기
   // 서버로 유지 위해 use client를 question list로?
 
+
   const authCtx = useContext(AuthContext);
   const [matchProgress, setMatchProgress] = useState<boolean>(false);
 
@@ -62,10 +63,10 @@ function Bets() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const [showShareModal, setShowShareModal] = useState(false);
-  const [showPointModal, setShowPointModal] = useState(false);
-  const [showWaitModal, setShowWaitModal] = useState(false);
-  const [showFailModal, setShowFailModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState<boolean>(false);
+  const [showPointModal, setShowPointModal] = useState<boolean>(false);
+  const [showWaitModal, setShowWaitModal] = useState<boolean>(false);
+  const [showFailModal, setShowFailModal] = useState<boolean>(false);
   const [showSharePointModal, setShowSharePointModal] = useState(false);
   const [timeOutModal, setTimeOutModal] = useState(false);
   const [sharePointModalText, setSharePointModalText] = useState("");
@@ -125,6 +126,7 @@ function Bets() {
   function clickWaitModal() {
     setShowWaitModal(!showWaitModal);
   }
+
 
   function clickTimeOutModal() {
     setTimeOutModal(!timeOutModal);

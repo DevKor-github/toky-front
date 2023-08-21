@@ -5,6 +5,10 @@ import { css, styled } from "styled-components";
 import KLogo from "./../../../public/image/koreaLogo.png";
 import YLogo from "./../../../public/image/yonseiLogo.png";
 import ShareArrow from "../../../public/image/ShareArrow.svg";
+import { useState } from "react";
+import Help from "../../../public/image/help.svg";
+import PointTip from "./PointTip";
+import ModalPortal from "../common/ModalPortal";
 
 interface BannerProps {
   match: number;
@@ -47,51 +51,63 @@ export default function BetBanner({
   ];
 
   const matchProgressString = matchProgress ? "예측 진행중" : "예측 마감";
+  const [showPointTip, setShowPointTip] = useState<boolean>(false);
+  function clickPointTip() {
+    setShowPointTip((prev) => !prev);
+  }
 
   return (
-    <BannerWrapper>
-      <Banner>
-        {/* <ImgContainer> */}
-        <Background></Background>
-        <Image
-          src={matchImage[match]}
-          fill
-          style={{ objectFit: "cover", zIndex: "0" }}
-          alt="bannerImage"
-        />
-        {/* </ImgContainer> */}
-        <ProgressBox matchProgress={matchProgress}>
-          {matchProgressString}
-        </ProgressBox>
-        <MatchInfo>
-          <UniLogo style={{ justifyContent: "flex-end" }}>
-            <H3>고려대학교</H3>
-            <ImageContainer>
-              <Image src={KLogo} width={30} height={42} alt="koreaUniLogo" />
-            </ImageContainer>
-          </UniLogo>
-          <TimeInfo>
-            <H4>{matchTime[match].time}</H4>
-            <H5>{matchTime[match].date}</H5>
-          </TimeInfo>
-          <UniLogo>
-            <ImageContainer>
-              <Image src={YLogo} width={40} height={40} alt="koreaUniLogo" />
-            </ImageContainer>
-
-            <H3>연세대학교</H3>
-          </UniLogo>
-        </MatchInfo>
-        <ShareBtn onClick={clickModal}>
-          내 예측 공유하기
+    <>
+      <BannerWrapper>
+        <Banner>
+          {/* <ImgContainer> */}
+          <Background></Background>
           <Image
-            src={ShareArrow}
-            alt="share arrow"
-            style={{ marginLeft: "4.69px" }}
+            src={matchImage[match]}
+            fill
+            style={{ objectFit: "cover", zIndex: "0" }}
+            alt="bannerImage"
           />
-        </ShareBtn>
-      </Banner>
-    </BannerWrapper>
+          {/* </ImgContainer> */}
+          <ProgressBox matchProgress={matchProgress}>
+            {matchProgressString}
+          </ProgressBox>
+          <MatchInfo>
+            <UniLogo style={{ justifyContent: "flex-end" }}>
+              <H3>고려대학교</H3>
+              <ImageContainer>
+                <Image src={KLogo} width={30} height={42} alt="koreaUniLogo" />
+              </ImageContainer>
+            </UniLogo>
+            <TimeInfo>
+              <H4>{matchTime[match].time}</H4>
+              <H5>{matchTime[match].date}</H5>
+            </TimeInfo>
+            <UniLogo>
+              <ImageContainer>
+                <Image src={YLogo} width={40} height={40} alt="koreaUniLogo" />
+              </ImageContainer>
+
+              <H3>연세대학교</H3>
+            </UniLogo>
+          </MatchInfo>
+          <BtnContainer>
+            <ShareBtn onClick={clickModal}>
+              내 예측 공유하기
+              <Image
+                src={ShareArrow}
+                alt="share arrow"
+                style={{ marginLeft: "4.69px" }}
+              />
+            </ShareBtn>
+            <Img alt="help" src={Help} height={16} onClick={clickPointTip} />
+          </BtnContainer>
+          <ModalPortal isShowing={showPointTip}>
+            <PointTip clickPointTip={clickPointTip} />,
+          </ModalPortal>
+        </Banner>
+      </BannerWrapper>
+    </>
   );
 }
 const BannerWrapper = styled.div`
@@ -196,17 +212,12 @@ const H5 = styled.h5`
 `;
 
 const ShareBtn = styled.button`
-  position: absolute;
-  width: 108px;
-  height: 29px;
   border-radius: 3.45px;
   border: 0.862px solid var(--87, rgba(255, 255, 255, 0.87));
-
+  width: 108px;
+  height: 29px;
   background-color: transparent;
   z-index: 1;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   color: var(--87, rgba(255, 255, 255, 0.87));
   text-align: center;
@@ -217,15 +228,22 @@ const ShareBtn = styled.button`
   line-height: normal;
   letter-spacing: -0.472px;
 `;
-{
-  /* backgrou 이미지 넣고 logo image 넣고 시간 */
-}
-{
-  /* 현재 x 명이 참여했어요!  */
-}
 
+const BtnContainer = styled.div`
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-54px, -50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+`;
 const ImageContainer = styled.div`
   height: 42px;
   display: flex;
   align-items: center;
+`;
+
+const Img = styled(Image)`
+  margin-left: 8px;
 `;

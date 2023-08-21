@@ -49,8 +49,8 @@ const Wrapper = styled.div`
 
 const MatchSelector = styled.div`
   display: flex;
-  padding-left: 50px;
-  gap: 10px;
+  justify-content: space-around;
+
   height: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 `;

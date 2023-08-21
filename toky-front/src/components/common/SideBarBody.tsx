@@ -185,7 +185,15 @@ function SideBarBodyFC(
           <NavItem>경품응모</NavItem>
         </Link>
 
-        <NavItem>문의하기</NavItem>
+        <NavItem
+          onClick={() => {
+            window.open(
+              "https://instagram.com/official.toky?igshid=NjIwNzIyMDk2Mg=="
+            );
+          }}
+        >
+          문의하기
+        </NavItem>
         <NavItem
           onClick={() => {
             client.get("/auth/logout").then((res) => {

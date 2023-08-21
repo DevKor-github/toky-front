@@ -11,7 +11,9 @@ export default function PointInfo() {
     <PointInfoWrapper>
       <PointDescription>
         <MainTitle>적중률에 따른 포인트 지급</MainTitle>
-        <MainSubTitle>어쩌구 저쩌구</MainSubTitle>
+        <MainSubTitle>
+          더 많은 포인트로 더 높은 랭킹에 도전해보세요
+        </MainSubTitle>
       </PointDescription>
       <PointGifWrapper>
         <PointGif>
