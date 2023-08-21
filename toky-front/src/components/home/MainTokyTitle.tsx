@@ -426,11 +426,11 @@ export default function MainTokyTitle() {
               y2="58.6066"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#EE495C" stopOpacity="0.6" />
-              <stop offset="0.1875" stopColor="#680E19" stopOpacity="0.67" />
-              <stop offset="0.708333" stopColor="#0E195C" stopOpacity="0.69" />
-              <stop offset="0.833333" stopColor="#1A2DA2" stopOpacity="0.61" />
-              <stop offset="0.99" stopColor="#8395FF" stopOpacity="0.5" />
+              <stop stopColor="#EE495C" />
+              <stop offset="0.1875" stopColor="#680E19" stopOpacity="0.95" />
+              <stop offset="0.708333" stopColor="#0E195C" stopOpacity="0.89" />
+              <stop offset="0.833333" stopColor="#1A2DA2" stopOpacity="0.92" />
+              <stop offset="0.99" stopColor="#8395FF" stopOpacity="0.88" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_353_1477"
@@ -452,7 +452,6 @@ export default function MainTokyTitle() {
           height="60"
           viewBox="0 0 71 60"
           fill="none"
-          className="whiteSpace6"
         >
           <path
             d="M48.707 0.882812C50.0589 20.4557 51.399 40.0404 52.7509 59.6133H38.6208C38.3269 53.9471 38.1859 51.1141 37.9037 45.4479H32.8606C32.649 53.7238 26.8301 58.3437 17.4727 58.3437C7.59806 58.3437 1.41466 53.1595 1.3794 43.9902C1.33237 32.5874 1.32062 26.886 1.2736 15.4831C1.23833 6.31385 6.92798 1.12968 16.0855 1.12968C24.3496 1.12968 29.957 5.36166 31.3442 12.8852C33.3073 12.8852 34.283 12.8852 36.2345 12.8852C36.1287 10.7104 36.0699 9.6289 35.9523 7.45414C34.4006 4.8209 33.6365 3.50429 32.1083 0.882812C38.7384 0.882812 42.0534 0.882812 48.6953 0.882812H48.707ZM18.6012 14.8483C18.5659 13.4612 17.6255 12.509 16.3677 12.509C15.1098 12.509 14.2164 13.4612 14.2517 14.8483C14.5103 26.7567 14.6278 32.7167 14.8865 44.625C14.9217 46.0122 15.8857 46.9644 17.2023 46.9644C18.5189 46.9644 19.4476 46.0122 19.4123 44.625C19.0949 32.7167 18.9304 26.7567 18.6012 14.8483ZM37.3277 34.0686C37.1279 30.154 37.0338 28.1908 36.834 24.2645C34.9061 24.2645 33.9421 24.2645 32.0025 24.2645C32.1788 28.1791 32.2611 30.1422 32.4374 34.0686C34.3888 34.0686 35.3763 34.0686 37.3277 34.0686ZM51.4696 0.882812C56.7008 0.882812 59.3105 0.882812 64.5417 0.882812C66.3168 20.4557 68.0918 40.0404 69.8552 59.6133H55.7251C54.3026 40.0404 52.8802 20.4557 51.4578 0.882812H51.4696Z"
@@ -470,11 +469,11 @@ export default function MainTokyTitle() {
               y2="59.6015"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#EE495C" stopOpacity="0.6" />
-              <stop offset="0.1875" stopColor="#680E19" stopOpacity="0.67" />
-              <stop offset="0.708333" stopColor="#0E195C" stopOpacity="0.69" />
-              <stop offset="0.833333" stopColor="#1A2DA2" stopOpacity="0.61" />
-              <stop offset="0.99" stopColor="#8395FF" stopOpacity="0.5" />
+              <stop stopColor="#EE495C" />
+              <stop offset="0.1875" stopColor="#680E19" stopOpacity="0.95" />
+              <stop offset="0.708333" stopColor="#0E195C" stopOpacity="0.89" />
+              <stop offset="0.833333" stopColor="#1A2DA2" stopOpacity="0.92" />
+              <stop offset="0.99" stopColor="#8395FF" stopOpacity="0.88" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_353_1478"
@@ -563,7 +562,9 @@ const SecondTitleWrapper = styled.div`
     margin-top: 9px;
   }
   & .whiteSpace5 {
-    margin-right: 9px;
+    margin-right: 8px;
+    margin-top: 1px;
+    margin-left: -3px;
   }
   & .whiteSpace6 {
     margin-right: 5px;

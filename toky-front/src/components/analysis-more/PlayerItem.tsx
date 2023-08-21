@@ -29,8 +29,13 @@ export default function PlayerItem({
   return (
     <Wrapper onClick={() => setIsClicked(!isClicked)}>
       {univ === 0 && (
-        <CopyRight>
+        <CopyRight univ={univ}>
           <p>©SPORTS KU</p>
+        </CopyRight>
+      )}
+      {univ === 1 && (
+        <CopyRight univ={univ}>
+          <p>연세대학교 시스붐바 제공</p>
         </CopyRight>
       )}
       <Image
@@ -129,12 +134,13 @@ const Name = styled.div<{ $isClicked: boolean }>`
     $isClicked && "color: #ffffff; background: rgba(18, 18, 18, 0.8);"}
 `;
 
-const CopyRight = styled.div`
+const CopyRight = styled.div<{ univ: number }>`
   position: absolute;
   top: 0%;
   left: 0%;
   p {
     font-size: 1px;
   }
-  color: var(--red, #f3233c);
+  color: ${({ univ }) =>
+    univ === 0 ? "var(--red, #f3233c);" : "var(--blue, #2948FF)"};
 `;
