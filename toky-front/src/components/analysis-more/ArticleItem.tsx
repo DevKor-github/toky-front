@@ -1,36 +1,33 @@
 "use-client";
 
 import styled from "styled-components";
-import Link from "next/link";
 import Image from "next/image";
 import { Space } from "../common/Space";
 import { ArticleT } from "./Article";
 
 export default function ArticleItem(props: ArticleT) {
   return (
-    <Link href={props.url}>
-      <Wrapper>
-        <div style={{ flexDirection: "column" }}>
-          <Title>{props.title}</Title>
-          <Space h={8} />
-          <Detail>
-            <span>{props.src}</span>
-            <span>|</span>
-            <span>{props.date}</span>
-          </Detail>
-        </div>
-        {props.img && (
-          <Img
-            src={props.img}
-            alt="img"
-            width={74}
-            height={74}
-            sizes="74px"
-            style={{ objectFit: "cover" }}
-          />
-        )}
-      </Wrapper>
-    </Link>
+    <Wrapper onClick={() => window.open(`${props.url}`)}>
+      <div style={{ flexDirection: "column" }}>
+        <Title>{props.title}</Title>
+        <Space h={8} />
+        <Detail>
+          <span>{props.src}</span>
+          <span>|</span>
+          <span>{props.date}</span>
+        </Detail>
+      </div>
+      {props.img && (
+        <Img
+          src={props.img}
+          alt="img"
+          width={74}
+          height={74}
+          sizes="74px"
+          style={{ objectFit: "cover" }}
+        />
+      )}
+    </Wrapper>
   );
 }
 
