@@ -30,23 +30,30 @@ function Bets() {
 	// 서버로 유지 위해 use client를 question list로?
 
 	const [showShareModal, setShowShareModal] = useState(false);
-	const [portalElement, setProtalElement] = useState<Element | null>(null);
 	const [showPointModal, setShowPointModal] = useState(false);
-
-	useEffect(() => {
-		setProtalElement(document.getElementById("portal"));
-	}, [showShareModal]);
-
+	const [showWaitModal, setShowWaitModal] = useState(false);
+	const [showFailModal, setShowFailModal] = useState(false);
 	function clickShareModal() {
 		setShowShareModal(!showShareModal);
 	}
+	function autoPointModal() {
+		setShowPointModal(true);
+		setTimeout(() => {
+			setShowPointModal(false);
+		}, 1000);
+	}
 	function clickPointModal() {
-		setShowPointModal(!showPointModal);
+		setShowPointModal(false);
+	}
+	function clickFailModal() {
+		setShowFailModal(!showFailModal);
+	}
+	function clickWaitModal() {
+		setShowWaitModal(!showWaitModal);
 	}
 
 	const [match, setMatch] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-
 	const [questions, setQuestions] = useState<QuestionType[]>([]);
 
 	const handleMatch = (m: number) => {
@@ -66,9 +73,9 @@ function Bets() {
 					authCtx.setNickname(user.name);
 					const uni = user.university === 0 ? "고려대학교" : "연세대학교";
 					authCtx.setUniv(uni);
-
 					authCtx.setScore(user.score);
 					authCtx.setRemain(user.remain);
+					authCtx.setPhoneNum(user.phoneNumber);
 				})
 				.catch((err) => {
 					window.location.href = "/login";
@@ -93,28 +100,34 @@ function Bets() {
 	return (
 		<>
 			<NavigationBar />
-			<BetBanner match={match} matchProgress={matchProgress} clickModal={clickShareModal} />
-			<MatchNavBar match={match} handleMatch={handleMatch} />
-			{!isLoading && (
-				<QuestionList
-					questions={questionsInMatch}
-					setQuestions={setQuestions}
-					orgQuestions={questions}
-					setModal={clickPointModal}
-					match={match}
-					matchProgress={matchProgress}
-				/>
-			)}
-			{showPointModal && portalElement
-				? createPortal(
-						// <SharePrediction clickModal={clickShareModal} />
-						<PointModal clickModal={clickPointModal} />,
-						portalElement
-				  )
-				: null}
-			{showShareModal && portalElement
-				? createPortal(<SharePrediction clickModal={clickShareModal} />, portalElement)
-				: null}
+			<PageTransitionWrapper>
+				<BetBanner match={match} matchProgress={matchProgress} clickModal={clickShareModal} />
+				<MatchNavBar match={match} handleMatch={handleMatch} />
+				{!isLoading && (
+					<QuestionList
+						questions={questionsInMatch}
+						setQuestions={setQuestions}
+						orgQuestions={questions}
+						setPointModal={autoPointModal}
+						setWaitModal={clickWaitModal}
+						setFailModal={clickFailModal}
+						match={match}
+						matchProgress={matchProgress}
+					/>
+				)}
+				<ModalPortal isShowing={showPointModal}>
+					<PointModal />
+				</ModalPortal>
+				<ModalPortal isShowing={showShareModal}>
+					<SharePrediction clickModal={clickShareModal} />
+				</ModalPortal>
+				<ModalPortal isShowing={showWaitModal}>
+					<BetWaitModal clickModal={clickWaitModal} />
+				</ModalPortal>
+				<ModalPortal isShowing={showFailModal}>
+					<BetFailModal clickModal={clickFailModal} />
+				</ModalPortal>
+			</PageTransitionWrapper>
 		</>
 	);
 }
