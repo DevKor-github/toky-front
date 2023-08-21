@@ -7,7 +7,7 @@ import { RankingItemT } from "./RankingInfo";
 
 export default function RankingItem(props: RankingItemT) {
   return (
-    <Wrapper highlight={props.highlight}>
+    <Wrapper highlight={props.highlight} rank={props.rank}>
       <Flex>
         <span
           style={{
@@ -38,7 +38,7 @@ export default function RankingItem(props: RankingItemT) {
   );
 }
 
-const Wrapper = styled.div<{ highlight: boolean }>`
+const Wrapper = styled.div<{ highlight: boolean; rank: number }>`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -51,8 +51,22 @@ const Wrapper = styled.div<{ highlight: boolean }>`
     props.highlight &&
     css`
       background-color: #222222;
-			
     `}
+  ${(props) => {
+    if (props.rank === 1) {
+      return css`
+        color: gold;
+      `;
+    } else if (props.rank === 2) {
+      return css`
+        color: silver;
+      `;
+    } else if (props.rank === 3) {
+      return css`
+        color: #cd7f32;
+      `;
+    }
+  }}
 `;
 
 const Space = styled.div<{ w: number }>`
