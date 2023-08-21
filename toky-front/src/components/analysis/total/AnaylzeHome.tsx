@@ -18,7 +18,7 @@ export default function AnalyzeHome() {
         </div>
         <div>
           <HistoryTitle>연세대학교</HistoryTitle>
-          20
+          21
         </div>
       </HistoryContainer>
       <Divider top={84} />

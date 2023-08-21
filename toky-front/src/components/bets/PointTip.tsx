@@ -6,6 +6,8 @@ interface Props {
   clickPointTip: () => void;
 }
 export default function PointTip({ clickPointTip }: Props) {
+  const pointPolicy =
+    "• 가입 시 100p 지급\n • 예측/랭킹 공유 시 매일 100p 지급\n\t(최초 1회 300p 지급)\n• 승부 예측 참여 시 항목 당 50p 지급\n• 적중시 항목 당 100p 지급\n• 종목의 예측 항목 중 ";
   return (
     <PortalWrapper onClick={clickPointTip}>
       <Wrapper>
@@ -16,15 +18,7 @@ export default function PointTip({ clickPointTip }: Props) {
           src={close}
         />
 
-        <div>
-          • 가입 시 100p
-          <br />
-          • 예측/랭킹 공유 시 매일 100p (최초 300p)
-          <br />
-          • 승부예측 참여 시 종목 당 50
-          <br />• 적중시 항목당 100p
-          <br />• 종목 하나 5개 다 맞히면 보너스 500p
-        </div>
+        <div style={{ whiteSpace: "pre-wrap" }}>{pointPolicy}</div>
       </Wrapper>
     </PortalWrapper>
   );
@@ -44,7 +38,7 @@ const Wrapper = styled.div`
   top: 160px;
   z-index: 4;
 
-  width: 200px;
+  width: 190px;
   height: 120px;
   display: flex;
   flex-direction: column;

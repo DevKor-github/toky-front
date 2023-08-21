@@ -100,7 +100,7 @@ export default function BetBanner({
                 style={{ marginLeft: "4.69px" }}
               />
             </ShareBtn>
-            <Img alt="help" src={Help} width={10} onClick={clickPointTip} />
+            <Img alt="help" src={Help} height={16} onClick={clickPointTip} />
           </BtnContainer>
           <ModalPortal isShowing={showPointTip}>
             <PointTip clickPointTip={clickPointTip} />,
@@ -235,6 +235,8 @@ const BtnContainer = styled.div`
   left: 50%;
   transform: translate(-54px, -50%);
   z-index: 2;
+  display: flex;
+  align-items: center;
 `;
 const ImageContainer = styled.div`
   height: 42px;
@@ -243,5 +245,5 @@ const ImageContainer = styled.div`
 `;
 
 const Img = styled(Image)`
-  margin-left: 5px;
+  margin-left: 8px;
 `;
