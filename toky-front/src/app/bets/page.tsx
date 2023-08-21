@@ -29,10 +29,10 @@ function Bets() {
   // useffect로 question 받아와서 question set해주기
   // 서버로 유지 위해 use client를 question list로?
 
-  const [showShareModal, setShowShareModal] = useState(false);
-  const [showPointModal, setShowPointModal] = useState(false);
-  const [showWaitModal, setShowWaitModal] = useState(false);
-  const [showFailModal, setShowFailModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState<boolean>(false);
+  const [showPointModal, setShowPointModal] = useState<boolean>(false);
+  const [showWaitModal, setShowWaitModal] = useState<boolean>(false);
+  const [showFailModal, setShowFailModal] = useState<boolean>(false);
   function clickShareModal() {
     setShowShareModal(!showShareModal);
   }
@@ -51,7 +51,6 @@ function Bets() {
   function clickWaitModal() {
     setShowWaitModal(!showWaitModal);
   }
-
   const [match, setMatch] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [questions, setQuestions] = useState<QuestionType[]>([]);
