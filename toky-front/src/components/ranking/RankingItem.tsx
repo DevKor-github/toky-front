@@ -48,14 +48,15 @@ export default function RankingItem(props: RankingItemT) {
               style={{ borderRadius: "20px" }}
             />
           )}
-
         </ProfileImage>
         <Space w={9} />
         <Flex style={{ flexDirection: "column", alignItems: "flex-start" }}>
           <span style={{ fontSize: 10 }}>
             {props.university === 0 ? "고려대학교" : "연세대학교"}
           </span>
-          <span style={{ fontSize: 16 }}>{props.name}</span>
+          <span style={{ fontSize: 16, whiteSpace: "nowrap" }}>
+            {props.name}
+          </span>
         </Flex>
       </Flex>
       <div style={{ fontSize: 22 }}>{props.point}p</div>

@@ -76,6 +76,9 @@ const Wrapper = styled.div`
   padding: 0 20px;
   background-color: #1f1f1f;
   color: rgba(255, 255, 255, 0.87);
+  span {
+    white-space: nowrap;
+  }
 `;
 
 const Flex = styled.div`
