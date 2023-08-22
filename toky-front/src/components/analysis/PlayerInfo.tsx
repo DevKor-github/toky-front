@@ -24,6 +24,7 @@ export default function PlayerInfo({ match }: MatchProps) {
             src={map[match]}
             alt="player image"
             fill
+            sizes="(max-width: 480px) 100vw, (max-width: 480px) 100vw, (max-width: 480px) 100vw"
             style={{ objectFit: "contain", width: "100%" }}
           />
         </PlayerImageWrapper>
