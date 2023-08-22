@@ -144,7 +144,7 @@ export default function DrawGift({
                 공유 이벤트
               </h1>
               <p>
-                나의 예측을
+                나의 예측과 랭킹을
                 <br /> @official.toky를 태그해서 스토리에 공유해주세요. <br />{" "}
                 <br /> 추첨을 통해 20분께
                 <br /> 스타벅스 아메리카노를 <br />
