@@ -90,6 +90,7 @@ const Wrapper = styled.div`
 `;
 
 const Info = styled.div`
+  z-index: 300;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -122,6 +123,7 @@ const Info = styled.div`
 
 const Name = styled.div<{ $isClicked: boolean }>`
   display: flex;
+  z-index: 300;
   justify-content: flex-end;
   height: 24px;
   padding-right: 7px;

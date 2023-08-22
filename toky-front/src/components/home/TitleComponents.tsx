@@ -11,7 +11,6 @@ export const MainTitle = styled.h1`
   letter-spacing: -0.04em;
 `;
 export const MainSubTitle = styled.h4`
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

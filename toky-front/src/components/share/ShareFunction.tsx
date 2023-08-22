@@ -12,7 +12,7 @@ export const downloadImage = async ({
   mode,
 }: IShareFunc) => {
   if (ref.current === null) return;
-  const name = mode === 0 ? "my-prediction" : "my-rank";
+  const name = mode === 0 ? "my-prediction.png" : "my-rank.png";
   setIsLoading(true);
 
   const canvas = await html2canvas(ref.current, {
@@ -37,7 +37,7 @@ export const fakelinkDownload = (blob: string, fileName: string) => {
 };
 
 export const shareImage = async ({ imgRef: ref, mode }: IShareFunc) => {
-  const name = mode === 0 ? "my-prediction" : "my-rank";
+  const name = mode === 0 ? "my-prediction.png" : "my-rank.png";
   if (ref.current === null) return;
   const canvas = await html2canvas(ref.current, {
     allowTaint: true,
@@ -55,9 +55,12 @@ export const shareImage = async ({ imgRef: ref, mode }: IShareFunc) => {
       lastModified: new Date().getTime(),
     }),
   ];
+  console.log(filesArray);
   const shareData = {
     files: filesArray,
   };
+  console.log(shareData);
+
   if (navigator.canShare && navigator.canShare(shareData)) {
     await navigator.share(shareData);
   } else {
