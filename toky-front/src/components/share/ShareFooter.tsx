@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export default function ShareFooter() {
   return (
     <Footer>
-      <h4>2023정기전 승부예측 토키</h4>
+      <h4>2023 정기전 승부예측 토키</h4>
       <img
         src="/image/divider.svg"
         alt="divider"

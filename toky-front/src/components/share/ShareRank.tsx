@@ -60,6 +60,7 @@ export default function ShareRank({
                     width: "289px",
                     verticalAlign: "bottom",
                     zIndex: "1000",
+                    borderRadius: "15px",
                   }}
                 />
                 <BottomBlur />

@@ -63,13 +63,17 @@ export default function UserInfo() {
       <InfoWrapper>
         <Flex>
           <ProfileImg univ={univ} />
-
         </Flex>
         <Space h={25} />
         <Flex style={{ gap: 46 }}>
           {authCtx.nickname && (
             <Flex style={{ alignItems: "flex-start", gap: 16 }}>
-              <Info>닉네임</Info>
+              <Info>
+                닉네임{" "}
+                <p className="nickname">
+                  (*부적절한 닉네임은 강제 변경됩니다.)
+                </p>
+              </Info>
               <Flex
                 style={{
                   alignItems: "flex-start",
@@ -144,6 +148,10 @@ const Info = styled.div`
   font-family: Spoqa Han Sans Neo;
   font-size: 15px;
   letter-spacing: -0.6px;
+  .nickname {
+    font-size: 8px;
+    margin-top: 5px;
+  }
 `;
 
 const Content = styled.div`
