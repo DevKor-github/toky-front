@@ -10,18 +10,17 @@ import IcehockeyTimer from "./timer/IcehockeyTimer";
 import BasketballTimer from "./timer/BasketballTimer";
 import RugbyTimer from "./timer/RugbyTimer";
 import FootballTimer from "./timer/FootballTimer";
-
 function AnalBanner({ match, progress }: { match: number; progress: number }) {
   //progress 받아오기
   //match별 결과 받아오기
 
   const AnalBannerImage = [
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
+    "/image/banner/Banner0.jpg",
+    "/image/banner/Banner1.jpg",
+    "/image/banner/Banner2.jpg",
+    "/image/banner/Banner3.jpg",
+    "/image/banner/Banner4.jpg",
+    "/image/banner/Banner5.jpg",
   ];
   const rederTimer = () => {
     if (match === 0) {

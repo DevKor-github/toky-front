@@ -44,7 +44,7 @@ export default function PlayerItem({
         src={img.src}
         alt="player"
         fill
-        sizes="110px,110px,110px"
+        sizes="120px, 120px, 120px"
         style={{ objectFit: "cover" }}
       />
       {isClicked && (
