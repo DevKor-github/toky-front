@@ -60,7 +60,11 @@ export default function UserInfo({
       </Flex>
       <ShareButton onClick={clickModal}>
         <span>내 랭킹 공유하기</span>
-        <Image src={arrowRight} alt="arrow-right" />
+        <Image
+          src={arrowRight}
+          alt="arrow-right"
+          style={{ marginLeft: "3px" }}
+        />
       </ShareButton>
     </Wrapper>
   );

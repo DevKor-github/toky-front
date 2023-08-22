@@ -9,15 +9,22 @@ import { MatchProps } from "./MatchType";
 
 export default function PlayerInfo({ match }: MatchProps) {
   let matchPlayer = PLAYER[match];
-  const map = ["", "", "/image/basketball_main_player.svg", "", ""];
+  const map = [
+    "/image/baseball_main_player.svg",
+    "/image/icehockey_main_player.svg",
+    "/image/basketball_main_player.svg",
+    "/image/rugby_main_player.svg",
+    "/image/football_main_player.svg",
+  ];
   return (
     <Wrapper>
       <PlayerInfoWrapper>
         <PlayerImageWrapper>
           <Image
             src={map[match]}
-            alt="player image test"
+            alt="player image"
             fill
+            sizes="(max-width: 480px) 100vw, (max-width: 480px) 100vw, (max-width: 480px) 100vw"
             style={{ objectFit: "contain", width: "100%" }}
           />
         </PlayerImageWrapper>

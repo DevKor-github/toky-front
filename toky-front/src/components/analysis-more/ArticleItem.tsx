@@ -23,7 +23,7 @@ export default function ArticleItem(props: ArticleT) {
           alt="img"
           width={74}
           height={74}
-          sizes="74px, 74px, 74px"
+          sizes="74px,74px,74px"
           style={{ objectFit: "cover" }}
         />
       )}
