@@ -42,8 +42,8 @@ export default function QuestionList({
         answer,
       });
       if (response.status === 201) {
-        authCtx.setScore(authCtx.score + 10);
-        authCtx.setRemain(authCtx.remain + 10);
+        authCtx.setScore(authCtx.score + 50);
+        authCtx.setRemain(authCtx.remain + 50);
         setPointModal();
       }
       if (response.status !== 400) {
