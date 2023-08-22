@@ -13,10 +13,10 @@ export const metadata: Metadata = {
   title: "신나는 정기전 승부예측, TOKY",
   description: "정기전 승부예측하고 경품 받자!",
   icons: {
-    icon: "../../public/image/favicon.svg",
+    icon: "/image/favicon.svg",
   },
   openGraph: {
-    images: [{ url: "../../public/image/opengraph.jpg" }],
+    images: [{ url: "/image/opengraph.jpg" }],
   },
 };
 
