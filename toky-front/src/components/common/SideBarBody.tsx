@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   width: 331px;
   background-color: #222222;
   transition: 1s ease;
-  z-index: 10;
+  z-index: 310;
   &.open {
     left: calc(100% - 331px);
     transition: 1s ease;
@@ -26,8 +26,7 @@ const Wrapper = styled.div`
 const UnivName = styled.div`
   margin-top: 15px;
 
-  color: ${(props) =>
-    props.children === "고려대학교" ? "#FF8586" : "#5B84FF"};
+  color: ${(props) => (props.children === "고려대학교" ? "#FF8586" : "#5B84FF")};
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -124,10 +123,7 @@ const Img = styled(Image)<{ univ: string }>`
       : "linear-gradient(0deg, #5b84ff 0%, #2948ff 100%)"};
 `;
 
-function SideBarBodyFC(
-  { isBarOpen = true },
-  ref: ForwardedRef<HTMLDivElement>
-) {
+function SideBarBodyFC({ isBarOpen = true }, ref: ForwardedRef<HTMLDivElement>) {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     if (authCtx.nickname === "") {
@@ -155,16 +151,10 @@ function SideBarBodyFC(
           <UserName>{authCtx.nickname}</UserName>
         </FlexWrapper>
         <Link href="/mypage">
-          <Image
-            src={Setting}
-            alt="setting"
-            style={{ marginTop: 32.5, marginLeft: 6 }}
-          />
+          <Image src={Setting} alt="setting" style={{ marginTop: 32.5, marginLeft: 6 }} />
         </Link>
         <Img
-          src={
-            authCtx.university === "고려대학교" ? KoreaProfile : YonseiProfile
-          }
+          src={authCtx.university === "고려대학교" ? KoreaProfile : YonseiProfile}
           alt="profile"
           width={59}
           height={59}
@@ -208,9 +198,7 @@ function SideBarBodyFC(
 
         <NavItem
           onClick={() => {
-            window.open(
-              "https://instagram.com/official.toky?igshid=NjIwNzIyMDk2Mg=="
-            );
+            window.open("https://instagram.com/official.toky?igshid=NjIwNzIyMDk2Mg==");
           }}
         >
           문의하기
