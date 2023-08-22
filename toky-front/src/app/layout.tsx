@@ -2,25 +2,25 @@ import { AuthContextProvider } from "@/components/common/AuthContext";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/registry";
 import { Noto_Sans_KR } from "next/font/google";
+import { Metadata } from "next";
 
 const NotoSansKR = Noto_Sans_KR({
   weight: ["500"],
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "신나는 정기전 승부예측, TOKY",
   description: "정기전 승부예측하고 경품 받자!",
   icons: {
     icon: "../../public/image/favicon.svg",
   },
+  openGraph: {
+    images: [{ url: "../../public/image/opengraph.jpg" }],
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="kr">
       <head>
