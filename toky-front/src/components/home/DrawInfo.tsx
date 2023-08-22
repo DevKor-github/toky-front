@@ -1,11 +1,14 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { styled, css } from "styled-components";
-import DrawProduct from "../../../public/image/DummyProduct.png";
+import gift0 from "../../../public/image/Gift/gift0.png";
+import gift1 from "../../../public/image/Gift/gift1.png";
+import gift2 from "../../../public/image/Gift/gift2.png";
+
 import { MainSubTitle, MainTitle } from "./TitleComponents";
 import { useRouter } from "next/navigation";
-
+const GiftImage: StaticImageData[] = [gift1, gift0, gift2];
 export default function DrawInfo() {
   const rank = [2, 1, 3];
   const router = useRouter();
@@ -16,12 +19,28 @@ export default function DrawInfo() {
 
   const product = rank.map((ranking, i) => {
     return (
-      <ProductBox key={i} ranking={ranking}>
-        <ProductRank className="circle">{ranking}등</ProductRank>
-        <ImageContainer>
-          <Image src={DrawProduct} alt="Draw product" width={148} />
-        </ImageContainer>
-      </ProductBox>
+      <ProductContainer key={i}>
+        <ProductBox ranking={ranking}>
+          <ProductRank className="circle">{ranking}등</ProductRank>
+          <ImageContainer className="gift">
+            <Image
+              src={GiftImage[i]}
+              alt="Draw product"
+              fill
+              sizes="100px"
+              style={{
+                objectFit: "contain",
+                // transform: "translate(-50%,0)",
+              }}
+            />
+          </ImageContainer>
+        </ProductBox>
+        <p>
+          {ranking === 1 && "애플워치 40mm (1명)"}
+          {ranking === 2 && "배민 3만원 상품권 (5명)"}
+          {ranking === 3 && "뿌링클+콜라 세트 (5명)"}
+        </p>
+      </ProductContainer>
     );
   });
   return (
@@ -72,16 +91,27 @@ const Btn = styled.button`
 
   cursor: pointer;
 `;
+const ProductContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    margin-top: 10px;
+    font-size: 10px;
+  }
+`;
 const ProductBox = styled.div<{ ranking: number }>`
   border-radius: 6px;
   position: relative;
   width: 97px;
   height: 117px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
   .circle {
     width: 20px;
     height: 20px;
-    font-size: 8px;
+    font-size: 7px;
     font-weight: 500;
   }
   ${(props) => {
@@ -100,7 +130,7 @@ const ProductBox = styled.div<{ ranking: number }>`
           width: 25px;
           height: 25px;
           font-weight: 700;
-          font-size: 10px;
+          font-size: 12px;
         }
       `;
     } else if (props.ranking === 2) {
@@ -116,9 +146,9 @@ const ProductBox = styled.div<{ ranking: number }>`
       return css`
         background: linear-gradient(
           180deg,
-          #b6a67e 0%,
-          #f6eed7 50.52%,
-          #826e3e 100%
+          #b7b7b7 0%,
+          #f5f5f5 50.52%,
+          #717171 100%
         );
       `;
     }
@@ -132,7 +162,6 @@ const ProductRank = styled.div`
   transform: translate(-50%, -50%);
   background: #4c0eb0;
   color: #fff;
-  font-family: "Spoqa Han Sans Neo";
   font-style: normal;
   letter-spacing: -0.4px;
   display: flex;
@@ -141,8 +170,9 @@ const ProductRank = styled.div`
 `;
 const ImageContainer = styled.div`
   background-color: transparent;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  text-align: center;
+  width: 90px;
+  height: 100px;
+  margin: auto;
 `;
