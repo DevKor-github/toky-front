@@ -27,8 +27,9 @@ export default function ShareRank({
 
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const randomToky = Math.floor(Math.random() * 10);
+    let randomToky = Math.floor(Math.random() * 13);
     if (univ === 0) {
+      randomToky = Math.floor(Math.random() * 14);
       setTokyImgUrl(TokyKoreaCharacter[randomToky].imgUrl);
     } else {
       setTokyImgUrl(TokyYonseiCharacter[randomToky].imgUrl);
