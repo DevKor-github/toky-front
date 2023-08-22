@@ -2,7 +2,8 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import defaultProfile from "../../../public/image/defaultProfile.svg";
+import KoreaProfile from "../../../public/image/korea_profile.png";
+import YonseiProfile from "../../../public/image/yonsei_profile.png";
 import arrowRight from "../../../public/image/arrow_right.svg";
 import { useContext } from "react";
 import AuthContext from "../common/AuthContext";
@@ -14,7 +15,12 @@ export interface UserInfoProps {
   clickModal: () => void;
 }
 
-export default function UserInfo({ total, rank, searchMyRank, clickModal }: UserInfoProps) {
+export default function UserInfo({
+  total,
+  rank,
+  searchMyRank,
+  clickModal,
+}: UserInfoProps) {
   const authCtx = useContext(AuthContext);
   const univ = authCtx.university === "고려대학교" ? 0 : 1;
   return (
@@ -31,9 +37,14 @@ export default function UserInfo({ total, rank, searchMyRank, clickModal }: User
       <Flex style={{ gap: 7, marginLeft: 40 }}>
         <ProfileImage univ={univ}>
           <Image
-            src={defaultProfile}
+            src={univ === 0 ? KoreaProfile : YonseiProfile}
             alt="profile-image"
-            style={{ width: 61, height: 61, borderRadius: 33 }}
+            style={{
+              width: 63,
+              height: 63,
+              borderRadius: 33,
+              backgroundColor: "#222222",
+            }}
           />
         </ProfileImage>
         <span>{authCtx.nickname}</span>

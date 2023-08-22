@@ -2,7 +2,8 @@
 
 import styled, { css } from "styled-components";
 import Image from "next/image";
-import defaultProfile from "../../../public/image/defaultProfile.svg";
+import KoreaProfile from "../../../public/image/korea_profile.png";
+import YonseiProfile from "../../../public/image/yonsei_profile.png";
 import { RankingItemT } from "./RankingInfo";
 
 export default function RankingItem(props: RankingItemT) {
@@ -20,9 +21,14 @@ export default function RankingItem(props: RankingItemT) {
         <Space w={17} />
         <ProfileImage univ={props.university}>
           <Image
-            src={defaultProfile}
+            src={props.university === 0 ? KoreaProfile : YonseiProfile}
             alt="profile-image"
-            style={{ width: 37, height: 37, borderRadius: 20 }}
+            style={{
+              width: 38,
+              height: 38,
+              borderRadius: 20,
+              backgroundColor: "#222222",
+            }}
           />
         </ProfileImage>
         <Space w={9} />

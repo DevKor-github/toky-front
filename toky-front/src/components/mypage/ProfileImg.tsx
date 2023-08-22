@@ -1,21 +1,25 @@
 "use client";
 import styled from "styled-components";
 import Image from "next/image";
-import Avatar from "../../../public/image/defaultProfile.svg";
-import Edit from "../../../public/image/edit.svg";
+import KoreaProfile from "../../../public/image/korea_profile.png";
+import YonseiProfile from "../../../public/image/yonsei_profile.png";
 
-export default function ProfileImg() {
+interface Props {
+  univ: string;
+}
+
+export default function ProfileImg({ univ }: Props) {
   return (
     <Wrapper>
       <Image
-        src={Avatar}
+        src={univ === "고려대학교" ? KoreaProfile : YonseiProfile}
         alt="profile-image"
-        style={{ width: 70, height: 70, borderRadius: 35 }}
-      />
-      <Image
-        src={Edit}
-        alt="edit"
-        style={{ position: "absolute", bottom: 0, right: 0 }}
+        style={{
+          width: 70,
+          height: 70,
+          borderRadius: 35,
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+        }}
       />
     </Wrapper>
   );

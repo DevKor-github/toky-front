@@ -2,7 +2,8 @@ import React, { ForwardedRef, useContext, useEffect } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Setting from "../../../public/image/Setting.svg";
-import Avatar from "../../../public/image/Avatar.png";
+import KoreaProfile from "../../../public/image/korea_profile.png";
+import YonseiProfile from "../../../public/image/yonsei_profile.png";
 import AuthContext from "./AuthContext";
 import client from "@/lib/httpClient";
 import Link from "next/link";
@@ -152,7 +153,19 @@ function SideBarBodyFC(
             style={{ marginTop: 32.5, marginLeft: 6 }}
           />
         </Link>
-        <Image src={Avatar} alt="avatar" style={{ marginLeft: "auto" }} />
+        <Image
+          src={
+            authCtx.university === "고려대학교" ? KoreaProfile : YonseiProfile
+          }
+          alt="profile"
+          style={{
+            marginLeft: "auto",
+            width: 59,
+            height: 59,
+            borderRadius: 30,
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+          }}
+        />
       </FlexWrapper>
       <DivBar />
       <FlexWrapper style={{ justifyContent: "space-around" }}>
