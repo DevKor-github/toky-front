@@ -3,11 +3,11 @@
 import { styled } from "styled-components";
 import Image from "next/image";
 import { Space } from "../common/Space";
-import devKor from "../../../public/image/devkor_logo.svg";
-import aws from "../../../public/image/aws_logo.svg";
-import kuaa from "../../../public/image/kuaa_logo.svg";
-import sportsku from "../../../public/image/sportsku_logo.svg";
-import sisboombah from "../../../public/image/sisboombah_logo.svg";
+import devKor from "../../../public/image/devkor_logo.png";
+import aws from "../../../public/image/aws_logo.png";
+import kuaa from "../../../public/image/kuaa_logo.png";
+import sportsku from "../../../public/image/sportsku_logo.png";
+import sisboombah from "../../../public/image/sisboombah_logo.png";
 
 export default function MainFooter() {
   return (
@@ -15,13 +15,13 @@ export default function MainFooter() {
       <Flex>
         <DevInfo>
           <Text>개발</Text>
-          <Image alt="devKor" src={devKor} />
+          <Image alt="devKor" width={70} src={devKor} />
         </DevInfo>
         <SupportInfo>
           <Text>후원</Text>
           <ImageFlex>
-            <Image alt="aws" src={aws} />
-            <Image alt="kuaa" src={kuaa} />
+            <Image alt="aws" width={44} src={aws} />
+            <Image alt="kuaa" width={38} src={kuaa} />
           </ImageFlex>
         </SupportInfo>
       </Flex>
@@ -29,8 +29,8 @@ export default function MainFooter() {
       <MaterialProvisionInfo>
         <Text>자료제공</Text>
         <ImageFlex>
-          <Image alt="sportku" src={sportsku} />
-          <Image alt="sisboombah" src={sisboombah} />
+          <Image alt="sportku" width={91} src={sportsku} />
+          <Image alt="sisboombah" width={106} src={sisboombah} />
         </ImageFlex>
       </MaterialProvisionInfo>
       <Space h={48} />
