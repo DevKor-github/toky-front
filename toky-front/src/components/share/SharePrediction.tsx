@@ -4,7 +4,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import client from "@/lib/httpClient";
 import AuthContext from "../common/AuthContext";
 import Modal from "../common/Modal";
-import { TokyKoreaCharacter, TokyYonseiCharacter } from "./TokyCharater";
+import {
+  TokyDrawCharacter,
+  TokyKoreaCharacter,
+  TokyYonseiCharacter,
+} from "./TokyCharater";
 import ShareFooter from "./ShareFooter";
 import ShareBtn from "./ShareBtn";
 
@@ -29,16 +33,20 @@ export default function SharePrediction({ clickModal }: ShareProps) {
   async function getShare() {
     const response = await client.get("/bets/share");
     const result = response.data;
-    const randomToky = Math.floor(Math.random() * 10);
+    let randomToky = Math.floor(Math.random() * 3);
     setPredictionData(result);
     const total = result.numWinKorea + result.numWinYonsei + result.numDraw;
     if (total >= 5) setCompletePredict(true);
     if (result.numWinKorea == result.numWinYonsei) {
+      randomToky = Math.floor(Math.random() * 3);
+      setTokyImgUrl(TokyDrawCharacter[randomToky].imgUrl);
       setDraw(true);
     } else if (result.numWinKorea > result.numWinYonsei) {
+      randomToky = Math.floor(Math.random() * 14);
       setWinKorea(true);
       setTokyImgUrl(TokyKoreaCharacter[randomToky].imgUrl);
     } else {
+      randomToky = Math.floor(Math.random() * 13);
       setTokyImgUrl(TokyYonseiCharacter[randomToky].imgUrl);
     }
 
