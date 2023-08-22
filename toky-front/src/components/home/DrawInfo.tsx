@@ -27,7 +27,7 @@ export default function DrawInfo() {
               src={GiftImage[i]}
               alt="Draw product"
               fill
-              sizes="100px, 100px"
+              sizes="100px,100px,100px"
               style={{
                 objectFit: "contain",
                 // transform: "translate(-50%,0)",
