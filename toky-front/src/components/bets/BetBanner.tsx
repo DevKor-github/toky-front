@@ -43,11 +43,11 @@ export default function BetBanner({
     },
   ];
   const matchImage = [
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
-    "/image/bannerimage.jpeg",
+    "/image/banner/Banner0.jpg",
+    "/image/banner/Banner1.jpg",
+    "/image/banner/Banner2.jpg",
+    "/image/banner/Banner3.jpg",
+    "/image/banner/Banner4.jpg",
   ];
 
   const matchProgressString = matchProgress ? "예측 진행중" : "예측 마감";
