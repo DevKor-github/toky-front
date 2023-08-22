@@ -13,7 +13,16 @@ export default function RankingItem(props: RankingItemT) {
         <span
           style={{
             fontWeight: 700,
-            fontSize: 25,
+            fontSize:
+              props.rank >= 1000
+                ? 18
+                : props.rank >= 100
+                ? 20
+                : props.rank >= 10
+                ? 22
+                : 25,
+            width: 58,
+            textAlign: "right",
           }}
         >
           {props.rank}
@@ -50,7 +59,7 @@ const Wrapper = styled.div<{ highlight: boolean; rank: number }>`
   justify-content: space-between;
   align-items: center;
   height: 74px;
-  padding: 0 42px;
+  padding: 0 42px 0 0;
   background-color: #121212;
   color: rgba(255, 255, 255, 0.87);
   ${(props) =>
