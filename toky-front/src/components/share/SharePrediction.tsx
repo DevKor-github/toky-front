@@ -185,7 +185,7 @@ const ScoreContainer = styled.div`
     font-family: Spoqa Han Sans Neo;
     font-weight: 500;
     letter-spacing: -0.48px;
-    text-shadow: 1px 1px 2px black;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
   }
   & h1 {
     text-align: center;
@@ -220,7 +220,12 @@ const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
   ${(props) =>
     props.$draw &&
     css`
-      background: gray;
+      background: linear-gradient(
+        360deg,
+        #d0b2ff 0%,
+        #7e41ff 100%,
+        #6e2bff 100%
+      );
     `}
   & h3 {
     font-size: 14px;
@@ -230,23 +235,22 @@ const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
     text-align: center;
   }
   .userContainer {
+    background: var(--60, rgba(255, 255, 255, 0.6));
+
     ${(props) =>
       props.$winKorea &&
       css`
-        background: var(--60, rgba(255, 255, 255, 0.6));
         color: var(--red, #f3233c);
       `}
     ${(props) =>
       !props.$winKorea &&
       css`
-        background: var(--125, rgba(255, 255, 255, 0.38));
-        color: var(--blue, #445fff);
+        color: var(--blue, #2948ff);
       `}
     ${(props) =>
       props.$draw &&
       css`
-        background: #b0a5a5;
-        color: black;
+        color: #4c0eb0;
       `}
   }
   .score {
@@ -258,24 +262,22 @@ const ShareCard = styled.div<{ $winKorea: boolean; $draw: boolean }>`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    background: var(--87, rgba(255, 255, 255, 0.87));
 
     ${(props) =>
       props.$winKorea &&
       css`
-        background: var(--87, rgba(255, 255, 255, 0.87));
         color: #f9555e;
       `}
     ${(props) =>
       !props.$winKorea &&
       css`
-        background: var(--87, rgba(255, 255, 255, 0.87));
         color: var(--blue, #445fff);
       `}
     ${(props) =>
       props.$draw &&
       css`
-        background: #b0a5a5;
-        color: black;
+        color: #4c0eb0;
       `}
   }
 `;
