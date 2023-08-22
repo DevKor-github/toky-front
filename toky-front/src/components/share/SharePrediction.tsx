@@ -88,6 +88,7 @@ export default function SharePrediction({ clickModal }: ShareProps) {
                     width: "289px",
                     verticalAlign: "bottom",
                     zIndex: "1000",
+                    borderRadius: "15px",
                   }}
                 />
               </ImageContainer>
