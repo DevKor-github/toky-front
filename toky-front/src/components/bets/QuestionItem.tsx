@@ -96,12 +96,7 @@ export default function QuestionItem({
                 {!notAnswerd && (
                   <Percentage>
                     <strong>
-                      {i < percentage.length
-                        ? (percentage[i] * 100)
-                            .toString()
-                            .slice(0, 3)
-                            .replaceAll(".", "")
-                        : ""}
+                      {i < percentage.length ? percentage[i].toString().substring(2, 4) : ""}
                     </strong>
                     %
                   </Percentage>
