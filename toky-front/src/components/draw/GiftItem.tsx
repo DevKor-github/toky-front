@@ -2,10 +2,18 @@
 
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Space } from "../common/Space";
 import remove from "../../../public/image/remove.svg";
 import add from "../../../public/image/add.svg";
+
+import gift0 from "../../../public/image/Gift/gift0.png";
+import gift1 from "../../../public/image/Gift/gift1.png";
+import gift2 from "../../../public/image/Gift/gift2.png";
+import gift3 from "../../../public/image/Gift/gift3.png";
+import gift4 from "../../../public/image/Gift/gift4.png";
+
+const GiftImage: StaticImageData[] = [gift0, gift1, gift2, gift3, gift4];
 
 interface Props {
   id: number;
@@ -57,7 +65,7 @@ export default function GiftItem({
       <Space h={4} />
       <Point>{point}p</Point>
       <Space h={9} />
-      <TempImg />
+      <Image src={GiftImage[id - 1]} height={90} alt="gifts" />
       <Space h={4} />
       <Flex style={{ gap: "30px" }}>
         <ImageContainer onClick={decreaseQuantity}>
@@ -98,6 +106,7 @@ const DrawCount = styled.div`
   font-size: 9px;
   font-weight: 400;
   letter-spacing: -0.36px;
+  margin-bottom: 3px;
 `;
 
 const Title = styled.div`
@@ -119,7 +128,7 @@ const Point = styled.div`
   height: 18px;
   border-radius: 9.5px;
   background: #1f1f1f;
-
+  margin-top: 4px;
   color: #ffffff;
   font-family: Spoqa Han Sans Neo;
   font-size: 12px;

@@ -57,12 +57,13 @@ export default function UserInfo() {
   useEffect(() => {
     setNickname(authCtx.nickname);
   }, [authCtx.nickname]);
-
+  const univ: number = authCtx.university === "고려대학교" ? 0 : 1;
   return (
     <>
       <InfoWrapper>
         <Flex>
-          <ProfileImg univ={authCtx.university} />
+          <ProfileImg univ={univ} />
+
         </Flex>
         <Space h={25} />
         <Flex style={{ gap: 46 }}>

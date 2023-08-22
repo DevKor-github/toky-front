@@ -1,30 +1,44 @@
 "use client";
 import styled from "styled-components";
 import Image from "next/image";
-import KoreaProfile from "../../../public/image/korea_profile.png";
-import YonseiProfile from "../../../public/image/yonsei_profile.png";
-
-interface Props {
-  univ: string;
+import YonseiToky from "../../../public/image/YonseiProfileToky.png";
+import KoreaToky from "../../../public/image/KoreaProfileToky.png";
+interface IProfile {
+  univ: number;
 }
-
-export default function ProfileImg({ univ }: Props) {
+export default function ProfileImg({ univ }: IProfile) {
   return (
-    <Wrapper>
-      <Image
-        src={univ === "고려대학교" ? KoreaProfile : YonseiProfile}
-        alt="profile-image"
-        style={{
-          width: 70,
-          height: 70,
-          borderRadius: 35,
-          border: "1px solid rgba(255, 255, 255, 0.3)",
-        }}
-      />
+    <Wrapper univ={univ}>
+      {univ === 0 && (
+        <Image
+          src={KoreaToky}
+          alt="profile-image"
+          width={70}
+          height={70}
+          style={{ borderRadius: "35px" }}
+        />
+      )}
+      {univ === 1 && (
+        <Image
+          src={YonseiToky}
+          alt="profile-image"
+          width={70}
+          height={70}
+          style={{ borderRadius: "35px" }}
+        />
+      )}
+
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ univ: number }>`
+  width: 70px;
+  height: 70px;
   position: relative;
+  background: ${({ univ }) =>
+    univ === 0
+      ? "linear-gradient(0deg, #f3233c 0%, #f95B6e 100%)"
+      : "linear-gradient(0deg, #5b84ff 0%, #2948ff 100%)"};
+  border-radius: 35px;
 `;
