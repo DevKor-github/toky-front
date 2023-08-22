@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { css, styled } from "styled-components";
 import CharImage from "../../../public/image/Logo.webp";
 import { MatchProps } from "./MatchType";
@@ -7,6 +7,20 @@ import { pastMatch } from "./Data";
 import React from "react";
 import KoreaLogo from "../../../public/image/PastMatchKoreaLogo.png";
 import YonseiLogo from "../../../public/image/PastMatchYonseiLogo.png";
+import AnalToky0 from "../../../public/image/AnalToky/AnalToky0.png";
+import AnalToky1 from "../../../public/image/AnalToky/AnalToky1.png";
+import AnalToky2 from "../../../public/image/AnalToky/AnalToky2.png";
+import AnalToky3 from "../../../public/image/AnalToky/AnalToky3.png";
+import AnalToky4 from "../../../public/image/AnalToky/AnalToky4.png";
+
+const AnalToky: StaticImageData[] = [
+  AnalToky0,
+  AnalToky1,
+  AnalToky2,
+  AnalToky3,
+  AnalToky4,
+];
+
 export default function ScoreInfo({ match }: MatchProps) {
   const winner = [
     "막상막하에요",
@@ -22,7 +36,12 @@ export default function ScoreInfo({ match }: MatchProps) {
           <LeagueInfo>최근 두 경기 상대 전적 </LeagueInfo>
           <ResultInfo>상대 전적은 {winner[match]}</ResultInfo>
           <CharImageWrapper>
-            <Image src={CharImage} alt="character image" />
+            <Img
+              src={AnalToky[match]}
+              width={390}
+              height={294}
+              alt="character image"
+            />
           </CharImageWrapper>
         </Container>
       </ScoreInfowrapper>
@@ -61,10 +80,7 @@ export default function ScoreInfo({ match }: MatchProps) {
   );
 }
 
-const ScoreInfowrapper = styled.div`
-  min-height: 500px;
-  position: relative;
-`;
+const ScoreInfowrapper = styled.div``;
 const Container = styled.div``;
 const LeagueInfo = styled.h4`
   font-family: "Spoqa Han Sans Neo";
@@ -91,10 +107,12 @@ const ResultInfo = styled.h2`
 `;
 
 const CharImageWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /*  */
+  position: relative;
+  width: 100%;
+  height: 294px;
+  margin: 0 auto;
+  margin-top: 10px;
 `;
 
 const MatchContainer = styled.div<{ $result: number }>`
@@ -156,4 +174,11 @@ const MatchTextContainer = styled.div`
     font-weight: 500;
     white-space: nowrap;
   }
+`;
+
+const Img = styled(Image)`
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
 `;
