@@ -2,14 +2,38 @@
 import NavigationBar from "@/components/common/NavigationBar";
 import RankingInfo from "@/components/ranking/RankingInfo";
 import SearchBar from "@/components/ranking/SearchBar";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { RankingItemT } from "@/components/ranking/RankingInfo";
 import client from "@/lib/httpClient";
 import PageTransitionWrapper from "@/components/common/PageTransition";
 import ModalPortal from "@/components/common/ModalPortal";
 import ShareRank from "@/components/share/ShareRank";
+import CommonModal from "@/components/common/CommonModal";
+import AuthContext from "@/components/common/AuthContext";
 
 export default function Ranking() {
+  const authCtx = useContext(AuthContext);
+
+  // 최초 로드 및 match 변경 시 -> 질문 가져오기
+  useEffect(() => {
+    if (authCtx.nickname === "") {
+      client
+        .get("/auth/profile")
+        .then((res) => res.data)
+        .then((user) => {
+          authCtx.setNickname(user.name);
+          const uni = user.university === 0 ? "고려대학교" : "연세대학교";
+          authCtx.setUniv(uni);
+          authCtx.setScore(user.score);
+          authCtx.setRemain(user.remain);
+          authCtx.setPhoneNum(user.phoneNumber);
+        })
+        .catch((err) => {
+          window.location.href = "/login";
+        });
+    }
+  }, []);
+
   const [topPage, setTopPage] = useState(1);
   const [bottomPage, setBottomPage] = useState(1);
 
@@ -24,9 +48,49 @@ export default function Ranking() {
   const [rankInfoList, setRankInfoList] = useState<RankingItemT[]>([]);
   const [showRankModal, setShowRankModal] = useState(false);
 
+  const [showRankShareModal, setShowRankShareModal] = useState(false);
+  const [rankShareModalText, setRankShareModalText] = useState("");
+  const [clicked, setClicked] = useState(false);
+  useEffect(() => {
+    if (!showRankModal && clicked) {
+      if (
+        !localStorage.getItem("rank") ||
+        new Date(localStorage.getItem("rank")!).getTime() <=
+          new Date().getTime() - 24 * 60 * 60 * 1000
+      ) {
+        client
+          .get("/points/share/rank")
+          .then((res) => res.data)
+          .then((data) => {
+            if (data === 300) {
+              setShowRankShareModal(true);
+              setRankShareModalText("최초 랭킹 공유로 300P 지급!");
+              authCtx.setRemain(authCtx.remain + 300);
+              authCtx.setScore(authCtx.score + 300);
+              setTimeout(() => {
+                setShowRankShareModal(false);
+                setRankShareModalText("");
+              }, 2000);
+            } else if (data === 100) {
+              setShowRankShareModal(true);
+              setRankShareModalText("랭킹 공유로 100P 지급!");
+              authCtx.setRemain(authCtx.remain + 100);
+              authCtx.setScore(authCtx.score + 100);
+              setTimeout(() => {
+                setShowRankShareModal(false);
+                setRankShareModalText("");
+              }, 2000);
+            }
+            localStorage.setItem("rank", new Date().toString());
+          });
+      }
+    }
+  }, [showRankModal]);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   function clickRankModal() {
     setShowRankModal(!showRankModal);
+    setClicked(true);
   }
   useEffect(() => {
     const divElement = scrollRef.current;
@@ -40,9 +104,14 @@ export default function Ranking() {
             scrollRef.current.scrollTop -
             scrollRef.current.clientHeight;
           if (top === 0 && topPage > 1) {
+            const currentScrollPosition = scrollRef.current && scrollRef.current.scrollTop;
+            scrollRef.current.style.overflowY = "hidden";
             const fetchedData = await getRankByPage(topPage - 1);
             setTopPage(topPage - 1);
             setRankInfoList([...fetchedData, ...rankInfoList]);
+
+            scrollRef.current.scrollTop = currentScrollPosition + 740;
+            scrollRef.current.style.overflowY = "auto";
           } else if (bottom === 0 && bottomPage < Math.ceil(totalCount / 10)) {
             console.log(bottomPage);
             const fetchedData = await getRankByPage(bottomPage + 1);
@@ -64,15 +133,21 @@ export default function Ranking() {
     const res = await client.get(`points/rank/search?name=${searchValue}`);
     const data = res.data;
 
-    if (data.users === undefined) {
-      setRankInfoList([]);
-      setTopPage(0);
-      setBottomPage(Math.ceil(totalCount / 10));
+    if (scrollRef.current) {
+      scrollRef.current.style.overflowY = "hidden";
+      if (data.users === undefined) {
+        setRankInfoList([]);
+        setTopPage(0);
+        setBottomPage(Math.ceil(totalCount / 10));
+      } else {
+        const i = data.users.findIndex((user: RankingItemT) => user.name === searchValue);
+        setRankInfoList(data.users);
+        scrollRef.current.scrollTop = 74 * i;
+        scrollRef.current.style.overflowY = "auto";
+        setTopPage(data.page);
+        setBottomPage(data.page);
+      }
     }
-    setRankInfoList(data.users);
-
-    setTopPage(data.page);
-    setBottomPage(data.page);
   };
 
   const searchMyRank = async () => {
@@ -125,6 +200,7 @@ export default function Ranking() {
             rankInfoList={rankInfoList}
             searchMyRank={searchMyRank}
             clickModal={clickRankModal}
+            searchValue={searchValue}
           />
           <SearchBar
             searchValue={searchValue}
@@ -135,11 +211,10 @@ export default function Ranking() {
         </PageTransitionWrapper>
       </div>
       <ModalPortal isShowing={showRankModal}>
-        <ShareRank
-          clickModal={clickRankModal}
-          totalRank={totalCount}
-          myRank={myRank}
-        />
+        <ShareRank clickModal={clickRankModal} totalRank={totalCount} myRank={myRank} />
+      </ModalPortal>
+      <ModalPortal isShowing={showRankShareModal}>
+        <CommonModal>{rankShareModalText}</CommonModal>
       </ModalPortal>
     </>
   );

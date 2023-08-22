@@ -10,7 +10,10 @@ import { ProgressCheck } from "../common/ProgressCheck";
 import { Finish } from "../bets/QuestionList";
 import ModalPortal from "../common/ModalPortal";
 import AuthContext from "../common/AuthContext";
-
+import TimeOutModal from "./TimeOutModal";
+import Link from "next/link";
+import ShareArrow from "../../../public/image/MainArrow.svg";
+import Image from "next/image";
 interface DrawGiftProps {
   remainingPoint: number;
   allDrawParticipants: Array<IDrawCount>;
@@ -33,6 +36,12 @@ export default function DrawGift({
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [totalDraw, setTotalDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [myDraw, setMyDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+
+  const [timeOutModal, setTimeOutModal] = useState<boolean>(false);
+  function clickTimeOutModal() {
+    setTimeOutModal(!timeOutModal);
+  }
+
   let totalDrawTemp = [0, 0, 0, 0, 0];
   let myDrawTemp = [0, 0, 0, 0, 0];
   useEffect(() => {
@@ -83,7 +92,9 @@ export default function DrawGift({
   const onClickDraw = async () => {
     if (ProgressCheck(drawDate)) {
       const res = await drawGifts();
-      if (res && res.status === 201) {
+      if (res && res.data.message === "응모 기간이 아닙니다.") {
+        clickTimeOutModal();
+      } else if (res && res.status === 201) {
         setModalStatus("success");
         // all + my 업데이트
         totalDrawTemp = [...totalDraw];
@@ -126,6 +137,31 @@ export default function DrawGift({
                 setDraw={setDraw}
               />
             ))}
+            <ShareCard>
+              <h1>
+                인스타그램 스토리
+                <br />
+                공유 이벤트
+              </h1>
+              <p>
+                나의 예측을
+                <br /> @official.toky를 태그해서 스토리에 공유해주세요. <br />{" "}
+                <br /> 추첨을 통해 20분께
+                <br /> 스타벅스 아메리카노를 <br />
+                드립니다.
+              </p>
+              <Link href="/ranking">
+                <ShareDirectBtn>
+                  공유 바로가기
+                  <Image
+                    src={ShareArrow}
+                    alt="arrow"
+                    width={7}
+                    style={{ marginLeft: "5px", marginTop: "5px" }}
+                  />
+                </ShareDirectBtn>
+              </Link>
+            </ShareCard>
           </Flex>
           <Space h={20} />
           <Flex
@@ -160,6 +196,9 @@ export default function DrawGift({
           closeModal={() => setModalStatus("close")}
           completeDraw={completeDraw}
         />
+      </ModalPortal>
+      <ModalPortal isShowing={timeOutModal}>
+        <TimeOutModal clickModal={clickTimeOutModal} />
       </ModalPortal>
     </>
   );
@@ -226,6 +265,46 @@ const getTypeFromPoint = (point: number) => {
   else return 3;
 };
 
+const ShareCard = styled.div`
+  width: 168px;
+  height: 228.2px;
+  border-radius: 6px;
+  background: var(--black-4, #272727);
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+  h1 {
+    color: var(--87, rgba(255, 255, 255, 0.87));
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 21px;
+  }
+  p {
+    width: 141px;
+    color: var(--60, rgba(255, 255, 255, 0.6));
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 9px;
+  }
+`;
+const ShareDirectBtn = styled.button`
+  color: var(--87, rgba(255, 255, 255, 0.87));
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.84px;
+  background: none;
+  margin-top: 22px;
+`;
 interface giftT {
   id: number;
   title: string;
@@ -237,31 +316,31 @@ interface giftT {
 const gifts: giftT[] = [
   {
     id: 1,
-    title: "애플워치 (1명)",
-    point: 300,
+    title: "애플워치SE 40mm (1명)",
+    point: 500,
     type: 1,
   },
   {
     id: 2,
-    title: "애플워치 (1명)",
+    title: "배달의 민족 3만원 상품권 (5명)",
     point: 300,
     type: 2,
   },
   {
     id: 3,
-    title: "애플워치 (1명)",
-    point: 200,
+    title: "뿌링클+콜라 세트 (5명)",
+    point: 300,
     type: 2,
   },
   {
     id: 4,
-    title: "애플워치 (1명)",
-    point: 200,
-    type: 2,
+    title: "스타벅스 세트(10명)",
+    point: 100,
+    type: 3,
   },
   {
     id: 5,
-    title: "스타벅스 아메리카노 (10명)",
+    title: "설빙 인절미 빙수(10명)",
     point: 100,
     type: 3,
   },

@@ -22,7 +22,7 @@ export default function PointHistoryList() {
         `/points/history?page=${pageNumber}`
       );
       const historyData: IHistory[] = historyResponse.data;
-      if (historyData.length < 10) {
+      if (historyData.length < 13) {
         console.log(historyData.length);
         setLastPage(true);
       }

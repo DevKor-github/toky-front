@@ -185,12 +185,14 @@ const ScoreContainer = styled.div`
     font-family: Spoqa Han Sans Neo;
     font-weight: 500;
     letter-spacing: -0.48px;
+    text-shadow: 1px 1px 2px black;
   }
   & h1 {
     text-align: center;
     font-size: 35px;
     font-family: Spoqa Han Sans Neo;
     font-weight: 700;
+    text-shadow: 1px 1px 9px rgba(0, 0, 0, 0.5);
   }
 `;
 

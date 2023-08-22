@@ -35,5 +35,6 @@ const Footer = styled.div`
     font-family: Spoqa Han Sans Neo;
     font-weight: 500;
     letter-spacing: -0.6px;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
   }
 `;
