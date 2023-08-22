@@ -2,7 +2,8 @@
 
 import styled, { css } from "styled-components";
 import Image from "next/image";
-import defaultProfile from "../../../public/image/defaultProfile.svg";
+import YonseiToky from "../../../public/image/YonseiProfileToky.png";
+import KoreaToky from "../../../public/image/KoreaProfileToky.png";
 import { RankingItemT } from "./RankingInfo";
 
 export default function RankingItem(props: RankingItemT) {
@@ -19,11 +20,24 @@ export default function RankingItem(props: RankingItemT) {
         </span>
         <Space w={17} />
         <ProfileImage univ={props.university}>
-          <Image
-            src={defaultProfile}
-            alt="profile-image"
-            style={{ width: 37, height: 37, borderRadius: 20 }}
-          />
+          {props.university === 0 && (
+            <Image
+              src={KoreaToky}
+              alt="profile-image"
+              width={37}
+              height={37}
+              style={{ borderRadius: "20px" }}
+            />
+          )}
+          {props.university === 1 && (
+            <Image
+              src={YonseiToky}
+              alt="profile-image"
+              width={37}
+              height={37}
+              style={{ borderRadius: "20px" }}
+            />
+          )}
         </ProfileImage>
         <Space w={9} />
         <Flex style={{ flexDirection: "column", alignItems: "flex-start" }}>

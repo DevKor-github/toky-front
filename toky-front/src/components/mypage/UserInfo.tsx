@@ -14,8 +14,8 @@ export default function UserInfo() {
   const [nickname, setNickname] = useState<string>(authCtx.nickname);
   const [duplicate, setDuplicate] = useState<boolean | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-  const clickable = authCtx.nickname !== nickname && duplicate === false ? "true" : "false";
+  const clickable =
+    authCtx.nickname !== nickname && duplicate === false ? "true" : "false";
 
   const phoneNum =
     authCtx.phoneNum.slice(0, 3) +
@@ -56,12 +56,12 @@ export default function UserInfo() {
   useEffect(() => {
     setNickname(authCtx.nickname);
   }, [authCtx.nickname]);
-
+  const univ: number = authCtx.university === "고려대학교" ? 0 : 1;
   return (
     <>
       <InfoWrapper>
         <Flex>
-          <ProfileImg />
+          <ProfileImg univ={univ} />
         </Flex>
         <Space h={25} />
         <Flex style={{ gap: 46 }}>
@@ -76,7 +76,11 @@ export default function UserInfo() {
                 }}
               >
                 <Label>
-                  <input value={nickname} onChange={handleNicknameChange} spellCheck={false} />
+                  <input
+                    value={nickname}
+                    onChange={handleNicknameChange}
+                    spellCheck={false}
+                  />
                   {authCtx.nickname !== nickname && (
                     <button onClick={checkDuplicateName}>중복확인</button>
                   )}

@@ -2,7 +2,8 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import defaultProfile from "../../../public/image/defaultProfile.svg";
+import YonseiToky from "../../../public/image/YonseiProfileToky.png";
+import KoreaToky from "../../../public/image/KoreaProfileToky.png";
 import arrowRight from "../../../public/image/arrow_right.svg";
 import { useContext } from "react";
 import AuthContext from "../common/AuthContext";
@@ -14,7 +15,12 @@ export interface UserInfoProps {
   clickModal: () => void;
 }
 
-export default function UserInfo({ total, rank, searchMyRank, clickModal }: UserInfoProps) {
+export default function UserInfo({
+  total,
+  rank,
+  searchMyRank,
+  clickModal,
+}: UserInfoProps) {
   const authCtx = useContext(AuthContext);
   const univ = authCtx.university === "고려대학교" ? 0 : 1;
   return (
@@ -30,11 +36,24 @@ export default function UserInfo({ total, rank, searchMyRank, clickModal }: User
       </Flex>
       <Flex style={{ gap: 7, marginLeft: 40 }}>
         <ProfileImage univ={univ}>
-          <Image
-            src={defaultProfile}
-            alt="profile-image"
-            style={{ width: 61, height: 61, borderRadius: 33 }}
-          />
+          {univ === 0 && (
+            <Image
+              src={KoreaToky}
+              alt="profile-image"
+              width={61}
+              height={61}
+              style={{ borderRadius: "33px" }}
+            />
+          )}
+          {univ === 1 && (
+            <Image
+              src={YonseiToky}
+              alt="profile-image"
+              width={61}
+              height={61}
+              style={{ borderRadius: "33px" }}
+            />
+          )}
         </ProfileImage>
         <span>{authCtx.nickname}</span>
       </Flex>
