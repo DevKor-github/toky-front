@@ -9,8 +9,8 @@ const NotoSansKR = Noto_Sans_KR({
 });
 
 export const metadata = {
-  title: "신나는 고연전 승부예측, TOKY",
-  description: "고연전 승부예측하고 경품 받자!",
+  title: "신나는 정기전 승부예측, TOKY",
+  description: "정기전 승부예측하고 경품 받자!",
   icons: {
     icon: "../../public/image/favicon.svg",
   },
