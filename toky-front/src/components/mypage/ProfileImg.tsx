@@ -27,6 +27,7 @@ export default function ProfileImg({ univ }: IProfile) {
           style={{ borderRadius: "35px" }}
         />
       )}
+
     </Wrapper>
   );
 }

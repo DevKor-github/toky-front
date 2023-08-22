@@ -14,6 +14,7 @@ export default function UserInfo() {
   const [nickname, setNickname] = useState<string>(authCtx.nickname);
   const [duplicate, setDuplicate] = useState<boolean | undefined>(undefined);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const clickable =
     authCtx.nickname !== nickname && duplicate === false ? "true" : "false";
 
@@ -62,6 +63,7 @@ export default function UserInfo() {
       <InfoWrapper>
         <Flex>
           <ProfileImg univ={univ} />
+
         </Flex>
         <Space h={25} />
         <Flex style={{ gap: 46 }}>

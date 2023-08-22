@@ -9,13 +9,13 @@ import { MatchProps } from "./MatchType";
 
 export default function PlayerInfo({ match }: MatchProps) {
   let matchPlayer = PLAYER[match];
-
+  const map = ["", "", "/image/basketball_main_player.svg", "", ""];
   return (
     <Wrapper>
       <PlayerInfoWrapper>
         <PlayerImageWrapper>
           <Image
-            src={testPlayer}
+            src={map[match]}
             alt="player image test"
             fill
             style={{ objectFit: "contain", width: "100%" }}

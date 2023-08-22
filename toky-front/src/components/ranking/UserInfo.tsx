@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import YonseiToky from "../../../public/image/YonseiProfileToky.png";
 import KoreaToky from "../../../public/image/KoreaProfileToky.png";
+
 import arrowRight from "../../../public/image/arrow_right.svg";
 import { useContext } from "react";
 import AuthContext from "../common/AuthContext";

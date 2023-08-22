@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import Image from "next/image";
 import YonseiToky from "../../../public/image/YonseiProfileToky.png";
 import KoreaToky from "../../../public/image/KoreaProfileToky.png";
+
 import { RankingItemT } from "./RankingInfo";
 
 export default function RankingItem(props: RankingItemT) {
@@ -13,7 +14,16 @@ export default function RankingItem(props: RankingItemT) {
         <span
           style={{
             fontWeight: 700,
-            fontSize: 25,
+            fontSize:
+              props.rank >= 1000
+                ? 18
+                : props.rank >= 100
+                ? 20
+                : props.rank >= 10
+                ? 22
+                : 25,
+            width: 45,
+            textAlign: "center",
           }}
         >
           {props.rank}
@@ -38,6 +48,7 @@ export default function RankingItem(props: RankingItemT) {
               style={{ borderRadius: "20px" }}
             />
           )}
+
         </ProfileImage>
         <Space w={9} />
         <Flex style={{ flexDirection: "column", alignItems: "flex-start" }}>
@@ -58,7 +69,7 @@ const Wrapper = styled.div<{ highlight: boolean; rank: number }>`
   justify-content: space-between;
   align-items: center;
   height: 74px;
-  padding: 0 42px;
+  padding: 0 33px 0 28px;
   background-color: #121212;
   color: rgba(255, 255, 255, 0.87);
   ${(props) =>
