@@ -50,6 +50,7 @@ export default function PlayerList({ univ, match }: Props) {
             studentId={item.studentId}
             body={item.body}
             univ={univ}
+            match={match}
           />
         ))}
       </Wrapper>

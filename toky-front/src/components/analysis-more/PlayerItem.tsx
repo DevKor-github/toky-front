@@ -11,6 +11,7 @@ interface Props {
   studentId: number;
   body: string;
   univ: number;
+  match: number;
 }
 
 export default function PlayerItem({
@@ -21,6 +22,7 @@ export default function PlayerItem({
   studentId,
   body,
   univ,
+  match,
 }: Props) {
   const [isClicked, setIsClicked] = useState(false);
   useEffect(() => {
@@ -47,10 +49,13 @@ export default function PlayerItem({
       />
       {isClicked && (
         <Info>
-          <div className="detail">
-            <span className="detail-label">백넘버</span>
-            <span className="detail-value">{backNum}</span>
-          </div>
+          {match !== 3 && (
+            <div className="detail">
+              <span className="detail-label">백넘버</span>
+              <span className="detail-value">{backNum}</span>
+            </div>
+          )}
+
           <div className="detail">
             <span className="detail-label">포지션</span>
             <span className="detail-value">{position}</span>
