@@ -96,7 +96,9 @@ export default function QuestionItem({
                 {!notAnswerd && (
                   <Percentage>
                     <strong>
-                      {i < percentage.length ? percentage[i].toString().substring(2, 4) : ""}
+                      {i < percentage.length
+                        ? percentage[i].toString().padEnd(4, "0").substring(2, 4)
+                        : ""}
                     </strong>
                     %
                   </Percentage>
