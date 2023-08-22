@@ -1,5 +1,5 @@
 import { IPlayer } from "../PlayerList";
-import player from "../../../../public/image/player.svg";
+import player from "../../../../public/image/korea_profile.png";
 import img0 from "../../../../public/image/KoreaPlayer/3/0.kimchanjoo.png";
 import img1 from "../../../../public/image/KoreaPlayer/3/1.wonjeongho.png";
 import img2 from "../../../../public/image/KoreaPlayer/3/2.youseongtae.png";
