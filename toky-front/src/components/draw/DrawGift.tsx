@@ -36,6 +36,7 @@ export default function DrawGift({
   const [draw, setDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [totalDraw, setTotalDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
   const [myDraw, setMyDraw] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [timeOutModal, setTimeOutModal] = useState<boolean>(false);
   function clickTimeOutModal() {
@@ -90,6 +91,7 @@ export default function DrawGift({
   };
 
   const onClickDraw = async () => {
+    setIsDisabled(true);
     if (ProgressCheck(drawDate)) {
       const res = await drawGifts();
       if (res && res.data.message === "응모 기간이 아닙니다.") {
@@ -105,6 +107,7 @@ export default function DrawGift({
         setMyDraw(myDrawChange);
       } else setModalStatus("fail");
     }
+    setIsDisabled(false);
   };
 
   const completeDraw = () => {
@@ -186,7 +189,9 @@ export default function DrawGift({
             </span>
           </Flex>
           <Space h={11} />
-          <DrawButton onClick={onClickDraw}>응모하기</DrawButton>
+          <DrawButton disabled={isDisabled} onClick={onClickDraw}>
+            응모하기
+          </DrawButton>
         </div>
         {!drawProgress && <Finish />}
       </Wrapper>
@@ -244,7 +249,7 @@ const Divider = styled.div`
   background-color: rgba(255, 255, 255, 0.15);
 `;
 
-const DrawButton = styled.div`
+const DrawButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

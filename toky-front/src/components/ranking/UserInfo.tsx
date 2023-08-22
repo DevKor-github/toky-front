@@ -2,8 +2,9 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import KoreaProfile from "../../../public/image/korea_profile.png";
-import YonseiProfile from "../../../public/image/yonsei_profile.png";
+import YonseiToky from "../../../public/image/YonseiProfileToky.png";
+import KoreaToky from "../../../public/image/KoreaProfileToky.png";
+
 import arrowRight from "../../../public/image/arrow_right.svg";
 import { useContext } from "react";
 import AuthContext from "../common/AuthContext";
@@ -36,16 +37,24 @@ export default function UserInfo({
       </Flex>
       <Flex style={{ gap: 7, marginLeft: 40 }}>
         <ProfileImage univ={univ}>
-          <Image
-            src={univ === 0 ? KoreaProfile : YonseiProfile}
-            alt="profile-image"
-            style={{
-              width: 63,
-              height: 63,
-              borderRadius: 33,
-              backgroundColor: "#222222",
-            }}
-          />
+          {univ === 0 && (
+            <Image
+              src={KoreaToky}
+              alt="profile-image"
+              width={61}
+              height={61}
+              style={{ borderRadius: "33px" }}
+            />
+          )}
+          {univ === 1 && (
+            <Image
+              src={YonseiToky}
+              alt="profile-image"
+              width={61}
+              height={61}
+              style={{ borderRadius: "33px" }}
+            />
+          )}
         </ProfileImage>
         <span>{authCtx.nickname}</span>
       </Flex>
@@ -67,6 +76,9 @@ const Wrapper = styled.div`
   padding: 0 20px;
   background-color: #1f1f1f;
   color: rgba(255, 255, 255, 0.87);
+  span {
+    white-space: nowrap;
+  }
 `;
 
 const Flex = styled.div`

@@ -104,7 +104,8 @@ export default function Ranking() {
             scrollRef.current.scrollTop -
             scrollRef.current.clientHeight;
           if (top === 0 && topPage > 1) {
-            const currentScrollPosition = scrollRef.current && scrollRef.current.scrollTop;
+            const currentScrollPosition =
+              scrollRef.current && scrollRef.current.scrollTop;
             scrollRef.current.style.overflowY = "hidden";
             const fetchedData = await getRankByPage(topPage - 1);
             setTopPage(topPage - 1);
@@ -129,39 +130,51 @@ export default function Ranking() {
     }
   }, [totalCount, topPage, bottomPage]);
 
+  const [isDisabled, setIsDisabled] = useState(false);
   const searchRank = async () => {
-    const res = await client.get(`points/rank/search?name=${searchValue}`);
-    const data = res.data;
+    if (!isDisabled) {
+      setIsDisabled(true);
+      const res = await client.get(`points/rank/search?name=${searchValue}`);
+      const data = res.data;
 
-    if (scrollRef.current) {
-      scrollRef.current.style.overflowY = "hidden";
+      if (scrollRef.current) {
+        scrollRef.current.style.overflowY = "hidden";
+        if (data.users === undefined) {
+          setRankInfoList([]);
+          setTopPage(0);
+          setBottomPage(Math.ceil(totalCount / 10));
+        } else {
+          const i = data.users.findIndex(
+            (user: RankingItemT) => user.name === searchValue
+          );
+          setRankInfoList(data.users);
+          scrollRef.current.scrollTop = 74 * i;
+          scrollRef.current.style.overflowY = "auto";
+          setTopPage(data.page);
+          setBottomPage(data.page);
+        }
+      }
+      setIsDisabled(false);
+    }
+  };
+
+  const [myRankLoading, setMyRankLoading] = useState(false);
+  const searchMyRank = async () => {
+    if (!myRankLoading) {
+      setMyRankLoading(true);
+      const res = await client.get("points/rank/my");
+      const data = res.data;
+
       if (data.users === undefined) {
         setRankInfoList([]);
         setTopPage(0);
         setBottomPage(Math.ceil(totalCount / 10));
-      } else {
-        const i = data.users.findIndex((user: RankingItemT) => user.name === searchValue);
-        setRankInfoList(data.users);
-        scrollRef.current.scrollTop = 74 * i;
-        scrollRef.current.style.overflowY = "auto";
-        setTopPage(data.page);
-        setBottomPage(data.page);
       }
+      setRankInfoList(data.users);
+      setTopPage(data.page);
+      setBottomPage(data.page);
+      setMyRankLoading(false);
     }
-  };
-
-  const searchMyRank = async () => {
-    const res = await client.get("points/rank/my");
-    const data = res.data;
-
-    if (data.users === undefined) {
-      setRankInfoList([]);
-      setTopPage(0);
-      setBottomPage(Math.ceil(totalCount / 10));
-    }
-    setRankInfoList(data.users);
-    setTopPage(data.page);
-    setBottomPage(data.page);
   };
 
   const getRankByPage = async (page: number) => {
@@ -211,7 +224,11 @@ export default function Ranking() {
         </PageTransitionWrapper>
       </div>
       <ModalPortal isShowing={showRankModal}>
-        <ShareRank clickModal={clickRankModal} totalRank={totalCount} myRank={myRank} />
+        <ShareRank
+          clickModal={clickRankModal}
+          totalRank={totalCount}
+          myRank={myRank}
+        />
       </ModalPortal>
       <ModalPortal isShowing={showRankShareModal}>
         <CommonModal>{rankShareModalText}</CommonModal>

@@ -115,6 +115,14 @@ const InfoDetail = styled.div`
   /* 투명도_87 */
   color: rgba(255, 255, 255, 0.87);
 `;
+const Img = styled(Image)<{ univ: string }>`
+  margin-left: auto;
+  border-radius: 30px;
+  background: ${({ univ }) =>
+    univ === "고려대학교"
+      ? "linear-gradient(0deg, #f3233c 0%, #f95B6e 100%)"
+      : "linear-gradient(0deg, #5b84ff 0%, #2948ff 100%)"};
+`;
 
 function SideBarBodyFC(
   { isBarOpen = true },
@@ -153,18 +161,14 @@ function SideBarBodyFC(
             style={{ marginTop: 32.5, marginLeft: 6 }}
           />
         </Link>
-        <Image
+        <Img
           src={
             authCtx.university === "고려대학교" ? KoreaProfile : YonseiProfile
           }
           alt="profile"
-          style={{
-            marginLeft: "auto",
-            width: 59,
-            height: 59,
-            borderRadius: 30,
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-          }}
+          width={59}
+          height={59}
+          univ={authCtx.university}
         />
       </FlexWrapper>
       <DivBar />

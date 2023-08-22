@@ -2,8 +2,9 @@
 
 import styled, { css } from "styled-components";
 import Image from "next/image";
-import KoreaProfile from "../../../public/image/korea_profile.png";
-import YonseiProfile from "../../../public/image/yonsei_profile.png";
+import YonseiToky from "../../../public/image/YonseiProfileToky.png";
+import KoreaToky from "../../../public/image/KoreaProfileToky.png";
+
 import { RankingItemT } from "./RankingInfo";
 
 export default function RankingItem(props: RankingItemT) {
@@ -29,23 +30,33 @@ export default function RankingItem(props: RankingItemT) {
         </span>
         <Space w={17} />
         <ProfileImage univ={props.university}>
-          <Image
-            src={props.university === 0 ? KoreaProfile : YonseiProfile}
-            alt="profile-image"
-            style={{
-              width: 38,
-              height: 38,
-              borderRadius: 20,
-              backgroundColor: "#222222",
-            }}
-          />
+          {props.university === 0 && (
+            <Image
+              src={KoreaToky}
+              alt="profile-image"
+              width={37}
+              height={37}
+              style={{ borderRadius: "20px" }}
+            />
+          )}
+          {props.university === 1 && (
+            <Image
+              src={YonseiToky}
+              alt="profile-image"
+              width={37}
+              height={37}
+              style={{ borderRadius: "20px" }}
+            />
+          )}
         </ProfileImage>
         <Space w={9} />
         <Flex style={{ flexDirection: "column", alignItems: "flex-start" }}>
           <span style={{ fontSize: 10 }}>
             {props.university === 0 ? "고려대학교" : "연세대학교"}
           </span>
-          <span style={{ fontSize: 16 }}>{props.name}</span>
+          <span style={{ fontSize: 16, whiteSpace: "nowrap" }}>
+            {props.name}
+          </span>
         </Flex>
       </Flex>
       <div style={{ fontSize: 22 }}>{props.point}p</div>

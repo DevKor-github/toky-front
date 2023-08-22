@@ -38,14 +38,21 @@ export default function RankingInfo({
   const authCtx = useContext(AuthContext);
   return (
     <Wrapper id="ranking-info">
-      <UserInfo total={total} rank={rank} searchMyRank={searchMyRank} clickModal={clickModal} />
+      <UserInfo
+        total={total}
+        rank={rank}
+        searchMyRank={searchMyRank}
+        clickModal={clickModal}
+      />
       <Divider />
       <Ranking ref={scrollRef}>
         {rankInfoList.length > 0 ? (
           rankInfoList.map((item, idx) => (
             <RankingItem
               key={idx}
-              highlight={item.name === authCtx.nickname || item.name === searchValue}
+              highlight={
+                item.name === authCtx.nickname || item.name === searchValue
+              }
               university={item.university}
               name={item.name}
               point={item.point}
@@ -59,7 +66,7 @@ export default function RankingInfo({
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 30,
+              height: "100%",
             }}
           >
             <div
@@ -71,13 +78,7 @@ export default function RankingInfo({
                 textAlign: "center",
               }}
             >
-              <Image
-                src={NotFound}
-                width={200}
-                height={200}
-                alt="not found"
-                style={{ marginBottom: "30px" }}
-              />
+              <Image src={NotFound} width={280} alt="not found" />
               검색결과가 없습니다..ㅠㅠ
             </div>
           </div>

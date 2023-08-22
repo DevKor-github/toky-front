@@ -36,12 +36,7 @@ export default function ScoreInfo({ match }: MatchProps) {
           <LeagueInfo>최근 두 경기 상대 전적 </LeagueInfo>
           <ResultInfo>상대 전적은 {winner[match]}</ResultInfo>
           <CharImageWrapper>
-            <Img
-              src={AnalToky[match]}
-              width={390}
-              height={294}
-              alt="character image"
-            />
+            <Img src={AnalToky[match]} fill alt="character image" />
           </CharImageWrapper>
         </Container>
       </ScoreInfowrapper>
@@ -110,7 +105,7 @@ const CharImageWrapper = styled.div`
   /*  */
   position: relative;
   width: 100%;
-  height: 294px;
+  height: 300px;
   margin: 0 auto;
   margin-top: 10px;
 `;
@@ -177,8 +172,9 @@ const MatchTextContainer = styled.div`
 `;
 
 const Img = styled(Image)`
-  position: absolute;
+  /* position: absolute;
   bottom: 0%;
   left: 50%;
-  transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%); */
+  object-fit: cover;
 `;
