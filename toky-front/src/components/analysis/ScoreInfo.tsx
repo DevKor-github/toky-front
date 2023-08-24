@@ -23,11 +23,11 @@ const AnalToky: StaticImageData[] = [
 
 export default function ScoreInfo({ match }: MatchProps) {
   const winner = [
-    "막상막하에요",
-    "막상막하에요",
+    "막상막하예요",
+    "막상막하예요",
     "고려대학교가 앞서요",
     "고려대학교가 앞서요",
-    "막상막하에요",
+    "막상막하예요",
   ];
   return (
     <>
