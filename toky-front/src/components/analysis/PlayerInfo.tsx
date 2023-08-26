@@ -1,20 +1,24 @@
 import Link from "next/link";
 import { styled } from "styled-components";
-import Arrow from "../../../public/image/MainArrow.svg";
 import Image from "next/image";
 import testPlayer from "../../../public/image/playerTest.png";
 // link href 수정하기
 import { PLAYER } from "./Data";
 import { MatchProps } from "./MatchType";
+import baseball_image from "../../../public/image/baseball_main_player.png";
+import icehockey_image from "../../../public/image/icehockey_main_player.png";
+import basketball_image from "../../../public/image/basketball_main_player.png";
+import rugby_image from "../../../public/image/rugby_main_player.png";
+import football_image from "../../../public/image/football_main_player.png";
 
 export default function PlayerInfo({ match }: MatchProps) {
   let matchPlayer = PLAYER[match];
   const map = [
-    "/image/baseball_main_player.svg",
-    "/image/icehockey_main_player.svg",
-    "/image/basketball_main_player.svg",
-    "/image/rugby_main_player.svg",
-    "/image/football_main_player.svg",
+    baseball_image,
+    icehockey_image,
+    basketball_image,
+    rugby_image,
+    football_image,
   ];
   return (
     <Wrapper>
@@ -24,6 +28,7 @@ export default function PlayerInfo({ match }: MatchProps) {
             src={map[match]}
             alt="player image"
             fill
+            priority
             sizes="(max-width: 480px) 100vw, (max-width: 480px) 100vw, (max-width: 480px) 100vw"
             style={{ objectFit: "contain", width: "100%" }}
           />
@@ -93,4 +98,8 @@ const PlayerImageWrapper = styled.div`
   min-height: 585px;
   height: 665px;
   width: 100%;
+
+  & > img {
+    display: block;
+  }
 `;
